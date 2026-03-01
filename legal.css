@@ -1,0 +1,112 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+  background: #f0f4f8;
+  min-height: 100vh;
+  padding: 1.5rem 1rem;
+  color: #2d3748;
+  line-height: 1.8;
+}
+
+.legal-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.legal-header {
+  margin-bottom: 1rem;
+}
+
+.back-link {
+  font-size: 0.875rem;
+  color: #17B890;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.legal-card {
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 2.5rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.legal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.4rem;
+}
+
+.legal-date {
+  font-size: 0.8rem;
+  color: #a0aec0;
+  margin-bottom: 2rem;
+}
+
+section {
+  margin-bottom: 1.75rem;
+}
+
+section:last-child {
+  margin-bottom: 0;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid #E4F9F4;
+}
+
+h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #4a5568;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+p {
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin-bottom: 0.75rem;
+}
+
+ul {
+  font-size: 0.9rem;
+  color: #4a5568;
+  padding-left: 1.5rem;
+}
+
+ul li {
+  margin-bottom: 0.4rem;
+}
+
+a {
+  color: #17B890;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.legal-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #a0aec0;
+  padding-bottom: 1rem;
+}

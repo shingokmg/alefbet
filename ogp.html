@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200">
+  <title>OGP Image Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background: #0f1923;
+    }
+
+    .ogp {
+      width: 1200px;
+      height: 630px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f1923 0%, #1a2a3a 60%, #0d2318 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 背景装飾：大きなヘブライ文字 */
+    .bg-letters {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .bg-letter {
+      font-family: 'Cardo', serif;
+      color: #17B890;
+      opacity: 0.06;
+      position: absolute;
+      line-height: 1;
+      direction: rtl;
+    }
+
+    .bg-letter-1 { font-size: 520px; top: -80px; right: 20px; opacity: 0.07; }
+    .bg-letter-2 { font-size: 280px; bottom: -40px; left: 30px; opacity: 0.05; }
+    .bg-letter-3 { font-size: 180px; top: 20px; left: 220px; opacity: 0.04; }
+
+    /* グリーングロー */
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .glow-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(23,184,144,0.18) 0%, transparent 70%);
+      top: -100px; right: 100px;
+    }
+    .glow-2 {
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(23,184,144,0.1) 0%, transparent 70%);
+      bottom: -50px; left: 50px;
+    }
+
+    /* コンテンツ */
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0;
+    }
+
+    .tag {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #17B890;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      background: rgba(23,184,144,0.12);
+      padding: 6px 20px;
+      border-radius: 9999px;
+      border: 1px solid rgba(23,184,144,0.3);
+    }
+
+    .hebrew-word {
+      font-family: 'Cardo', serif;
+      font-size: 100px;
+      color: #17B890;
+      line-height: 1;
+      direction: rtl;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 30px rgba(23,184,144,0.5));
+    }
+
+    .main-title {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 64px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .main-title span {
+      color: #17B890;
+    }
+
+    .subtitle {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: #94a3b8;
+      letter-spacing: 0.05em;
+      margin-bottom: 40px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 16px;
+    }
+
+    .badge {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #e2e8f0;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 8px 20px;
+      border-radius: 9999px;
+      letter-spacing: 0.03em;
+    }
+
+    /* 左側の縦ライン装飾 */
+    .side-accent {
+      position: absolute;
+      left: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .side-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #17B890;
+      opacity: 0.5;
+    }
+    .side-dot:nth-child(2) { opacity: 0.8; width: 8px; height: 8px; }
+    .side-dot:nth-child(3) { opacity: 0.5; }
+
+    .side-line {
+      width: 2px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, #17B890, transparent);
+      opacity: 0.4;
+    }
+
+    /* 右側にも */
+    .side-accent-right {
+      position: absolute;
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="ogp">
+    <!-- 背景グロー -->
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <!-- 背景ヘブライ文字 -->
+    <div class="bg-letters">
+      <span class="bg-letter bg-letter-1">א</span>
+      <span class="bg-letter bg-letter-2">ת</span>
+      <span class="bg-letter bg-letter-3">ב</span>
+    </div>
+
+    <!-- サイド装飾 -->
+    <div class="side-accent">
+      <div class="side-line"></div>
+      <div class="side-dot"></div>
+      <div class="side-dot"></div>
+      <div class="side-dot"></div>
+      <div class="side-line"></div>
+    </div>
+    <div class="side-accent side-accent-right">
+      <div class="side-line"></div>
+      <div class="side-dot"></div>
+      <div class="side-dot"></div>
+      <div class="side-dot"></div>
+      <div class="side-line"></div>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div class="content">
+      <div class="tag">Classical Hebrew</div>
+      <div class="hebrew-word">אָלֶפְבֵּית</div>
+      <div class="main-title">ヘブライ語<br><span>Alefbet</span> 道場</div>
+      <div class="subtitle">旧約聖書を原典で読むための第一歩</div>
+      <div class="badges">
+        <div class="badge">📖 全28文字</div>
+        <div class="badge">👆 4択クイズ</div>
+        <div class="badge">⏱️ タイムアタック</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
