@@ -128,12 +128,7 @@ function buildFontOptions() {
     nameSpan.className = 'font-option-name';
     nameSpan.textContent = font.value;
 
-    const styleBadge = document.createElement('span');
-    styleBadge.className = 'font-option-style font-style-' + font.style;
-    styleBadge.textContent = font.style;
-
     top.appendChild(nameSpan);
-    top.appendChild(styleBadge);
 
     info.appendChild(top);
 
@@ -207,8 +202,12 @@ function startQuiz() {
 }
 
 function showQuestion() {
-  answered = false;
   nextWrap.classList.add('hidden');
+
+  const choicesEl = document.getElementById('choices');
+  choicesEl.style.display = 'none';
+  choicesEl.offsetHeight; // force reflow
+  choicesEl.style.display = '';
 
   choiceBtns.forEach(btn => {
     btn.classList.remove('correct', 'wrong');
@@ -221,6 +220,7 @@ function showQuestion() {
 
   updateProgressDisplay();
 
+  letterEl.style.color = '';
   letterEl.textContent = correct.char;
 
   const wrongs  = pickWrongAnswers(letterIdx, 3);
@@ -230,6 +230,8 @@ function showQuestion() {
     btn.textContent = choices[i].name;
     btn.dataset.correct = (choices[i] === correct) ? 'true' : 'false';
   });
+
+  answered = false;
 }
 
 function handleAnswer(btn) {
@@ -239,8 +241,8 @@ function handleAnswer(btn) {
   const isCorrect = btn.dataset.correct === 'true';
 
   if (isCorrect) {
-    btn.classList.add('correct');
     correctCount++;
+    letterEl.style.color = '#17B890';
   } else {
     btn.classList.add('wrong');
     incorrectCount++;
@@ -253,7 +255,7 @@ function handleAnswer(btn) {
   updateProgressDisplay();
 
   if (isCorrect) {
-    setTimeout(nextQuestion, 300);
+    setTimeout(nextQuestion, 200);
   } else {
     nextWrap.classList.remove('hidden');
   }
@@ -278,27 +280,36 @@ function updateProgressDisplay() {
     `　<span class="progress-wrong">✕ ${incorrectCount}</span>`;
 }
 
+const BASE_TIME = 120; // 基準タイム（秒）
+
+function calcScore() {
+  const total       = LETTERS.length;
+  const accuracy    = correctCount / total; // 0〜1
+  const speedFactor = 1 + Math.max(0, (BASE_TIME - elapsedSeconds) / BASE_TIME);
+  return Math.round(accuracy * 100 * speedFactor);
+}
+
 function finishQuiz() {
   stopTimer();
   showResultScreen();
 
-  const total = LETTERS.length;
-  const pct   = Math.round((correctCount / total) * 100);
+  const total      = LETTERS.length;
+  const accuracy   = Math.round((correctCount / total) * 100);
+  const finalScore = calcScore();
 
-  resultScore.textContent = `${pct}`;
+  resultScore.textContent = `${finalScore}`;
   resultTime.textContent  = formatTime(elapsedSeconds);
   document.getElementById('result-detail').innerHTML =
     `<span class="progress-correct">○ ${correctCount}</span>　<span class="progress-wrong">✕ ${incorrectCount}</span>`;
 
   let msg;
-  if (pct === 100)    msg = '全問正解！ヘブライ文字を完全制覇しました。';
-  else if (pct >= 90) msg = '惜しい！あと一歩で完全制覇です。';
-  else if (pct >= 75) msg = '基礎はしっかり身についています。繰り返して完璧を目指しましょう。';
-  else if (pct >= 50) msg = '着実に覚えてきています。続けることが大切です。';
-  else                msg = '焦らず少しずつ。何度も繰り返すうちに必ず定着します。';
+  if (accuracy === 100)    msg = '全問正解！ヘブライ文字を完全制覇しました。';
+  else if (accuracy >= 90) msg = '惜しい！あと一歩で完全制覇です。';
+  else if (accuracy >= 75) msg = '基礎はしっかり身についています。繰り返して完璧を目指しましょう。';
+  else if (accuracy >= 50) msg = '着実に覚えてきています。続けることが大切です。';
+  else                     msg = '焦らず少しずつ。何度も繰り返すうちに必ず定着します。';
 
   resultMsg.textContent = msg;
-
 }
 
 // --- Share ---
@@ -311,11 +322,10 @@ function shareToLine() {
 }
 
 function shareToX() {
-  const total = LETTERS.length;
-  const pct   = Math.round((correctCount / total) * 100);
+  const finalScore = calcScore();
   const text = [
     `🏆 ヘブライ語Alefbet道場 全28文字に挑戦！`,
-    `スコア：${pct}点　タイム：${formatTime(elapsedSeconds)}`,
+    `スコア：${finalScore}点　タイム：${formatTime(elapsedSeconds)}`,
     `#Alefbet道場 ${APP_URL}`,
   ].join('\n');
 
