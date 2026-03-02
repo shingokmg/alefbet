@@ -29,28 +29,46 @@
         <h1 class="start-title">ヘブライ語Alefbet道場</h1>
         <p class="start-subtitle">旧約聖書を原典で読むための第一歩</p>
         <p class="feature-badges">
-          <span class="feature-badge">全28文字</span>
+          <span class="feature-badge">全44問</span>
           <span class="badge-sep">×</span>
-          <span class="feature-badge">4択クイズ</span>
+          <span class="feature-badge">択一クイズ</span>
           <span class="badge-sep">×</span>
           <span class="feature-badge">タイムアタック</span>
         </p>
 
-        <div class="mode-section">
+        <div class="type-section">
+          <div class="type-section-title">クイズ内容</div>
+          <div class="type-options">
+            <label class="type-option" id="type-label-consonant">
+              <input type="radio" name="quizType" value="consonant">
+              <div class="type-option-text">
+                <span class="type-option-name">子音</span>
+                <span class="type-option-sub">字形 → 名前（28問）</span>
+              </div>
+            </label>
+            <label class="type-option" id="type-label-vowel">
+              <input type="radio" name="quizType" value="vowel">
+              <div class="type-option-text">
+                <span class="type-option-name">母音記号</span>
+                <span class="type-option-sub">記号 → 音（16問）</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="mode-section" id="mode-section">
           <div class="mode-section-title">出題モード</div>
           <div class="mode-options">
             <label class="mode-option" id="mode-label-random">
               <input type="radio" name="mode" value="random">
               <div class="mode-option-text">
                 <span class="mode-option-name">ランダム</span>
-                <span class="mode-option-sub">毎回異なる順序</span>
               </div>
             </label>
             <label class="mode-option" id="mode-label-alpha">
               <input type="radio" name="mode" value="alpha">
               <div class="mode-option-text">
-                <span class="mode-option-name">アルファベット順</span>
-                <span class="mode-option-sub">א から ת の順に出題</span>
+                <span class="mode-option-name">固定順</span>
               </div>
             </label>
           </div>
@@ -102,6 +120,8 @@
           <button class="choice-btn" data-index="1"></button>
           <button class="choice-btn" data-index="2"></button>
           <button class="choice-btn" data-index="3"></button>
+          <button class="choice-btn" data-index="4"></button>
+          <button class="choice-btn" data-index="5"></button>
         </div>
 
         <div class="next-wrap hidden" id="next-wrap">

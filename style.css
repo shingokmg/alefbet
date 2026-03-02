@@ -149,6 +149,74 @@ body {
   color: #718096;
 }
 
+/* Quiz type selection */
+.type-section {
+  background: #f7fafc;
+  border-radius: 0.75rem;
+  padding: 1.25rem 1rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.type-section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 0.75rem;
+}
+
+.type-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.type-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.6rem;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.type-option:hover {
+  border-color: #17B890;
+  background: #E4F9F4;
+}
+
+.type-option:has(input:checked) {
+  border-color: #17B890;
+  background: #E4F9F4;
+}
+
+.type-option input[type="radio"] {
+  accent-color: #17B890;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.type-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.type-option-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.type-option-sub {
+  font-size: 0.72rem;
+  color: #718096;
+}
+
 /* Font selection */
 .font-section {
   background: #f7fafc;
@@ -436,6 +504,19 @@ body {
   background: #fed7d7;
   border-color: #e53e3e;
   color: #742a2a;
+}
+
+/* Vowel quiz: 5-button row + full-width silent button */
+.choices.vowel-mode {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.choices.vowel-mode .choice-btn {
+  font-size: 1.4rem;
+}
+
+.choices.vowel-mode .choice-btn[data-index="5"] {
+  grid-column: 1 / -1;
 }
 
 /* Next button */

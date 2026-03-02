@@ -32,15 +32,37 @@ const LETTERS = [
   { char: 'ת',  name: 'タウ',                 romanized: 'Tav' },
 ];
 
+const VOWELS = [
+  { display: 'בֲ',  name: 'ハテフ・パタハ',          sounds: ['a'],      romanized: 'ă'   },
+  { display: 'בֱ',  name: 'ハテフ・セゴル',          sounds: ['e'],      romanized: 'ĕ'   },
+  { display: 'בֳ',  name: 'ハテフ・カメツ',          sounds: ['o'],      romanized: 'ŏ'   },
+  { display: 'בְ',  name: '有音シェワ / 無音シェワ',  sounds: ['e', '無音'], romanized: 'ə/–' },
+  { display: 'בַ',  name: 'パタハ',                  sounds: ['a'],      romanized: 'a'   },
+  { display: 'בִ',  name: 'ヒレク',                  sounds: ['i'],      romanized: 'i'   },
+  { display: 'בֻ',  name: 'キブツ',                  sounds: ['u'],      romanized: 'u'   },
+  { display: 'בֶ',  name: 'セゴル',                  sounds: ['e'],      romanized: 'e'   },
+  { display: 'בָ',  name: '大カメツ / 小カメツ',      sounds: ['a', 'o'], romanized: 'ā/o' },
+  { display: 'בֵ',  name: 'ツェレ',                  sounds: ['e'],      romanized: 'ē'   },
+  { display: 'בֹ',  name: 'ホレム',                  sounds: ['o'],      romanized: 'ō'   },
+  { display: 'בָה', name: '大カメツ・ヘー',           sounds: ['a'],      romanized: 'ā'   },
+  { display: 'בִי', name: 'ヒレク・ヨード',           sounds: ['i'],      romanized: 'î'   },
+  { display: 'בוּ', name: 'シュルク',                sounds: ['u'],      romanized: 'û'   },
+  { display: 'בֵי', name: 'ツェレ・ヨード',           sounds: ['e'],      romanized: 'ê'   },
+  { display: 'בוֹ', name: 'ホレム・ワウ',             sounds: ['o'],      romanized: 'ô'   },
+];
+
+const VOWEL_SOUNDS = ['a', 'i', 'u', 'e', 'o', '無音'];
+
 const FONTS = [
-  { value: 'Cardo',            style: 'セリフ' },
-  { value: 'Frank Ruhl Libre', style: 'セリフ' },
-  { value: 'Heebo',            style: 'サンセリフ' },
-  { value: 'Assistant',        style: 'サンセリフ' },
+  { value: 'Cardo',            style: 'セリフ',     previewSize: '1.2rem' },
+  { value: 'Frank Ruhl Libre', style: 'セリフ',     previewSize: '1.45rem' },
+  { value: 'Heebo',            style: 'サンセリフ', previewSize: '1.2rem' },
+  { value: 'Assistant',        style: 'サンセリフ', previewSize: '1.4rem' },
 ];
 
 const STORAGE_KEY_FONT = 'hebrew-quiz-font';
 const STORAGE_KEY_MODE = 'hebrew-quiz-mode';
+const STORAGE_KEY_TYPE = 'hebrew-quiz-type';
 const PREVIEW_CHAR = 'שׁלום'; // preview word shown on start screen (שׁ = shin with shin dot)
 
 // --- State ---
@@ -49,8 +71,10 @@ let currentIndex  = 0;
 let correctCount   = 0;
 let incorrectCount = 0;
 let answered       = false;
-let selectedFont  = localStorage.getItem(STORAGE_KEY_FONT) || 'Cardo';
-let selectedMode  = localStorage.getItem(STORAGE_KEY_MODE) || 'random';
+let selectedFont    = localStorage.getItem(STORAGE_KEY_FONT) || 'Cardo';
+let selectedMode    = localStorage.getItem(STORAGE_KEY_MODE) || 'random';
+let quizType        = localStorage.getItem(STORAGE_KEY_TYPE) || 'consonant';
+let selectedAnswers = [];
 
 // Timer state
 let timerInterval = null;
@@ -135,6 +159,7 @@ function buildFontOptions() {
     const preview = document.createElement('span');
     preview.className = 'font-option-preview';
     preview.style.fontFamily = `'${font.value}', serif`;
+    preview.style.fontSize   = font.previewSize;
     preview.textContent = PREVIEW_CHAR;
 
     label.appendChild(radio);
@@ -188,7 +213,8 @@ function showResultScreen() {
 
 // --- Quiz logic ---
 function startQuiz() {
-  const indices = LETTERS.map((_, i) => i);
+  const data    = quizType === 'vowel' ? VOWELS : LETTERS;
+  const indices = data.map((_, i) => i);
   shuffledOrder = selectedMode === 'alpha' ? indices : shuffle(indices);
   currentIndex   = 0;
   correctCount   = 0;
@@ -209,35 +235,87 @@ function showQuestion() {
   choicesEl.offsetHeight; // force reflow
   choicesEl.style.display = '';
 
+  selectedAnswers = [];
+
   choiceBtns.forEach(btn => {
-    btn.classList.remove('correct', 'wrong');
+    btn.classList.remove('correct', 'wrong', 'hidden');
     btn.disabled = false;
     btn.textContent = '';
   });
 
+  const data      = quizType === 'vowel' ? VOWELS : LETTERS;
   const letterIdx = shuffledOrder[currentIndex];
-  const correct   = LETTERS[letterIdx];
+  const correct   = data[letterIdx];
 
   updateProgressDisplay();
 
   letterEl.style.color = '';
-  letterEl.textContent = correct.char;
 
-  const wrongs  = pickWrongAnswers(letterIdx, 3);
-  const choices = shuffle([correct, ...wrongs]);
+  if (quizType === 'vowel') {
+    choicesEl.classList.add('vowel-mode');
+    letterEl.textContent = correct.display;
+    choiceBtns.forEach((btn, i) => {
+      btn.textContent    = VOWEL_SOUNDS[i];
+      btn.dataset.correct = correct.sounds.includes(VOWEL_SOUNDS[i]) ? 'true' : 'false';
+    });
+  } else {
+    choicesEl.classList.remove('vowel-mode');
+    letterEl.textContent = correct.char;
+    choiceBtns[4].classList.add('hidden');
+    choiceBtns[4].dataset.correct = 'false';
+    choiceBtns[5].classList.add('hidden');
+    choiceBtns[5].dataset.correct = 'false';
 
-  choiceBtns.forEach((btn, i) => {
-    btn.textContent = choices[i].name;
-    btn.dataset.correct = (choices[i] === correct) ? 'true' : 'false';
-  });
+    const wrongs  = pickWrongAnswers(letterIdx, 3);
+    const choices = shuffle([correct, ...wrongs]);
+    choiceBtns.forEach((btn, i) => {
+      if (i >= 4) return;
+      btn.textContent = choices[i].name;
+      btn.dataset.correct = (choices[i] === correct) ? 'true' : 'false';
+    });
+  }
 
   answered = false;
 }
 
 function handleAnswer(btn) {
   if (answered) return;
-  answered = true;
 
+  const isMulti = quizType === 'vowel' &&
+    VOWELS[shuffledOrder[currentIndex]].sounds.length > 1;
+
+  if (isMulti) {
+    if (btn.dataset.correct === 'false') {
+      // 不正解：即時終了
+      answered = true;
+      btn.classList.add('wrong');
+      incorrectCount++;
+      choiceBtns.forEach(b => {
+        if (b.dataset.correct === 'true') b.classList.add('correct');
+        b.disabled = true;
+      });
+      updateProgressDisplay();
+      nextWrap.classList.remove('hidden');
+    } else {
+      // 正解の1つを選択
+      btn.classList.add('correct');
+      btn.disabled = true;
+      selectedAnswers.push(btn.textContent);
+      if (selectedAnswers.length >= VOWELS[shuffledOrder[currentIndex]].sounds.length) {
+        // 全正解選択完了
+        answered = true;
+        correctCount++;
+        letterEl.style.color = '#17B890';
+        choiceBtns.forEach(b => { b.disabled = true; });
+        updateProgressDisplay();
+        setTimeout(nextQuestion, 200);
+      }
+    }
+    return;
+  }
+
+  // 単一正解（子音クイズ・単音母音）
+  answered = true;
   const isCorrect = btn.dataset.correct === 'true';
 
   if (isCorrect) {
@@ -262,8 +340,9 @@ function handleAnswer(btn) {
 }
 
 function nextQuestion() {
+  const data = quizType === 'vowel' ? VOWELS : LETTERS;
   currentIndex++;
-  if (currentIndex >= LETTERS.length) {
+  if (currentIndex >= data.length) {
     finishQuiz();
   } else {
     showQuestion();
@@ -271,8 +350,9 @@ function nextQuestion() {
 }
 
 function updateProgressDisplay() {
+  const data        = quizType === 'vowel' ? VOWELS : LETTERS;
   const questionNum = currentIndex + 1;
-  const total       = LETTERS.length;
+  const total       = data.length;
   progressBar.style.width = `${((questionNum - 1) / total) * 100}%`;
   progressText.innerHTML =
     `${questionNum} / ${total}問` +
@@ -280,12 +360,14 @@ function updateProgressDisplay() {
     `　<span class="progress-wrong">✕ ${incorrectCount}</span>`;
 }
 
-const BASE_TIME = 120; // 基準タイム（秒）
+const BASE_TIME_CONSONANT = 120; // 子音：基準タイム（秒）
+const BASE_TIME_VOWEL     =  90; // 母音記号：基準タイム（秒）
 
 function calcScore() {
-  const total       = LETTERS.length;
+  const baseTime    = quizType === 'vowel' ? BASE_TIME_VOWEL : BASE_TIME_CONSONANT;
+  const total       = (quizType === 'vowel' ? VOWELS : LETTERS).length;
   const accuracy    = correctCount / total; // 0〜1
-  const speedFactor = 1 + Math.max(0, (BASE_TIME - elapsedSeconds) / BASE_TIME);
+  const speedFactor = 1 + Math.max(0, (baseTime - elapsedSeconds) / baseTime);
   return Math.round(accuracy * 100 * speedFactor);
 }
 
@@ -293,7 +375,8 @@ function finishQuiz() {
   stopTimer();
   showResultScreen();
 
-  const total      = LETTERS.length;
+  const data       = quizType === 'vowel' ? VOWELS : LETTERS;
+  const total      = data.length;
   const accuracy   = Math.round((correctCount / total) * 100);
   const finalScore = calcScore();
 
@@ -323,8 +406,9 @@ function shareToLine() {
 
 function shareToX() {
   const finalScore = calcScore();
+  const quizLabel = quizType === 'vowel' ? '母音記号16問' : '子音28問';
   const text = [
-    `🏆 ヘブライ語Alefbet道場 全28文字に挑戦！`,
+    `🏆 ヘブライ語Alefbet道場 ${quizLabel}に挑戦！`,
     `スコア：${finalScore}点　タイム：${formatTime(elapsedSeconds)}`,
     `#Alefbet道場 ${APP_URL}`,
   ].join('\n');
@@ -335,6 +419,21 @@ function shareToX() {
 }
 
 // --- Event listeners ---
+function updateModeLabels() {
+  const nameEl = document.querySelector('#mode-label-alpha .mode-option-name');
+  nameEl.textContent = quizType === 'vowel' ? '固定順' : 'アルファベット順';
+}
+
+const typeRadios = document.querySelectorAll('input[name="quizType"]');
+typeRadios.forEach(radio => {
+  if (radio.value === quizType) radio.checked = true;
+  radio.addEventListener('change', () => {
+    quizType = radio.value;
+    localStorage.setItem(STORAGE_KEY_TYPE, quizType);
+    updateModeLabels();
+  });
+});
+
 modeRadios.forEach(radio => {
   if (radio.value === selectedMode) radio.checked = true;
   radio.addEventListener('change', () => {
@@ -352,7 +451,7 @@ nextBtn.addEventListener('click', nextQuestion);
 document.addEventListener('keydown', e => {
   if (e.key !== 'a') return;
   if (answered || quizScreen.classList.contains('hidden')) return;
-  const correctBtn = [...choiceBtns].find(b => b.dataset.correct === 'true');
+  const correctBtn = [...choiceBtns].find(b => b.dataset.correct === 'true' && !b.disabled);
   if (correctBtn) handleAnswer(correctBtn);
 });
 
@@ -364,9 +463,11 @@ retryBtn.addEventListener('click', startQuiz);
 
 homeBtn.addEventListener('click', () => {
   buildFontOptions();
+  updateModeLabels();
   showStartScreen();
 });
 
 // --- Init ---
 buildFontOptions();
+updateModeLabels();
 showStartScreen();
