@@ -105,6 +105,7 @@ const shareBtn     = document.getElementById('share-btn');
 const retryBtn     = document.getElementById('retry-btn');
 const homeBtn      = document.getElementById('home-btn');
 const quizHomeBtn  = document.getElementById('quiz-home-btn');
+const themeToggle  = document.getElementById('theme-toggle');
 
 // --- Helpers ---
 function shuffle(arr) {
@@ -583,6 +584,17 @@ homeBtn.addEventListener('click', () => {
   buildFontOptions();
   updateModeLabels();
   showStartScreen();
+});
+
+themeToggle.addEventListener('click', () => {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  if (isDark) {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.removeItem('hebrew-quiz-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('hebrew-quiz-theme', 'dark');
+  }
 });
 
 // --- Init ---
