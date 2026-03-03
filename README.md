@@ -59,11 +59,11 @@
 ├── index.html      # メイン画面（スタート・クイズ・リザルト）
 ├── app.js          # クイズロジック・データ定義
 ├── style.css       # スタイル
-├── favicon.svg
-├── favicon.ico
 ├── terms.html      # 利用規約
 ├── privacy.html    # プライバシーポリシー
-└── legal.css       # 利用規約・プライバシーポリシー用スタイル
+├── legal.css       # 利用規約・プライバシーポリシー用スタイル
+├── sitemap.xml
+└── images/         # OGP画像・ファビコン一式
 ```
 
 ---
