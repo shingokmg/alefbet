@@ -36,7 +36,7 @@ const VOWELS = [
   { display: 'בֲ',  name: 'ハテフ・パタハ',          sounds: ['a'],      romanized: 'ă'   },
   { display: 'בֱ',  name: 'ハテフ・セゴル',          sounds: ['e'],      romanized: 'ĕ'   },
   { display: 'בֳ',  name: 'ハテフ・カメツ',          sounds: ['o'],      romanized: 'ŏ'   },
-  { display: 'בְ',  name: '有音シェワ / 無音シェワ',  sounds: ['e', '無音'], romanized: 'ə/–' },
+  { display: 'בְ',  name: '有音 / 無音シェワ',  sounds: ['e', '無音'], romanized: 'ə / –' },
   { display: 'בַ',  name: 'パタハ',                  sounds: ['a'],      romanized: 'a'   },
   { display: 'בִ',  name: 'ヒレク',                  sounds: ['i'],      romanized: 'i'   },
   { display: 'בֻ',  name: 'キブツ',                  sounds: ['u'],      romanized: 'u'   },
@@ -44,7 +44,7 @@ const VOWELS = [
   { display: 'בָ',  name: '大カメツ / 小カメツ',      sounds: ['a', 'o'], romanized: 'ā/o' },
   { display: 'בֵ',  name: 'ツェレ',                  sounds: ['e'],      romanized: 'ē'   },
   { display: 'בֹ',  name: 'ホレム',                  sounds: ['o'],      romanized: 'ō'   },
-  { display: 'בָה', name: '大カメツ・ヘー',           sounds: ['a'],      romanized: 'ā'   },
+  { display: 'בָה', name: '大カメツ・ヘー',           sounds: ['a'],      romanized: 'â'   },
   { display: 'בִי', name: 'ヒレク・ヨード',           sounds: ['i'],      romanized: 'î'   },
   { display: 'בוּ', name: 'シュルク',                sounds: ['u'],      romanized: 'û'   },
   { display: 'בֵי', name: 'ツェレ・ヨード',           sounds: ['e'],      romanized: 'ê'   },
@@ -163,8 +163,8 @@ function buildFontOptions() {
     preview.textContent = PREVIEW_CHAR;
 
     label.appendChild(radio);
-    label.appendChild(info);
     label.appendChild(preview);
+    label.appendChild(info);
 
     radio.addEventListener('change', () => {
       selectedFont = font.value;
@@ -225,6 +225,12 @@ function startQuiz() {
   showQuizScreen();
   startTimer();
   showQuestion();
+
+  gtag('event', 'quiz_start', {
+    quiz_type: quizType,
+    mode:      selectedMode,
+    font:      selectedFont,
+  });
 }
 
 function showQuestion() {
@@ -393,20 +399,40 @@ function finishQuiz() {
   else                     msg = '焦らず少しずつ。何度も繰り返すうちに必ず定着します。';
 
   resultMsg.textContent = msg;
+
+  gtag('event', 'quiz_complete', {
+    quiz_type:       quizType,
+    score:           finalScore,
+    correct:         correctCount,
+    incorrect:       incorrectCount,
+    elapsed_seconds: elapsedSeconds,
+    mode:            selectedMode,
+    font:            selectedFont,
+  });
 }
 
 // --- Share ---
 const APP_URL = 'https://alefbet.jp';
 
 function shareToLine() {
+  gtag('event', 'share_click', {
+    platform:  'line',
+    quiz_type: quizType,
+    score:     calcScore(),
+  });
   const text = `ヘブライ語Alefbet道場\n旧約聖書を原典で読むための第一歩\n${APP_URL}`;
   const url = `https://line.me/R/msg/text/?${encodeURIComponent(text)}`;
   window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 function shareToX() {
+  gtag('event', 'share_click', {
+    platform:  'x',
+    quiz_type: quizType,
+    score:     calcScore(),
+  });
   const finalScore = calcScore();
-  const quizLabel = quizType === 'vowel' ? '母音記号16問' : '子音28問';
+  const quizLabel = quizType === 'vowel' ? '母音記号16問' : 'ヘブライ文字28問';
   const text = [
     `🏆 ヘブライ語Alefbet道場 ${quizLabel}に挑戦！`,
     `スコア：${finalScore}点　タイム：${formatTime(elapsedSeconds)}`,
@@ -459,7 +485,21 @@ startBtn.addEventListener('click', startQuiz);
 
 document.getElementById('line-btn').addEventListener('click', shareToLine);
 shareBtn.addEventListener('click', shareToX);
-retryBtn.addEventListener('click', startQuiz);
+retryBtn.addEventListener('click', () => {
+  gtag('event', 'retry', {
+    quiz_type:      quizType,
+    previous_score: calcScore(),
+  });
+  startQuiz();
+});
+
+document.querySelector('.book-title-link').addEventListener('click', () => {
+  gtag('event', 'book_click', {
+    location:  'result_screen',
+    quiz_type: quizType,
+    score:     calcScore(),
+  });
+});
 
 homeBtn.addEventListener('click', () => {
   buildFontOptions();

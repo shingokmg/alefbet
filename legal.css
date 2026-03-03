@@ -19,23 +19,34 @@ body {
 }
 
 .legal-header {
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 .back-link {
-  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.9rem 0.55rem;
+  background: #fff;
+  border-radius: 0.75rem 0.75rem 0 0;
+  border-top: 5px solid #17B890;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.8rem;
   color: #17B890;
-  text-decoration: none;
   font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s;
 }
 
 .back-link:hover {
-  text-decoration: underline;
+  background: #f7fffe;
+  text-decoration: none;
 }
 
 .legal-card {
   background: #fff;
   border-radius: 1.25rem;
+  border-top-left-radius: 0;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   padding: 2.5rem 2rem;
   margin-bottom: 1.5rem;
@@ -51,6 +62,17 @@ body {
 .legal-date {
   font-size: 0.8rem;
   color: #a0aec0;
+  margin-bottom: 1.25rem;
+}
+
+.legal-intro {
+  font-size: 0.9rem;
+  color: #4a5568;
+  line-height: 1.8;
+  padding: 1rem 1.1rem;
+  background: #f7fffe;
+  border-left: 3px solid #17B890;
+  border-radius: 0 0.5rem 0.5rem 0;
   margin-bottom: 2rem;
 }
 
@@ -109,4 +131,27 @@ a:hover {
   font-size: 0.75rem;
   color: #a0aec0;
   padding-bottom: 1rem;
+}
+
+.legal-footer-links {
+  margin-top: 0.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.legal-footer-link {
+  color: #a0aec0;
+  text-decoration: none;
+}
+
+.legal-footer-link:hover {
+  color: #17B890;
+  text-decoration: underline;
+}
+
+.legal-footer-sep {
+  color: #cbd5e0;
 }
