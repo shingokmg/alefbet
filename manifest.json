@@ -1,0 +1,24 @@
+{
+  "name": "ヘブライ語Alefbet道場",
+  "short_name": "Alefbet道場",
+  "description": "ヘブライ文字（アレフベット）と母音記号（ニクド）を無料で学べるWebクイズアプリ",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#17B890",
+  "background_color": "#f0f4f8",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "images/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
