@@ -391,27 +391,15 @@ function updateProgressDisplay() {
     `　<span class="progress-wrong">✕ ${incorrectCount}</span>`;
 }
 
-const BASE_TIME_CONSONANT = 120; // 子音：基準タイム（秒）
-const BASE_TIME_VOWEL     =  90; // 母音記号：基準タイム（秒）
-
-function calcScore() {
-  const baseTime    = isVowelType() ? BASE_TIME_VOWEL : BASE_TIME_CONSONANT;
-  const total       = (isVowelType() ? VOWELS : LETTERS).length;
-  const accuracy    = correctCount / total; // 0〜1
-  const speedFactor = 1 + Math.max(0, (baseTime - elapsedSeconds) / baseTime);
-  return Math.round(accuracy * 100 * speedFactor);
-}
-
 function finishQuiz() {
   stopTimer();
   showResultScreen();
 
-  const data       = isVowelType() ? VOWELS : LETTERS;
-  const total      = data.length;
-  const accuracy   = Math.round((correctCount / total) * 100);
-  const finalScore = calcScore();
+  const data     = isVowelType() ? VOWELS : LETTERS;
+  const total    = data.length;
+  const accuracy = Math.round((correctCount / total) * 100);
 
-  resultScore.textContent = `${finalScore}`;
+  resultScore.innerHTML = `${accuracy}<span class="result-unit">%</span>`;
   resultTime.textContent  = formatTime(elapsedSeconds);
   document.getElementById('result-detail').innerHTML =
     `<span class="progress-correct">○ ${correctCount}</span>　<span class="progress-wrong">✕ ${incorrectCount}</span>`;
@@ -427,7 +415,7 @@ function finishQuiz() {
 
   gtag('event', 'quiz_complete', {
     quiz_type:       quizType,
-    score:           finalScore,
+    accuracy:        accuracy,
     correct:         correctCount,
     incorrect:       incorrectCount,
     elapsed_seconds: elapsedSeconds,
@@ -443,7 +431,6 @@ function shareToLine() {
   gtag('event', 'share_click', {
     platform:  'line',
     quiz_type: quizType,
-    score:     calcScore(),
   });
   const text = `ヘブライ語Alefbet道場\n旧約聖書を原典で読むための第一歩\n${APP_URL}`;
   const url = `https://line.me/R/msg/text/?${encodeURIComponent(text)}`;
@@ -451,18 +438,19 @@ function shareToLine() {
 }
 
 function shareToX() {
+  const data     = isVowelType() ? VOWELS : LETTERS;
+  const accuracy = Math.round((correctCount / data.length) * 100);
   gtag('event', 'share_click', {
     platform:  'x',
     quiz_type: quizType,
-    score:     calcScore(),
+    accuracy:  accuracy,
   });
-  const finalScore = calcScore();
   const quizLabel = quizType === 'vowel' ? '母音記号（音）16問'
                   : quizType === 'vowel-name' ? '母音記号（名前）16問'
                   : 'ヘブライ文字28問';
   const text = [
     `🏆 ヘブライ語Alefbet道場 ${quizLabel}に挑戦！`,
-    `スコア：${finalScore}点　タイム：${formatTime(elapsedSeconds)}`,
+    `正答率：${accuracy}%　タイム：${formatTime(elapsedSeconds)}`,
     `#Alefbet道場 ${APP_URL}`,
   ].join('\n');
 
@@ -519,9 +507,10 @@ document.getElementById('quiz-home-btn').addEventListener('click', () => {
 document.getElementById('line-btn').addEventListener('click', shareToLine);
 shareBtn.addEventListener('click', shareToX);
 retryBtn.addEventListener('click', () => {
+  const data = isVowelType() ? VOWELS : LETTERS;
   gtag('event', 'retry', {
-    quiz_type:      quizType,
-    previous_score: calcScore(),
+    quiz_type:          quizType,
+    previous_accuracy:  Math.round((correctCount / data.length) * 100),
   });
   startQuiz();
 });
@@ -530,7 +519,6 @@ document.querySelector('.book-title-link').addEventListener('click', () => {
   gtag('event', 'book_click', {
     location:  'result_screen',
     quiz_type: quizType,
-    score:     calcScore(),
   });
 });
 
