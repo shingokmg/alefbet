@@ -94,7 +94,7 @@ body {
 .ref-font-btn--active {
   border-color: #17B890;
   background: #E4F9F4;
-  color: #0d7a60;
+  color: #17B890;
 }
 
 .ref-section {
@@ -172,7 +172,7 @@ body {
 
 .ref-roman {
   font-size: 1rem;
-  color: #718096;
+  color: #5a677d;
   font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
 }
 
@@ -193,7 +193,7 @@ body {
 .ref-subsection-title {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #718096;
+  color: #5a677d;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem;
   border-left: 3px solid #E4F9F4;
@@ -246,20 +246,20 @@ body {
 .ref-book-meta {
   margin-top: 0.4rem;
   font-size: 0.75rem;
-  color: #718096;
+  color: #5a677d;
 }
 
 .ref-book-pr {
   font-size: 0.65rem;
   font-weight: 600;
-  color: #a0aec0;
+  color: #767676;
   letter-spacing: 0.03em;
 }
 
 .ref-footer {
   text-align: center;
   font-size: 0.75rem;
-  color: #a0aec0;
+  color: #767676;
   padding-bottom: 1rem;
 }
 
@@ -273,7 +273,7 @@ body {
 }
 
 .ref-footer-link {
-  color: #a0aec0;
+  color: #767676;
   text-decoration: none;
 }
 
