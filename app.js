@@ -456,12 +456,23 @@ function finishQuiz() {
   document.getElementById('result-detail').innerHTML =
     `<span class="progress-correct">○ ${correctCount}</span>　<span class="progress-wrong">✕ ${incorrectCount}</span>`;
 
+  const resultCard  = document.querySelector('.result-card');
+  const resultTitle = document.querySelector('.result-title');
+
   let msg;
-  if (accuracy === 100)    msg = '全問正解！ヘブライ文字を完全制覇しました。';
-  else if (accuracy >= 90) msg = '惜しい！あと一歩で完全制覇です。';
-  else if (accuracy >= 75) msg = '基礎はしっかり身についています。繰り返して完璧を目指しましょう。';
-  else if (accuracy >= 50) msg = '着実に覚えてきています。続けることが大切です。';
-  else                     msg = '焦らず少しずつ。何度も繰り返すうちに必ず定着します。';
+  if (accuracy === 100) {
+    msg = '全問正解！完全制覇おめでとうございます。';
+    resultTitle.textContent = '🎉 完全制覇！';
+    resultCard.classList.add('result-card--perfect');
+    launchConfetti();
+  } else {
+    resultTitle.textContent = 'クイズ終了！';
+    resultCard.classList.remove('result-card--perfect');
+    if (accuracy >= 90)      msg = '惜しい！あと一歩で完全制覇です。';
+    else if (accuracy >= 75) msg = '基礎はしっかり身についています。繰り返して完璧を目指しましょう。';
+    else if (accuracy >= 50) msg = '着実に覚えてきています。続けることが大切です。';
+    else                     msg = '焦らず少しずつ。何度も繰り返すうちに必ず定着します。';
+  }
 
   resultMsg.textContent = msg;
 
@@ -474,6 +485,58 @@ function finishQuiz() {
     mode:            selectedMode,
     font:            selectedFont,
   });
+}
+
+// --- Confetti ---
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx    = canvas.getContext('2d');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const COLORS = ['#17B890', '#fbbf24', '#f87171', '#60a5fa', '#a78bfa', '#34d399'];
+  const pieces = Array.from({ length: 120 }, () => ({
+    x:    Math.random() * canvas.width,
+    y:    Math.random() * -canvas.height,
+    w:    6 + Math.random() * 8,
+    h:    10 + Math.random() * 6,
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    rot:  Math.random() * Math.PI * 2,
+    vx:   (Math.random() - 0.5) * 2,
+    vy:   3 + Math.random() * 4,
+    vr:   (Math.random() - 0.5) * 0.2,
+  }));
+
+  let frame;
+  const DURATION = 7000;
+  const start    = performance.now();
+
+  function draw(now) {
+    const elapsed = now - start;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (const p of pieces) {
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.rot += p.vr;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = Math.max(0, 1 - elapsed / DURATION);
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    }
+
+    if (elapsed < DURATION) {
+      frame = requestAnimationFrame(draw);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  cancelAnimationFrame(frame);
+  requestAnimationFrame(draw);
 }
 
 // --- Share ---
