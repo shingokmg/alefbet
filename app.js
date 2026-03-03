@@ -257,6 +257,7 @@ function showQuestion() {
     btn.classList.remove('correct', 'wrong', 'hidden');
     btn.disabled = false;
     btn.textContent = '';
+    btn.style.fontFamily = '';
   });
 
   const data      = isVowelType() ? VOWELS : LETTERS;
@@ -266,6 +267,8 @@ function showQuestion() {
   updateProgressDisplay();
 
   letterEl.style.color = '';
+  letterEl.classList.remove('reverse-name');
+  choicesEl.classList.remove('vowel-mode', 'reverse-mode');
 
   if (quizType === 'vowel') {
     choicesEl.classList.add('vowel-mode');
@@ -275,7 +278,6 @@ function showQuestion() {
       btn.dataset.correct = correct.sounds.includes(VOWEL_SOUNDS[i]) ? 'true' : 'false';
     });
   } else if (quizType === 'vowel-name') {
-    choicesEl.classList.remove('vowel-mode');
     letterEl.textContent = correct.display;
     choiceBtns[4].classList.add('hidden');
     choiceBtns[4].dataset.correct = 'false';
@@ -289,8 +291,25 @@ function showQuestion() {
       btn.textContent     = choices[i].name;
       btn.dataset.correct = (choices[i] === correct) ? 'true' : 'false';
     });
+  } else if (quizType === 'consonant-reverse') {
+    choicesEl.classList.add('reverse-mode');
+    letterEl.classList.add('reverse-name');
+    letterEl.style.fontFamily = '';
+    letterEl.textContent = correct.name;
+    choiceBtns[4].classList.add('hidden');
+    choiceBtns[4].dataset.correct = 'false';
+    choiceBtns[5].classList.add('hidden');
+    choiceBtns[5].dataset.correct = 'false';
+
+    const wrongs  = pickWrongAnswers(letterIdx, 3);
+    const choices = shuffle([correct, ...wrongs]);
+    choiceBtns.forEach((btn, i) => {
+      if (i >= 4) return;
+      btn.textContent      = choices[i].char;
+      btn.dataset.correct  = (choices[i] === correct) ? 'true' : 'false';
+      btn.style.fontFamily = `'${selectedFont}', serif`;
+    });
   } else {
-    choicesEl.classList.remove('vowel-mode');
     letterEl.textContent = correct.char;
     choiceBtns[4].classList.add('hidden');
     choiceBtns[4].dataset.correct = 'false';
@@ -445,8 +464,9 @@ function shareToX() {
     quiz_type: quizType,
     accuracy:  accuracy,
   });
-  const quizLabel = quizType === 'vowel' ? '母音記号（音）16問'
-                  : quizType === 'vowel-name' ? '母音記号（名前）16問'
+  const quizLabel = quizType === 'vowel'             ? '母音記号（音）16問'
+                  : quizType === 'vowel-name'        ? '母音記号（名前）16問'
+                  : quizType === 'consonant-reverse' ? 'ヘブライ文字（逆）28問'
                   : 'ヘブライ文字28問';
   const text = [
     `🏆 ヘブライ語Alefbet道場 ${quizLabel}に挑戦！`,
