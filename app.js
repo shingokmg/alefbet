@@ -36,7 +36,7 @@ const VOWELS = [
   { display: 'בֲ',  name: 'ハテフ・パタハ',          sounds: ['a'],      romanized: 'ă'   },
   { display: 'בֱ',  name: 'ハテフ・セゴル',          sounds: ['e'],      romanized: 'ĕ'   },
   { display: 'בֳ',  name: 'ハテフ・カメツ',          sounds: ['o'],      romanized: 'ŏ'   },
-  { display: 'בְ',  name: '有音 / 無音シェワ',  sounds: ['e', '無音'], romanized: 'ə / –' },
+  { display: 'בְ',  name: '有音 / 無音シェワ',  sounds: ['ə', '無音'], romanized: 'ə / –' },
   { display: 'בַ',  name: 'パタハ',                  sounds: ['a'],      romanized: 'a'   },
   { display: 'בִ',  name: 'ヒレク',                  sounds: ['i'],      romanized: 'i'   },
   { display: 'בֻ',  name: 'キブツ',                  sounds: ['u'],      romanized: 'u'   },
@@ -51,7 +51,7 @@ const VOWELS = [
   { display: 'בוֹ', name: 'ホレム・ワウ',             sounds: ['o'],      romanized: 'ô'   },
 ];
 
-const VOWEL_SOUNDS = ['a', 'i', 'u', 'e', 'o', '無音'];
+const VOWEL_SOUNDS = ['a', 'i', 'u', 'e', 'o', 'ə', '無音'];
 
 const FONTS = [
   { value: 'Cardo',            style: 'セリフ',     previewSize: '1.2rem' },
@@ -198,6 +198,13 @@ function startTimer() {
   }, 1000);
 }
 
+function resumeTimer() {
+  timerInterval = setInterval(() => {
+    elapsedSeconds++;
+    timerEl.textContent = formatTime(elapsedSeconds);
+  }, 1000);
+}
+
 function stopTimer() {
   clearInterval(timerInterval);
   timerInterval = null;
@@ -255,7 +262,7 @@ function startWrongOnlyQuiz() {
 
   applyFont(selectedFont);
   showQuizScreen();
-  startTimer();
+  resumeTimer();
   showQuestion();
 }
 
@@ -299,6 +306,8 @@ function showQuestion() {
     choiceBtns[4].dataset.correct = 'false';
     choiceBtns[5].classList.add('hidden');
     choiceBtns[5].dataset.correct = 'false';
+    choiceBtns[6].classList.add('hidden');
+    choiceBtns[6].dataset.correct = 'false';
 
     const wrongs  = pickWrongVowelNames(letterIdx, 3);
     const choices = shuffle([correct, ...wrongs]);
@@ -316,6 +325,8 @@ function showQuestion() {
     choiceBtns[4].dataset.correct = 'false';
     choiceBtns[5].classList.add('hidden');
     choiceBtns[5].dataset.correct = 'false';
+    choiceBtns[6].classList.add('hidden');
+    choiceBtns[6].dataset.correct = 'false';
 
     const wrongs  = pickWrongAnswers(letterIdx, 3);
     const choices = shuffle([correct, ...wrongs]);
@@ -331,6 +342,8 @@ function showQuestion() {
     choiceBtns[4].dataset.correct = 'false';
     choiceBtns[5].classList.add('hidden');
     choiceBtns[5].dataset.correct = 'false';
+    choiceBtns[6].classList.add('hidden');
+    choiceBtns[6].dataset.correct = 'false';
 
     const wrongs  = pickWrongAnswers(letterIdx, 3);
     const choices = shuffle([correct, ...wrongs]);

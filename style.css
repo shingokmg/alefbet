@@ -550,17 +550,26 @@ body {
   padding: 0.75rem 0.5rem;
 }
 
-/* Vowel quiz: 5-button row + full-width silent button */
+/* Vowel quiz: 5-button row 1 + ə / 無音 row 2 */
 .choices.vowel-mode {
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(10, 1fr);
 }
 
 .choices.vowel-mode .choice-btn {
   font-size: 1.4rem;
 }
 
-.choices.vowel-mode .choice-btn[data-index="5"] {
-  grid-column: 1 / -1;
+.choices.vowel-mode .choice-btn[data-index="0"],
+.choices.vowel-mode .choice-btn[data-index="1"],
+.choices.vowel-mode .choice-btn[data-index="2"],
+.choices.vowel-mode .choice-btn[data-index="3"],
+.choices.vowel-mode .choice-btn[data-index="4"] {
+  grid-column: span 2;
+}
+
+.choices.vowel-mode .choice-btn[data-index="5"],
+.choices.vowel-mode .choice-btn[data-index="6"] {
+  grid-column: span 5;
 }
 
 /* Next button */
@@ -801,6 +810,9 @@ body {
 }
 
 .home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   background: #e2e8f0;
   color: #4a5568;
 }
@@ -814,6 +826,10 @@ body {
    Responsive
 ================================ */
 @media (max-width: 400px) {
+  .home-btn-icon {
+    display: none;
+  }
+
   .letter-display {
     font-size: 6rem;
     min-height: 8rem;
