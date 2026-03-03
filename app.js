@@ -103,6 +103,7 @@ const resultMsg    = document.getElementById('result-message');
 const shareBtn     = document.getElementById('share-btn');
 const retryBtn     = document.getElementById('retry-btn');
 const homeBtn      = document.getElementById('home-btn');
+const quizHomeBtn  = document.getElementById('quiz-home-btn');
 
 // --- Helpers ---
 function shuffle(arr) {
@@ -117,6 +118,15 @@ function shuffle(arr) {
 function pickWrongAnswers(correctIdx, count) {
   const pool = LETTERS.filter((_, i) => i !== correctIdx);
   return shuffle(pool).slice(0, count);
+}
+
+function pickWrongVowelNames(correctIdx, count) {
+  const pool = VOWELS.filter((_, i) => i !== correctIdx);
+  return shuffle(pool).slice(0, count);
+}
+
+function isVowelType() {
+  return quizType === 'vowel' || quizType === 'vowel-name';
 }
 
 function formatTime(seconds) {
@@ -213,7 +223,7 @@ function showResultScreen() {
 
 // --- Quiz logic ---
 function startQuiz() {
-  const data    = quizType === 'vowel' ? VOWELS : LETTERS;
+  const data    = isVowelType() ? VOWELS : LETTERS;
   const indices = data.map((_, i) => i);
   shuffledOrder = selectedMode === 'alpha' ? indices : shuffle(indices);
   currentIndex   = 0;
@@ -249,7 +259,7 @@ function showQuestion() {
     btn.textContent = '';
   });
 
-  const data      = quizType === 'vowel' ? VOWELS : LETTERS;
+  const data      = isVowelType() ? VOWELS : LETTERS;
   const letterIdx = shuffledOrder[currentIndex];
   const correct   = data[letterIdx];
 
@@ -261,8 +271,23 @@ function showQuestion() {
     choicesEl.classList.add('vowel-mode');
     letterEl.textContent = correct.display;
     choiceBtns.forEach((btn, i) => {
-      btn.textContent    = VOWEL_SOUNDS[i];
+      btn.textContent     = VOWEL_SOUNDS[i];
       btn.dataset.correct = correct.sounds.includes(VOWEL_SOUNDS[i]) ? 'true' : 'false';
+    });
+  } else if (quizType === 'vowel-name') {
+    choicesEl.classList.remove('vowel-mode');
+    letterEl.textContent = correct.display;
+    choiceBtns[4].classList.add('hidden');
+    choiceBtns[4].dataset.correct = 'false';
+    choiceBtns[5].classList.add('hidden');
+    choiceBtns[5].dataset.correct = 'false';
+
+    const wrongs  = pickWrongVowelNames(letterIdx, 3);
+    const choices = shuffle([correct, ...wrongs]);
+    choiceBtns.forEach((btn, i) => {
+      if (i >= 4) return;
+      btn.textContent     = choices[i].name;
+      btn.dataset.correct = (choices[i] === correct) ? 'true' : 'false';
     });
   } else {
     choicesEl.classList.remove('vowel-mode');
@@ -276,7 +301,7 @@ function showQuestion() {
     const choices = shuffle([correct, ...wrongs]);
     choiceBtns.forEach((btn, i) => {
       if (i >= 4) return;
-      btn.textContent = choices[i].name;
+      btn.textContent     = choices[i].name;
       btn.dataset.correct = (choices[i] === correct) ? 'true' : 'false';
     });
   }
@@ -346,7 +371,7 @@ function handleAnswer(btn) {
 }
 
 function nextQuestion() {
-  const data = quizType === 'vowel' ? VOWELS : LETTERS;
+  const data = isVowelType() ? VOWELS : LETTERS;
   currentIndex++;
   if (currentIndex >= data.length) {
     finishQuiz();
@@ -356,7 +381,7 @@ function nextQuestion() {
 }
 
 function updateProgressDisplay() {
-  const data        = quizType === 'vowel' ? VOWELS : LETTERS;
+  const data        = isVowelType() ? VOWELS : LETTERS;
   const questionNum = currentIndex + 1;
   const total       = data.length;
   progressBar.style.width = `${((questionNum - 1) / total) * 100}%`;
@@ -370,8 +395,8 @@ const BASE_TIME_CONSONANT = 120; // 子音：基準タイム（秒）
 const BASE_TIME_VOWEL     =  90; // 母音記号：基準タイム（秒）
 
 function calcScore() {
-  const baseTime    = quizType === 'vowel' ? BASE_TIME_VOWEL : BASE_TIME_CONSONANT;
-  const total       = (quizType === 'vowel' ? VOWELS : LETTERS).length;
+  const baseTime    = isVowelType() ? BASE_TIME_VOWEL : BASE_TIME_CONSONANT;
+  const total       = (isVowelType() ? VOWELS : LETTERS).length;
   const accuracy    = correctCount / total; // 0〜1
   const speedFactor = 1 + Math.max(0, (baseTime - elapsedSeconds) / baseTime);
   return Math.round(accuracy * 100 * speedFactor);
@@ -381,7 +406,7 @@ function finishQuiz() {
   stopTimer();
   showResultScreen();
 
-  const data       = quizType === 'vowel' ? VOWELS : LETTERS;
+  const data       = isVowelType() ? VOWELS : LETTERS;
   const total      = data.length;
   const accuracy   = Math.round((correctCount / total) * 100);
   const finalScore = calcScore();
@@ -432,7 +457,9 @@ function shareToX() {
     score:     calcScore(),
   });
   const finalScore = calcScore();
-  const quizLabel = quizType === 'vowel' ? '母音記号16問' : 'ヘブライ文字28問';
+  const quizLabel = quizType === 'vowel' ? '母音記号（音）16問'
+                  : quizType === 'vowel-name' ? '母音記号（名前）16問'
+                  : 'ヘブライ文字28問';
   const text = [
     `🏆 ヘブライ語Alefbet道場 ${quizLabel}に挑戦！`,
     `スコア：${finalScore}点　タイム：${formatTime(elapsedSeconds)}`,
@@ -447,7 +474,7 @@ function shareToX() {
 // --- Event listeners ---
 function updateModeLabels() {
   const nameEl = document.querySelector('#mode-label-alpha .mode-option-name');
-  nameEl.textContent = quizType === 'vowel' ? '固定順' : 'アルファベット順';
+  nameEl.innerHTML = isVowelType() ? '固定順' : 'Alefbet順';
 }
 
 const typeRadios = document.querySelectorAll('input[name="quizType"]');
@@ -482,6 +509,12 @@ document.addEventListener('keydown', e => {
 });
 
 startBtn.addEventListener('click', startQuiz);
+
+document.getElementById('quiz-home-btn').addEventListener('click', () => {
+  stopTimer();
+  buildFontOptions();
+  showStartScreen();
+});
 
 document.getElementById('line-btn').addEventListener('click', shareToLine);
 shareBtn.addEventListener('click', shareToX);

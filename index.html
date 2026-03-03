@@ -43,7 +43,7 @@
         <h1 class="start-title">ヘブライ語Alefbet道場</h1>
         <p class="start-subtitle">旧約聖書を原典で読むための第一歩</p>
         <p class="feature-badges">
-          <span class="feature-badge">全44問</span>
+          <span class="feature-badge">全60問</span>
           <span class="badge-sep">×</span>
           <span class="feature-badge">択一クイズ</span>
           <span class="badge-sep">×</span>
@@ -51,27 +51,34 @@
         </p>
 
         <div class="type-section">
-          <div class="type-section-title">クイズ内容</div>
+          <div class="type-section-title">練習内容</div>
           <div class="type-options">
             <label class="type-option" id="type-label-consonant">
               <input type="radio" name="quizType" value="consonant">
               <div class="type-option-text">
-                <span class="type-option-name">ヘブライ文字</span>
-                <span class="type-option-sub">字形 → 名前（28問）</span>
+                <span class="type-option-name">ヘブライ文字｜字形 → 名前</span>
+                <span class="type-option-count">28問</span>
               </div>
             </label>
             <label class="type-option" id="type-label-vowel">
               <input type="radio" name="quizType" value="vowel">
               <div class="type-option-text">
-                <span class="type-option-name">母音記号</span>
-                <span class="type-option-sub">記号 → 音（16問）</span>
+                <span class="type-option-name">母音記号｜記号 → 音</span>
+                <span class="type-option-count">16問</span>
+              </div>
+            </label>
+            <label class="type-option" id="type-label-vowel-name">
+              <input type="radio" name="quizType" value="vowel-name">
+              <div class="type-option-text">
+                <span class="type-option-name">母音記号｜記号 → 名前</span>
+                <span class="type-option-count">16問</span>
               </div>
             </label>
           </div>
         </div>
 
         <div class="mode-section" id="mode-section">
-          <div class="mode-section-title">出題モード</div>
+          <div class="mode-section-title">出題順</div>
           <div class="mode-options">
             <label class="mode-option" id="mode-label-random">
               <input type="radio" name="mode" value="random">
@@ -82,14 +89,14 @@
             <label class="mode-option" id="mode-label-alpha">
               <input type="radio" name="mode" value="alpha">
               <div class="mode-option-text">
-                <span class="mode-option-name">固定順</span>
+                <span class="mode-option-name">Alefbet順</span>
               </div>
             </label>
           </div>
         </div>
 
         <div class="font-section">
-          <div class="font-section-title">オプション：フォントを選択</div>
+          <div class="font-section-title">フォント（任意）</div>
           <div class="font-options" id="font-options">
             <!-- populated by JS -->
           </div>
@@ -117,17 +124,17 @@
     <!-- Quiz Screen -->
     <div id="quiz-screen" class="hidden">
       <header class="header">
-        <h1 class="title">ヘブライ語Alefbet道場</h1>
-        <div class="header-right">
-          <div class="timer" id="timer">0:00</div>
-        </div>
+        <button class="quiz-back-link" id="quiz-home-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>ヘブライ語Alefbet道場</button>
       </header>
 
       <main class="card">
         <div class="progress-bar-wrap">
           <div class="progress-bar" id="progress-bar"></div>
         </div>
-        <div class="progress-text" id="progress-text">1 / 27</div>
+        <div class="progress-info">
+          <div class="progress-text" id="progress-text">1 / 28問</div>
+          <div class="timer" id="timer">0:00</div>
+        </div>
 
         <div class="letter-display" dir="rtl" id="letter-display">א</div>
 
@@ -166,8 +173,8 @@
         <div class="result-message" id="result-message"></div>
 
         <div class="result-buttons">
+          <button class="home-btn" id="home-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>トップ</button>
           <button class="retry-btn" id="retry-btn">もう一度</button>
-          <button class="home-btn" id="home-btn">トップへ</button>
         </div>
 
         <div class="share-section">
