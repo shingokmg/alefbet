@@ -66,7 +66,8 @@ const STORAGE_KEY_TYPE = 'hebrew-quiz-type';
 const PREVIEW_CHAR = 'שׁלום'; // preview word shown on start screen (שׁ = shin with shin dot)
 
 // --- State ---
-let shuffledOrder = [];
+let shuffledOrder    = [];
+let incorrectIndices = [];
 let currentIndex  = 0;
 let correctCount   = 0;
 let incorrectCount = 0;
@@ -226,10 +227,11 @@ function startQuiz() {
   const data    = isVowelType() ? VOWELS : LETTERS;
   const indices = data.map((_, i) => i);
   shuffledOrder = selectedMode === 'alpha' ? indices : shuffle(indices);
-  currentIndex   = 0;
-  correctCount   = 0;
-  incorrectCount = 0;
-  answered       = false;
+  currentIndex     = 0;
+  correctCount     = 0;
+  incorrectCount   = 0;
+  incorrectIndices = [];
+  answered         = false;
 
   applyFont(selectedFont);
   showQuizScreen();
@@ -241,6 +243,20 @@ function startQuiz() {
     mode:      selectedMode,
     font:      selectedFont,
   });
+}
+
+function startWrongOnlyQuiz() {
+  shuffledOrder    = shuffle([...incorrectIndices]);
+  currentIndex     = 0;
+  correctCount     = 0;
+  incorrectCount   = 0;
+  incorrectIndices = [];
+  answered         = false;
+
+  applyFont(selectedFont);
+  showQuizScreen();
+  startTimer();
+  showQuestion();
 }
 
 function showQuestion() {
@@ -340,6 +356,7 @@ function handleAnswer(btn) {
       answered = true;
       btn.classList.add('wrong');
       incorrectCount++;
+      incorrectIndices.push(shuffledOrder[currentIndex]);
       choiceBtns.forEach(b => {
         if (b.dataset.correct === 'true') b.classList.add('correct');
         b.disabled = true;
@@ -374,6 +391,7 @@ function handleAnswer(btn) {
   } else {
     btn.classList.add('wrong');
     incorrectCount++;
+    incorrectIndices.push(shuffledOrder[currentIndex]);
     choiceBtns.forEach(b => {
       if (b.dataset.correct === 'true') b.classList.add('correct');
     });
@@ -390,9 +408,8 @@ function handleAnswer(btn) {
 }
 
 function nextQuestion() {
-  const data = isVowelType() ? VOWELS : LETTERS;
   currentIndex++;
-  if (currentIndex >= data.length) {
+  if (currentIndex >= shuffledOrder.length) {
     finishQuiz();
   } else {
     showQuestion();
@@ -400,9 +417,8 @@ function nextQuestion() {
 }
 
 function updateProgressDisplay() {
-  const data        = isVowelType() ? VOWELS : LETTERS;
   const questionNum = currentIndex + 1;
-  const total       = data.length;
+  const total       = shuffledOrder.length;
   progressBar.style.width = `${((questionNum - 1) / total) * 100}%`;
   progressText.innerHTML =
     `${questionNum} / ${total}問` +
@@ -414,9 +430,12 @@ function finishQuiz() {
   stopTimer();
   showResultScreen();
 
-  const data     = isVowelType() ? VOWELS : LETTERS;
-  const total    = data.length;
+  const total    = shuffledOrder.length;
   const accuracy = Math.round((correctCount / total) * 100);
+
+  retryBtn.textContent = incorrectCount > 0
+    ? `${incorrectCount}問 復習する`
+    : 'もう一度';
 
   resultScore.innerHTML = `${accuracy}<span class="result-unit">%</span>`;
   resultTime.textContent  = formatTime(elapsedSeconds);
@@ -510,7 +529,7 @@ choiceBtns.forEach(btn => {
 nextBtn.addEventListener('click', nextQuestion);
 
 document.addEventListener('keydown', e => {
-  if (e.key !== 'a') return;
+  if (e.key !== 'x') return;
   if (answered || quizScreen.classList.contains('hidden')) return;
   const correctBtn = [...choiceBtns].find(b => b.dataset.correct === 'true' && !b.disabled);
   if (correctBtn) handleAnswer(correctBtn);
@@ -527,13 +546,18 @@ document.getElementById('quiz-home-btn').addEventListener('click', () => {
 document.getElementById('line-btn').addEventListener('click', shareToLine);
 shareBtn.addEventListener('click', shareToX);
 retryBtn.addEventListener('click', () => {
-  const data = isVowelType() ? VOWELS : LETTERS;
   gtag('event', 'retry', {
-    quiz_type:          quizType,
-    previous_accuracy:  Math.round((correctCount / data.length) * 100),
+    quiz_type:         quizType,
+    previous_accuracy: Math.round((correctCount / shuffledOrder.length) * 100),
+    wrong_only:        incorrectIndices.length > 0,
   });
-  startQuiz();
+  if (incorrectIndices.length > 0) {
+    startWrongOnlyQuiz();
+  } else {
+    startQuiz();
+  }
 });
+
 
 document.querySelector('.book-title-link').addEventListener('click', () => {
   gtag('event', 'book_click', {

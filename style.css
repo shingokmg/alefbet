@@ -783,6 +783,7 @@ body {
   background: #e2e8f0;
 }
 
+
 .retry-btn, .home-btn {
   font-size: 1rem;
   font-weight: 600;
@@ -800,9 +801,6 @@ body {
 }
 
 .home-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
   background: #e2e8f0;
   color: #4a5568;
 }
