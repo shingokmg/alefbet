@@ -497,13 +497,17 @@ function shareToX() {
     quiz_type: quizType,
     accuracy:  accuracy,
   });
-  const quizLabel = quizType === 'vowel'             ? '母音記号（音）16問'
-                  : quizType === 'vowel-name'        ? '母音記号（名前）16問'
-                  : quizType === 'consonant-reverse' ? 'ヘブライ文字（逆）28問'
-                  : 'ヘブライ文字28問';
+  const quizLabel = isVowelType() ? '母音記号の正答率' : 'ヘブライ文字の正答率';
+  const sharePrefixes = [
+    '難読すぎる',
+    '知る人ぞ知る',
+    '3000年前の',
+    '超難解',
+  ];
+  const prefix = sharePrefixes[Math.floor(Math.random() * sharePrefixes.length)];
   const text = [
-    `🏆 ヘブライ語Alefbet道場 ${quizLabel}に挑戦！`,
-    `正答率：${accuracy}%　タイム：${formatTime(elapsedSeconds)}`,
+    `${prefix}ヘブライ語に挑戦中✨`,
+    `${quizLabel}${accuracy}% / ${formatTime(elapsedSeconds)}`,
     `#Alefbet道場 ${APP_URL}`,
   ].join('\n');
 
