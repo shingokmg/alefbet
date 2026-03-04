@@ -678,10 +678,50 @@ choiceBtns.forEach(btn => {
 nextBtn.addEventListener('click', nextQuestion);
 
 document.addEventListener('keydown', e => {
-  if (e.key !== 'x') return;
-  if (answered || quizScreen.classList.contains('hidden')) return;
-  const correctBtn = [...choiceBtns].find(b => b.dataset.correct === 'true' && !b.disabled);
-  if (correctBtn) handleAnswer(correctBtn);
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.target.closest('a, button, input')) return;
+
+  if (e.key === 'Enter') {
+    // Start screen
+    if (!startScreen.classList.contains('hidden')) {
+      e.preventDefault();
+      startBtn.click();
+      return;
+    }
+    // Quiz screen: next question
+    if (!quizScreen.classList.contains('hidden') && !nextWrap.classList.contains('hidden')) {
+      e.preventDefault();
+      nextQuestion();
+      return;
+    }
+    // Result screen: retry
+    if (!resultScreen.classList.contains('hidden')) {
+      e.preventDefault();
+      retryBtn.click();
+      return;
+    }
+  }
+
+  // Quiz screen only from here
+  if (quizScreen.classList.contains('hidden')) return;
+
+  // Cheat key
+  if (e.key === 'x') {
+    if (answered) return;
+    const correctBtn = [...choiceBtns].find(b => b.dataset.correct === 'true' && !b.disabled);
+    if (correctBtn) handleAnswer(correctBtn);
+    return;
+  }
+
+  // Number keys: select choice
+  const num = parseInt(e.key, 10);
+  if (num >= 1 && num <= 7) {
+    const btn = choiceBtns[num - 1];
+    if (btn && !btn.classList.contains('hidden') && !btn.disabled && !answered) {
+      e.preventDefault();
+      handleAnswer(btn);
+    }
+  }
 });
 
 startBtn.addEventListener('click', startQuiz);
