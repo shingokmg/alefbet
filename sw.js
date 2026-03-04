@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alefbet-v2';
+const CACHE_NAME = 'alefbet-v3';
 const ASSETS = [
   '/',
   '/index.html',
@@ -15,6 +15,11 @@ const ASSETS = [
   '/images/apple-touch-icon.png',
   '/images/favicon-32x32.png',
   '/images/favicon-16x16.png',
+  '/en/',
+  '/en/index.html',
+  '/en/alefbet.html',
+  '/en/terms.html',
+  '/en/privacy.html',
 ];
 
 self.addEventListener('install', event => {

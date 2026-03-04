@@ -415,7 +415,7 @@ body {
 
 .alefbet-link {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 0.4rem;
   margin-top: 1.5rem;
@@ -424,6 +424,11 @@ body {
   color: #17B890;
   text-decoration: none;
   transition: color 0.15s;
+}
+
+.alefbet-link svg {
+  flex-shrink: 0;
+  margin-top: 0.1em;
 }
 
 .alefbet-link:hover {
@@ -803,6 +808,10 @@ body {
   background: #000;
 }
 
+.share-btn-native {
+  background: #17B890;
+}
+
 @media (max-width: 480px) {
   .share-btn-line span {
     display: none;
@@ -940,6 +949,7 @@ body {
 
   .start-title {
     font-size: 1.55rem;
+    margin-top: 1.5rem;
   }
 
   .result-stats {
@@ -984,3 +994,27 @@ body {
   top: 1rem;
   right: 1rem;
 }
+
+/* ================================
+   Language Toggle
+================================ */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.lang-toggle-btn {
+  color: var(--text-sub);
+  text-decoration: none;
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+
+.lang-toggle-btn:hover { color: #17B890; }
+.lang-toggle-btn--active { color: #17B890; }
+.lang-toggle-sep { color: var(--border-mid); }

@@ -1,47 +1,40 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ヘブライ語Alefbet道場</title>
-  <meta name="description" content="ヘブライ文字（アレフベット）と母音記号（ニクド）を無料で学べるWebクイズアプリ。ヘブライ文字・母音記号をタイムアタック形式で練習。旧約聖書を原典で読みたい方に最適。">
+  <title>Hebrew Alefbet Dojo</title>
+  <meta name="description" content="Learn the Biblical Hebrew alphabet through timed multiple-choice quizzes. Practice Hebrew letters and vowel marks for free — no registration required.">
   <!-- OGP -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://alefbet.jp">
-  <meta property="og:site_name"   content="ヘブライ語Alefbet道場">
-  <meta property="og:title"       content="ヘブライ語Alefbet道場">
-  <meta property="og:description" content="ヘブライ文字（アレフベット）と母音記号（ニクド）を無料で学べるWebクイズアプリ。ヘブライ文字・母音記号をタイムアタック形式で練習。旧約聖書を原典で読みたい方に最適。">
-  <meta property="og:image"       content="https://alefbet.jp/images/ogp.png">
+  <meta property="og:url"         content="https://alefbet.jp/en/">
+  <meta property="og:site_name"   content="Hebrew Alefbet Dojo">
+  <meta property="og:title"       content="Hebrew Alefbet Dojo">
+  <meta property="og:description" content="Learn the Biblical Hebrew alphabet through timed multiple-choice quizzes. Practice Hebrew letters and vowel marks for free — no registration required.">
   <!-- Twitter Card -->
-  <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="ヘブライ語Alefbet道場">
-  <meta name="twitter:description" content="ヘブライ文字（アレフベット）と母音記号（ニクド）を無料で学べるWebクイズアプリ。ヘブライ文字・母音記号をタイムアタック形式で練習。旧約聖書を原典で読みたい方に最適。">
-  <meta name="twitter:image"       content="https://alefbet.jp/images/ogp.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Cardo:wght@400;700&family=Heebo:wght@400;700&family=Assistant:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-  <script>
-    (function() {
-      var s = localStorage.getItem('alefbet-lang');
-      if (s === 'en') { location.replace('en/index.html'); return; }
-      if (!s && navigator.language && navigator.language.toLowerCase().startsWith('en')) {
-        location.replace('en/index.html');
-      }
-    })();
-    if(localStorage.getItem('hebrew-quiz-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');
-  </script>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#17B890">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Alefbet道場">
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="Hebrew Alefbet Dojo">
+  <meta name="twitter:description" content="Learn the Biblical Hebrew alphabet through timed multiple-choice quizzes. Free, no registration required.">
   <link rel="alternate" hreflang="ja" href="https://alefbet.jp/">
   <link rel="alternate" hreflang="en" href="https://alefbet.jp/en/">
   <link rel="alternate" hreflang="x-default" href="https://alefbet.jp/">
-  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Cardo:wght@400;700&family=Heebo:wght@400;700&family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+  <script>
+    localStorage.setItem('alefbet-lang', 'en');
+    if (localStorage.getItem('hebrew-quiz-theme') === 'dark')
+      document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#17B890">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Alefbet Dojo">
+  <link rel="stylesheet" href="../style.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NCHCEQQXT"></script>
   <script>
@@ -59,104 +52,104 @@
     <div id="start-screen">
       <div class="start-card">
         <div class="lang-toggle" style="position:absolute;top:1rem;left:1rem;">
-          <span class="lang-toggle-btn lang-toggle-btn--active">JA</span>
+          <a class="lang-toggle-btn" href="../index.html" data-lang-link="ja">JA</a>
           <span class="lang-toggle-sep">|</span>
-          <a class="lang-toggle-btn" href="en/index.html" data-lang-link="en">EN</a>
+          <span class="lang-toggle-btn lang-toggle-btn--active">EN</span>
         </div>
-        <button class="theme-toggle" id="theme-toggle" aria-label="ダークモード切替">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
           <svg class="theme-icon theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           <svg class="theme-icon theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
         </button>
-        <h1 class="start-title">ヘブライ語Alefbet道場</h1>
-        <p class="start-subtitle">旧約聖書を原典で読むための第一歩</p>
+        <h1 class="start-title">Hebrew Alefbet Dojo</h1>
+        <p class="start-subtitle">Learn the Biblical Hebrew Alphabet</p>
         <p class="feature-badges">
-          <span class="feature-badge">全88問のクイズ</span>
-          <span class="badge-sep">×</span>
-          <span class="feature-badge">タイムアタック</span>
+          <span class="feature-badge">88 Questions</span>
+          <span class="badge-sep">·</span>
+          <span class="feature-badge">Beat the Clock</span>
         </p>
 
         <div class="type-section">
-          <div class="type-section-title">練習内容</div>
+          <div class="type-section-title">Quiz Mode</div>
           <div class="type-options">
             <label class="type-option" id="type-label-consonant">
               <input type="radio" name="quizType" value="consonant">
               <div class="type-option-text">
-                <span class="type-option-name">ヘブライ文字｜字形 → 名前</span>
-                <span class="type-option-count">28問</span>
+                <span class="type-option-name">Hebrew Letters · Name the Letter</span>
+                <span class="type-option-count">28</span>
               </div>
             </label>
             <label class="type-option" id="type-label-consonant-reverse">
               <input type="radio" name="quizType" value="consonant-reverse">
               <div class="type-option-text">
-                <span class="type-option-name">ヘブライ文字｜名前 → 字形</span>
-                <span class="type-option-count">28問</span>
+                <span class="type-option-name">Hebrew Letters · Find the Letter</span>
+                <span class="type-option-count">28</span>
               </div>
             </label>
             <label class="type-option" id="type-label-vowel">
               <input type="radio" name="quizType" value="vowel">
               <div class="type-option-text">
-                <span class="type-option-name">母音記号｜記号 → 音</span>
-                <span class="type-option-count">16問</span>
+                <span class="type-option-name">Vowel Marks · Name the Sound</span>
+                <span class="type-option-count">16</span>
               </div>
             </label>
             <label class="type-option" id="type-label-vowel-name">
               <input type="radio" name="quizType" value="vowel-name">
               <div class="type-option-text">
-                <span class="type-option-name">母音記号｜記号 → 名前</span>
-                <span class="type-option-count">16問</span>
+                <span class="type-option-name">Vowel Marks · Name the Vowel</span>
+                <span class="type-option-count">16</span>
               </div>
             </label>
           </div>
         </div>
 
         <div class="mode-section" id="mode-section">
-          <div class="mode-section-title">出題順</div>
+          <div class="mode-section-title">Order</div>
           <div class="mode-options">
             <label class="mode-option" id="mode-label-random">
               <input type="radio" name="mode" value="random">
               <div class="mode-option-text">
-                <span class="mode-option-name">ランダム</span>
+                <span class="mode-option-name">Random</span>
               </div>
             </label>
             <label class="mode-option" id="mode-label-alpha">
               <input type="radio" name="mode" value="alpha">
               <div class="mode-option-text">
-                <span class="mode-option-name">Alefbet順</span>
+                <span class="mode-option-name">In Order</span>
               </div>
             </label>
           </div>
         </div>
 
         <div class="font-section">
-          <div class="font-section-title">フォント（任意）</div>
+          <div class="font-section-title">Font (optional)</div>
           <div class="font-options" id="font-options">
             <!-- populated by JS -->
           </div>
         </div>
 
-        <button class="start-btn" id="start-btn">スタート</button>
+        <button class="start-btn" id="start-btn">Start</button>
 
-        <a class="alefbet-link" href="alefbet.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>クイズの前に文字と母音記号を確認する</a>
+        <a class="alefbet-link" href="alefbet.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Review letters &amp; vowels before quizzing</a>
 
         <hr class="start-divider">
 
         <footer class="start-footer">
           <div class="footer-links">
-            <a class="footer-link" href="https://forms.gle/7a6h6GPcLpNYBN1i8" target="_blank" rel="noopener noreferrer">お問い合わせ</a>
+            <a class="footer-link" href="https://forms.gle/7a6h6GPcLpNYBN1i8" target="_blank" rel="noopener noreferrer">Contact</a>
             <span class="footer-sep">|</span>
-            <a class="footer-link" href="terms.html">利用規約</a>
+            <a class="footer-link" href="terms.html">Terms</a>
             <span class="footer-sep">|</span>
-            <a class="footer-link" href="privacy.html">プライバシーポリシー</a>
+            <a class="footer-link" href="privacy.html">Privacy Policy</a>
           </div>
           <div class="footer-copy">© 2026 Shingo Kumagai</div>
         </footer>
       </div>
     </div>
 
-    <!-- Quiz Screen -->
+    <!--uiz Screen -->
     <div id="quiz-screen" class="hidden">
       <header class="header">
-        <button class="quiz-back-link" id="quiz-home-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>ヘブライ語Alefbet道場</button>
+        <button class="quiz-back-link" id="quiz-home-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Hebrew Alefbet Dojo</button>
       </header>
 
       <div class="card">
@@ -164,7 +157,7 @@
           <div class="progress-bar" id="progress-bar"></div>
         </div>
         <div class="progress-info">
-          <div class="progress-text" id="progress-text">1 / 28問</div>
+          <div class="progress-text" id="progress-text">1 / 28</div>
           <div class="timer" id="timer">0:00</div>
         </div>
 
@@ -181,7 +174,7 @@
         </div>
 
         <div class="next-wrap hidden" id="next-wrap">
-          <button class="next-btn" id="next-btn">次の問題</button>
+          <button class="next-btn" id="next-btn">Next</button>
         </div>
       </div>
     </div>
@@ -189,15 +182,15 @@
     <!-- Result Screen -->
     <div id="result-screen" class="hidden">
       <div class="result-card">
-        <h2 class="result-title">クイズ終了！</h2>
+        <h2 class="result-title">Quiz Complete!</h2>
 
         <div class="result-stats">
           <div class="result-stat">
-            <div class="result-stat-label">正答率</div>
+            <div class="result-stat-label">Accuracy</div>
             <div class="result-stat-value" id="result-score"></div>
           </div>
           <div class="result-stat">
-            <div class="result-stat-label">タイム</div>
+            <div class="result-stat-label">Time</div>
             <div class="result-stat-value" id="result-time"></div>
           </div>
         </div>
@@ -206,37 +199,45 @@
         <div class="result-message" id="result-message"></div>
 
         <div class="result-buttons">
-          <button class="home-btn" id="home-btn"><span class="home-btn-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>トップ</button>
-          <button class="retry-btn" id="retry-btn">もう一度</button>
+          <button class="home-btn" id="home-btn"><span class="home-btn-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Home</button>
+          <button class="retry-btn" id="retry-btn">Try Again</button>
         </div>
 
         <div class="share-section">
-          <div class="share-section-label">シェア</div>
+          <div class="share-section-label">Share</div>
           <div class="share-buttons">
+            <!-- LINE share hidden for EN
             <button class="share-btn share-btn-line" id="line-btn">
               <svg class="line-logo" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
-              <span>LINEで紹介</span>
+              <span>Share on LINE</span>
+            </button>
+            -->
+            <button class="share-btn share-btn-native hidden" id="web-share-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              <span>Share</span>
             </button>
             <button class="share-btn share-btn-x" id="share-btn">
               <svg class="x-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.738-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              <span>Xでシェア</span>
+              <span>Share on X</span>
             </button>
           </div>
         </div>
 
+        <!-- book-section hidden
         <div class="book-section">
-          <a class="book-title-link" href="https://amzn.to/4aT2Mk1" target="_blank" rel="noopener noreferrer"><span class="book-title-main">📖 超入門ヘブル語のススメ<span class="book-title-sub"> 聖書を原語で読もう</span></span></a>
-          <div class="book-author-text">城倉啓 著・いのちのことば社・2024　<span class="book-pr">PR</span></div>
+          <a class="book-title-link" href="https://amzn.to/4aT2Mk1" target="_blank" rel="noopener noreferrer"><span class="book-title-main">📖 An Introduction to Biblical Hebrew<span class="book-title-sub"> (Seow)</span></span></a>
+          <div class="book-author-text">C. L. Seow · Westminster John Knox Press　<span class="book-pr">AD</span></div>
         </div>
+        -->
       </div>
     </div>
 
   </main>
 
-  <script src="app.js"></script>
+  <script src="../app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
+      navigator.serviceWorker.register('../sw.js');
     }
   </script>
 </body>
