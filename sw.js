@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alefbet-v3';
+const CACHE_NAME = 'alefbet-v4';
 const ASSETS = [
   '/',
   '/index.html',
@@ -6,9 +6,11 @@ const ASSETS = [
   '/style.css',
   '/alefbet.html',
   '/alefbet.css',
+  '/about.html',
+  '/contact.html',
   '/terms.html',
   '/privacy.html',
-  '/legal.css',
+  '/subpage.css',
   '/manifest.json',
   '/images/android-chrome-192x192.png',
   '/images/android-chrome-512x512.png',
@@ -18,6 +20,8 @@ const ASSETS = [
   '/en/',
   '/en/index.html',
   '/en/alefbet.html',
+  '/en/about.html',
+  '/en/contact.html',
   '/en/terms.html',
   '/en/privacy.html',
 ];
