@@ -19,8 +19,9 @@ const STRINGS = {
     modeAlphaVowel:   '固定順',
     lineText:         `ヘブライ語Alefbet道場\n旧約聖書を原典で読むための第一歩\n`,
     sharePrefix:      ['難読すぎる', '知る人ぞ知る', '3000年前の', '超難解'],
-    shareLabelVowel:  '母音記号の正答率',
-    shareLabelLetter: 'ヘブライ文字の正答率',
+    shareLabelVowel:    '母音記号の正答率',
+    shareLabelLetter:   'ヘブライ文字の正答率',
+    shareLabelSyllable: '音節の正答率',
     shareChallenge:   'ヘブライ語に挑戦中✨',
     shareHashtag:     '#Alefbet道場',
     correctMark:      '○',
@@ -41,8 +42,9 @@ const STRINGS = {
     modeAlphaVowel:   'In Order',
     lineText:         `Hebrew Alefbet Dojo\nYour first step to reading the OT in Hebrew\n`,
     sharePrefix:      ['Ancient script', 'Right-to-left', '3,000-year-old', 'Hardest alphabet'],
-    shareLabelVowel:  'Vowel accuracy: ',
-    shareLabelLetter: 'Hebrew letter accuracy: ',
+    shareLabelVowel:    'Vowel accuracy: ',
+    shareLabelLetter:   'Hebrew letter accuracy: ',
+    shareLabelSyllable: 'Syllable accuracy: ',
     shareChallenge:   'Studying Hebrew✨',
     shareHashtag:     '#AlefbetDojo',
     correctMark:      '✓',
@@ -107,6 +109,399 @@ const VOWEL_SOUND_LABELS = LANG === 'en'
   ? ['a', 'i', 'u', 'e', 'o', 'ə', 'silent']
   : VOWEL_SOUNDS;
 
+// 389 syllables: consonant × vowel mark combinations (including begadkephat dagesh variants)
+const SYLLABLES = [
+  { display: 'אַ', romanized: 'ʾa' },
+  { display: 'אִ', romanized: 'ʾi' },
+  { display: 'אֻ', romanized: 'ʾu' },
+  { display: 'אֶ', romanized: 'ʾe' },
+  { display: 'אָ', romanized: 'ʾā/o' },
+  { display: 'אֵ', romanized: 'ʾē' },
+  { display: 'אֹ', romanized: 'ʾō' },
+  { display: 'אְ', romanized: 'ʾə/–' },
+  { display: 'אֲ', romanized: 'ʾă' },
+  { display: 'אֱ', romanized: 'ʾĕ' },
+  { display: 'אֳ', romanized: 'ʾŏ' },
+  { display: 'אָה', romanized: 'ʾâ' },
+  { display: 'אִי', romanized: 'ʾî' },
+  { display: 'אוּ', romanized: 'ʾû' },
+  { display: 'אֵי', romanized: 'ʾê' },
+  { display: 'אוֹ', romanized: 'ʾô' },
+  { display: 'בַ', romanized: 'va' },
+  { display: 'בַּ', romanized: 'ba' },
+  { display: 'בִ', romanized: 'vi' },
+  { display: 'בִּ', romanized: 'bi' },
+  { display: 'בֻ', romanized: 'vu' },
+  { display: 'בֻּ', romanized: 'bu' },
+  { display: 'בֶ', romanized: 've' },
+  { display: 'בֶּ', romanized: 'be' },
+  { display: 'בָ', romanized: 'vā/o' },
+  { display: 'בָּ', romanized: 'bā/o' },
+  { display: 'בֵ', romanized: 'vē' },
+  { display: 'בֵּ', romanized: 'bē' },
+  { display: 'בֹ', romanized: 'vō' },
+  { display: 'בֹּ', romanized: 'bō' },
+  { display: 'בְ', romanized: 'və/–' },
+  { display: 'בְּ', romanized: 'bə/–' },
+  { display: 'בָה', romanized: 'vâ' },
+  { display: 'בָּה', romanized: 'bâ' },
+  { display: 'בִי', romanized: 'vî' },
+  { display: 'בִּי', romanized: 'bî' },
+  { display: 'בוּ', romanized: 'vû' },
+  { display: 'בּוּ', romanized: 'bû' },
+  { display: 'בֵי', romanized: 'vê' },
+  { display: 'בֵּי', romanized: 'bê' },
+  { display: 'בוֹ', romanized: 'vô' },
+  { display: 'בּוֹ', romanized: 'bô' },
+  { display: 'גַ', romanized: 'gha' },
+  { display: 'גַּ', romanized: 'ga' },
+  { display: 'גִ', romanized: 'ghi' },
+  { display: 'גִּ', romanized: 'gi' },
+  { display: 'גֻ', romanized: 'ghu' },
+  { display: 'גֻּ', romanized: 'gu' },
+  { display: 'גֶ', romanized: 'ghe' },
+  { display: 'גֶּ', romanized: 'ge' },
+  { display: 'גָ', romanized: 'ghā/o' },
+  { display: 'גָּ', romanized: 'gā/o' },
+  { display: 'גֵ', romanized: 'ghē' },
+  { display: 'גֵּ', romanized: 'gē' },
+  { display: 'גֹ', romanized: 'ghō' },
+  { display: 'גֹּ', romanized: 'gō' },
+  { display: 'גְ', romanized: 'ghə/–' },
+  { display: 'גְּ', romanized: 'gə/–' },
+  { display: 'גָה', romanized: 'ghâ' },
+  { display: 'גָּה', romanized: 'gâ' },
+  { display: 'גִי', romanized: 'ghî' },
+  { display: 'גִּי', romanized: 'gî' },
+  { display: 'גוּ', romanized: 'ghû' },
+  { display: 'גּוּ', romanized: 'gû' },
+  { display: 'גֵי', romanized: 'ghê' },
+  { display: 'גֵּי', romanized: 'gê' },
+  { display: 'גוֹ', romanized: 'ghô' },
+  { display: 'גּוֹ', romanized: 'gô' },
+  { display: 'דַ', romanized: 'dha' },
+  { display: 'דַּ', romanized: 'da' },
+  { display: 'דִ', romanized: 'dhi' },
+  { display: 'דִּ', romanized: 'di' },
+  { display: 'דֻ', romanized: 'dhu' },
+  { display: 'דֻּ', romanized: 'du' },
+  { display: 'דֶ', romanized: 'dhe' },
+  { display: 'דֶּ', romanized: 'de' },
+  { display: 'דָ', romanized: 'dhā/o' },
+  { display: 'דָּ', romanized: 'dā/o' },
+  { display: 'דֵ', romanized: 'dhē' },
+  { display: 'דֵּ', romanized: 'dē' },
+  { display: 'דֹ', romanized: 'dhō' },
+  { display: 'דֹּ', romanized: 'dō' },
+  { display: 'דְ', romanized: 'dhə/–' },
+  { display: 'דְּ', romanized: 'də/–' },
+  { display: 'דָה', romanized: 'dhâ' },
+  { display: 'דָּה', romanized: 'dâ' },
+  { display: 'דִי', romanized: 'dhî' },
+  { display: 'דִּי', romanized: 'dî' },
+  { display: 'דוּ', romanized: 'dhû' },
+  { display: 'דּוּ', romanized: 'dû' },
+  { display: 'דֵי', romanized: 'dhê' },
+  { display: 'דֵּי', romanized: 'dê' },
+  { display: 'דוֹ', romanized: 'dhô' },
+  { display: 'דּוֹ', romanized: 'dô' },
+  { display: 'הַ', romanized: 'ha' },
+  { display: 'הִ', romanized: 'hi' },
+  { display: 'הֻ', romanized: 'hu' },
+  { display: 'הֶ', romanized: 'he' },
+  { display: 'הָ', romanized: 'hā/o' },
+  { display: 'הֵ', romanized: 'hē' },
+  { display: 'הֹ', romanized: 'hō' },
+  { display: 'הְ', romanized: 'hə/–' },
+  { display: 'הֲ', romanized: 'hă' },
+  { display: 'הֱ', romanized: 'hĕ' },
+  { display: 'הֳ', romanized: 'hŏ' },
+  { display: 'הָה', romanized: 'hâ' },
+  { display: 'הִי', romanized: 'hî' },
+  { display: 'הוּ', romanized: 'hû' },
+  { display: 'הֵי', romanized: 'hê' },
+  { display: 'הוֹ', romanized: 'hô' },
+  { display: 'וַ', romanized: 'wa' },
+  { display: 'וִ', romanized: 'wi' },
+  { display: 'וֻ', romanized: 'wu' },
+  { display: 'וֶ', romanized: 'we' },
+  { display: 'וָ', romanized: 'wā/o' },
+  { display: 'וֵ', romanized: 'wē' },
+  { display: 'וֹ', romanized: 'wō' },
+  { display: 'וְ', romanized: 'wə/–' },
+  { display: 'וָה', romanized: 'wâ' },
+  { display: 'וִי', romanized: 'wî' },
+  { display: 'ווּ', romanized: 'wû' },
+  { display: 'וֵי', romanized: 'wê' },
+  { display: 'ווֹ', romanized: 'wô' },
+  { display: 'זַ', romanized: 'za' },
+  { display: 'זִ', romanized: 'zi' },
+  { display: 'זֻ', romanized: 'zu' },
+  { display: 'זֶ', romanized: 'ze' },
+  { display: 'זָ', romanized: 'zā/o' },
+  { display: 'זֵ', romanized: 'zē' },
+  { display: 'זֹ', romanized: 'zō' },
+  { display: 'זְ', romanized: 'zə/–' },
+  { display: 'זָה', romanized: 'zâ' },
+  { display: 'זִי', romanized: 'zî' },
+  { display: 'זוּ', romanized: 'zû' },
+  { display: 'זֵי', romanized: 'zê' },
+  { display: 'זוֹ', romanized: 'zô' },
+  { display: 'חַ', romanized: 'ḥa' },
+  { display: 'חִ', romanized: 'ḥi' },
+  { display: 'חֻ', romanized: 'ḥu' },
+  { display: 'חֶ', romanized: 'ḥe' },
+  { display: 'חָ', romanized: 'ḥā/o' },
+  { display: 'חֵ', romanized: 'ḥē' },
+  { display: 'חֹ', romanized: 'ḥō' },
+  { display: 'חְ', romanized: 'ḥə/–' },
+  { display: 'חֲ', romanized: 'ḥă' },
+  { display: 'חֱ', romanized: 'ḥĕ' },
+  { display: 'חֳ', romanized: 'ḥŏ' },
+  { display: 'חָה', romanized: 'ḥâ' },
+  { display: 'חִי', romanized: 'ḥî' },
+  { display: 'חוּ', romanized: 'ḥû' },
+  { display: 'חֵי', romanized: 'ḥê' },
+  { display: 'חוֹ', romanized: 'ḥô' },
+  { display: 'טַ', romanized: 'ṭa' },
+  { display: 'טִ', romanized: 'ṭi' },
+  { display: 'טֻ', romanized: 'ṭu' },
+  { display: 'טֶ', romanized: 'ṭe' },
+  { display: 'טָ', romanized: 'ṭā/o' },
+  { display: 'טֵ', romanized: 'ṭē' },
+  { display: 'טֹ', romanized: 'ṭō' },
+  { display: 'טְ', romanized: 'ṭə/–' },
+  { display: 'טָה', romanized: 'ṭâ' },
+  { display: 'טִי', romanized: 'ṭî' },
+  { display: 'טוּ', romanized: 'ṭû' },
+  { display: 'טֵי', romanized: 'ṭê' },
+  { display: 'טוֹ', romanized: 'ṭô' },
+  { display: 'יַ', romanized: 'ya' },
+  { display: 'יִ', romanized: 'yi' },
+  { display: 'יֻ', romanized: 'yu' },
+  { display: 'יֶ', romanized: 'ye' },
+  { display: 'יָ', romanized: 'yā/o' },
+  { display: 'יֵ', romanized: 'yē' },
+  { display: 'יֹ', romanized: 'yō' },
+  { display: 'יְ', romanized: 'yə/–' },
+  { display: 'יָה', romanized: 'yâ' },
+  { display: 'יִי', romanized: 'yî' },
+  { display: 'יוּ', romanized: 'yû' },
+  { display: 'יֵי', romanized: 'yê' },
+  { display: 'יוֹ', romanized: 'yô' },
+  { display: 'כַ', romanized: 'kha' },
+  { display: 'כַּ', romanized: 'ka' },
+  { display: 'כִ', romanized: 'khi' },
+  { display: 'כִּ', romanized: 'ki' },
+  { display: 'כֻ', romanized: 'khu' },
+  { display: 'כֻּ', romanized: 'ku' },
+  { display: 'כֶ', romanized: 'khe' },
+  { display: 'כֶּ', romanized: 'ke' },
+  { display: 'כָ', romanized: 'khā/o' },
+  { display: 'כָּ', romanized: 'kā/o' },
+  { display: 'כֵ', romanized: 'khē' },
+  { display: 'כֵּ', romanized: 'kē' },
+  { display: 'כֹ', romanized: 'khō' },
+  { display: 'כֹּ', romanized: 'kō' },
+  { display: 'כְ', romanized: 'khə/–' },
+  { display: 'כְּ', romanized: 'kə/–' },
+  { display: 'כָה', romanized: 'khâ' },
+  { display: 'כָּה', romanized: 'kâ' },
+  { display: 'כִי', romanized: 'khî' },
+  { display: 'כִּי', romanized: 'kî' },
+  { display: 'כוּ', romanized: 'khû' },
+  { display: 'כּוּ', romanized: 'kû' },
+  { display: 'כֵי', romanized: 'khê' },
+  { display: 'כֵּי', romanized: 'kê' },
+  { display: 'כוֹ', romanized: 'khô' },
+  { display: 'כּוֹ', romanized: 'kô' },
+  { display: 'לַ', romanized: 'la' },
+  { display: 'לִ', romanized: 'li' },
+  { display: 'לֻ', romanized: 'lu' },
+  { display: 'לֶ', romanized: 'le' },
+  { display: 'לָ', romanized: 'lā/o' },
+  { display: 'לֵ', romanized: 'lē' },
+  { display: 'לֹ', romanized: 'lō' },
+  { display: 'לְ', romanized: 'lə/–' },
+  { display: 'לָה', romanized: 'lâ' },
+  { display: 'לִי', romanized: 'lî' },
+  { display: 'לוּ', romanized: 'lû' },
+  { display: 'לֵי', romanized: 'lê' },
+  { display: 'לוֹ', romanized: 'lô' },
+  { display: 'מַ', romanized: 'ma' },
+  { display: 'מִ', romanized: 'mi' },
+  { display: 'מֻ', romanized: 'mu' },
+  { display: 'מֶ', romanized: 'me' },
+  { display: 'מָ', romanized: 'mā/o' },
+  { display: 'מֵ', romanized: 'mē' },
+  { display: 'מֹ', romanized: 'mō' },
+  { display: 'מְ', romanized: 'mə/–' },
+  { display: 'מָה', romanized: 'mâ' },
+  { display: 'מִי', romanized: 'mî' },
+  { display: 'מוּ', romanized: 'mû' },
+  { display: 'מֵי', romanized: 'mê' },
+  { display: 'מוֹ', romanized: 'mô' },
+  { display: 'נַ', romanized: 'na' },
+  { display: 'נִ', romanized: 'ni' },
+  { display: 'נֻ', romanized: 'nu' },
+  { display: 'נֶ', romanized: 'ne' },
+  { display: 'נָ', romanized: 'nā/o' },
+  { display: 'נֵ', romanized: 'nē' },
+  { display: 'נֹ', romanized: 'nō' },
+  { display: 'נְ', romanized: 'nə/–' },
+  { display: 'נָה', romanized: 'nâ' },
+  { display: 'נִי', romanized: 'nî' },
+  { display: 'נוּ', romanized: 'nû' },
+  { display: 'נֵי', romanized: 'nê' },
+  { display: 'נוֹ', romanized: 'nô' },
+  { display: 'סַ', romanized: 'sa' },
+  { display: 'סִ', romanized: 'si' },
+  { display: 'סֻ', romanized: 'su' },
+  { display: 'סֶ', romanized: 'se' },
+  { display: 'סָ', romanized: 'sā/o' },
+  { display: 'סֵ', romanized: 'sē' },
+  { display: 'סֹ', romanized: 'sō' },
+  { display: 'סְ', romanized: 'sə/–' },
+  { display: 'סָה', romanized: 'sâ' },
+  { display: 'סִי', romanized: 'sî' },
+  { display: 'סוּ', romanized: 'sû' },
+  { display: 'סֵי', romanized: 'sê' },
+  { display: 'סוֹ', romanized: 'sô' },
+  { display: 'עַ', romanized: 'ʿa' },
+  { display: 'עִ', romanized: 'ʿi' },
+  { display: 'עֻ', romanized: 'ʿu' },
+  { display: 'עֶ', romanized: 'ʿe' },
+  { display: 'עָ', romanized: 'ʿā/o' },
+  { display: 'עֵ', romanized: 'ʿē' },
+  { display: 'עֹ', romanized: 'ʿō' },
+  { display: 'עְ', romanized: 'ʿə/–' },
+  { display: 'עֲ', romanized: 'ʿă' },
+  { display: 'עֱ', romanized: 'ʿĕ' },
+  { display: 'עֳ', romanized: 'ʿŏ' },
+  { display: 'עָה', romanized: 'ʿâ' },
+  { display: 'עִי', romanized: 'ʿî' },
+  { display: 'עוּ', romanized: 'ʿû' },
+  { display: 'עֵי', romanized: 'ʿê' },
+  { display: 'עוֹ', romanized: 'ʿô' },
+  { display: 'פַ', romanized: 'fa' },
+  { display: 'פַּ', romanized: 'pa' },
+  { display: 'פִ', romanized: 'fi' },
+  { display: 'פִּ', romanized: 'pi' },
+  { display: 'פֻ', romanized: 'fu' },
+  { display: 'פֻּ', romanized: 'pu' },
+  { display: 'פֶ', romanized: 'fe' },
+  { display: 'פֶּ', romanized: 'pe' },
+  { display: 'פָ', romanized: 'fā/o' },
+  { display: 'פָּ', romanized: 'pā/o' },
+  { display: 'פֵ', romanized: 'fē' },
+  { display: 'פֵּ', romanized: 'pē' },
+  { display: 'פֹ', romanized: 'fō' },
+  { display: 'פֹּ', romanized: 'pō' },
+  { display: 'פְ', romanized: 'fə/–' },
+  { display: 'פְּ', romanized: 'pə/–' },
+  { display: 'פָה', romanized: 'fâ' },
+  { display: 'פָּה', romanized: 'pâ' },
+  { display: 'פִי', romanized: 'fî' },
+  { display: 'פִּי', romanized: 'pî' },
+  { display: 'פוּ', romanized: 'fû' },
+  { display: 'פּוּ', romanized: 'pû' },
+  { display: 'פֵי', romanized: 'fê' },
+  { display: 'פֵּי', romanized: 'pê' },
+  { display: 'פוֹ', romanized: 'fô' },
+  { display: 'פּוֹ', romanized: 'pô' },
+  { display: 'צַ', romanized: 'ṣa' },
+  { display: 'צִ', romanized: 'ṣi' },
+  { display: 'צֻ', romanized: 'ṣu' },
+  { display: 'צֶ', romanized: 'ṣe' },
+  { display: 'צָ', romanized: 'ṣā/o' },
+  { display: 'צֵ', romanized: 'ṣē' },
+  { display: 'צֹ', romanized: 'ṣō' },
+  { display: 'צְ', romanized: 'ṣə/–' },
+  { display: 'צָה', romanized: 'ṣâ' },
+  { display: 'צִי', romanized: 'ṣî' },
+  { display: 'צוּ', romanized: 'ṣû' },
+  { display: 'צֵי', romanized: 'ṣê' },
+  { display: 'צוֹ', romanized: 'ṣô' },
+  { display: 'קַ', romanized: 'qa' },
+  { display: 'קִ', romanized: 'qi' },
+  { display: 'קֻ', romanized: 'qu' },
+  { display: 'קֶ', romanized: 'qe' },
+  { display: 'קָ', romanized: 'qā/o' },
+  { display: 'קֵ', romanized: 'qē' },
+  { display: 'קֹ', romanized: 'qō' },
+  { display: 'קְ', romanized: 'qə/–' },
+  { display: 'קָה', romanized: 'qâ' },
+  { display: 'קִי', romanized: 'qî' },
+  { display: 'קוּ', romanized: 'qû' },
+  { display: 'קֵי', romanized: 'qê' },
+  { display: 'קוֹ', romanized: 'qô' },
+  { display: 'רַ', romanized: 'ra' },
+  { display: 'רִ', romanized: 'ri' },
+  { display: 'רֻ', romanized: 'ru' },
+  { display: 'רֶ', romanized: 're' },
+  { display: 'רָ', romanized: 'rā/o' },
+  { display: 'רֵ', romanized: 'rē' },
+  { display: 'רֹ', romanized: 'rō' },
+  { display: 'רְ', romanized: 'rə/–' },
+  { display: 'רָה', romanized: 'râ' },
+  { display: 'רִי', romanized: 'rî' },
+  { display: 'רוּ', romanized: 'rû' },
+  { display: 'רֵי', romanized: 'rê' },
+  { display: 'רוֹ', romanized: 'rô' },
+  { display: 'שַׂ', romanized: 'śa' },
+  { display: 'שִׂ', romanized: 'śi' },
+  { display: 'שֻׂ', romanized: 'śu' },
+  { display: 'שֶׂ', romanized: 'śe' },
+  { display: 'שָׂ', romanized: 'śā/o' },
+  { display: 'שֵׂ', romanized: 'śē' },
+  { display: 'שֹׂ', romanized: 'śō' },
+  { display: 'שְׂ', romanized: 'śə/–' },
+  { display: 'שָׂה', romanized: 'śâ' },
+  { display: 'שִׂי', romanized: 'śî' },
+  { display: 'שׂוּ', romanized: 'śû' },
+  { display: 'שֵׂי', romanized: 'śê' },
+  { display: 'שׂוֹ', romanized: 'śô' },
+  { display: 'שַׁ', romanized: 'ša' },
+  { display: 'שִׁ', romanized: 'ši' },
+  { display: 'שֻׁ', romanized: 'šu' },
+  { display: 'שֶׁ', romanized: 'še' },
+  { display: 'שָׁ', romanized: 'šā/o' },
+  { display: 'שֵׁ', romanized: 'šē' },
+  { display: 'שֹׁ', romanized: 'šō' },
+  { display: 'שְׁ', romanized: 'šə/–' },
+  { display: 'שָׁה', romanized: 'šâ' },
+  { display: 'שִׁי', romanized: 'šî' },
+  { display: 'שׁוּ', romanized: 'šû' },
+  { display: 'שֵׁי', romanized: 'šê' },
+  { display: 'שׁוֹ', romanized: 'šô' },
+  { display: 'תַ', romanized: 'tha' },
+  { display: 'תַּ', romanized: 'ta' },
+  { display: 'תִ', romanized: 'thi' },
+  { display: 'תִּ', romanized: 'ti' },
+  { display: 'תֻ', romanized: 'thu' },
+  { display: 'תֻּ', romanized: 'tu' },
+  { display: 'תֶ', romanized: 'the' },
+  { display: 'תֶּ', romanized: 'te' },
+  { display: 'תָ', romanized: 'thā/o' },
+  { display: 'תָּ', romanized: 'tā/o' },
+  { display: 'תֵ', romanized: 'thē' },
+  { display: 'תֵּ', romanized: 'tē' },
+  { display: 'תֹ', romanized: 'thō' },
+  { display: 'תֹּ', romanized: 'tō' },
+  { display: 'תְ', romanized: 'thə/–' },
+  { display: 'תְּ', romanized: 'tə/–' },
+  { display: 'תָה', romanized: 'thâ' },
+  { display: 'תָּה', romanized: 'tâ' },
+  { display: 'תִי', romanized: 'thî' },
+  { display: 'תִּי', romanized: 'tî' },
+  { display: 'תוּ', romanized: 'thû' },
+  { display: 'תּוּ', romanized: 'tû' },
+  { display: 'תֵי', romanized: 'thê' },
+  { display: 'תֵּי', romanized: 'tê' },
+  { display: 'תוֹ', romanized: 'thô' },
+  { display: 'תּוֹ', romanized: 'tô' },
+];
+
 const FONTS = [
   { value: 'Cardo',            style: 'セリフ',     styleEn: 'Serif',      previewSize: '1.2rem'  },
   { value: 'Frank Ruhl Libre', style: 'セリフ',     styleEn: 'Serif',      previewSize: '1.45rem' },
@@ -134,6 +529,7 @@ let answered       = false;
 let selectedFont    = localStorage.getItem(STORAGE_KEY_FONT) || 'Cardo';
 let selectedMode    = localStorage.getItem(STORAGE_KEY_MODE) || 'random';
 let quizType        = localStorage.getItem(STORAGE_KEY_TYPE) || 'consonant';
+let syllableCount   = parseInt(localStorage.getItem('hebrew-quiz-syllable-count') || '20', 10);
 let selectedAnswers = [];
 
 // Timer state
@@ -186,8 +582,24 @@ function pickWrongVowelNames(correctIdx, count) {
   return shuffle(pool).slice(0, count);
 }
 
+function pickWrongSyllables(correctIdx, count) {
+  const correctRomanized = SYLLABLES[correctIdx].romanized;
+  const pool = SYLLABLES.filter((_, i) => i !== correctIdx && SYLLABLES[i].romanized !== correctRomanized);
+  return shuffle(pool).slice(0, count);
+}
+
 function isVowelType() {
   return quizType === 'vowel' || quizType === 'vowel-name';
+}
+
+function isSyllableType() {
+  return quizType === 'syllable';
+}
+
+function getQuizData() {
+  if (isSyllableType()) return SYLLABLES;
+  if (isVowelType())   return VOWELS;
+  return LETTERS;
 }
 
 function formatTime(seconds) {
@@ -291,9 +703,13 @@ function showResultScreen() {
 
 // --- Quiz logic ---
 function startQuiz() {
-  const data    = isVowelType() ? VOWELS : LETTERS;
+  const data    = getQuizData();
   const indices = data.map((_, i) => i);
-  shuffledOrder = selectedMode === 'alpha' ? indices : shuffle(indices);
+  if (isSyllableType()) {
+    shuffledOrder = shuffle(indices).slice(0, syllableCount);
+  } else {
+    shuffledOrder = selectedMode === 'alpha' ? indices : shuffle(indices);
+  }
   currentIndex     = 0;
   correctCount     = 0;
   incorrectCount   = 0;
@@ -343,7 +759,7 @@ function showQuestion() {
     btn.style.fontFamily = '';
   });
 
-  const data      = isVowelType() ? VOWELS : LETTERS;
+  const data      = getQuizData();
   const letterIdx = shuffledOrder[currentIndex];
   const correct   = data[letterIdx];
 
@@ -395,6 +811,22 @@ function showQuestion() {
       btn.textContent      = choices[i].char;
       btn.dataset.correct  = (choices[i] === correct) ? 'true' : 'false';
       btn.style.fontFamily = `'${selectedFont}', serif`;
+    });
+  } else if (quizType === 'syllable') {
+    letterEl.textContent = correct.display;
+    choiceBtns[4].classList.add('hidden');
+    choiceBtns[4].dataset.correct = 'false';
+    choiceBtns[5].classList.add('hidden');
+    choiceBtns[5].dataset.correct = 'false';
+    choiceBtns[6].classList.add('hidden');
+    choiceBtns[6].dataset.correct = 'false';
+
+    const wrongs  = pickWrongSyllables(letterIdx, 3);
+    const choices = shuffle([correct, ...wrongs]);
+    choiceBtns.forEach((btn, i) => {
+      if (i >= 4) return;
+      btn.textContent     = choices[i].romanized;
+      btn.dataset.correct = (choices[i] === correct) ? 'true' : 'false';
     });
   } else {
     letterEl.textContent = correct.char;
@@ -610,8 +1042,7 @@ function shareToLine() {
 }
 
 function shareToWebShare() {
-  const data     = isVowelType() ? VOWELS : LETTERS;
-  const accuracy = Math.round((correctCount / data.length) * 100);
+  const accuracy = Math.round((correctCount / shuffledOrder.length) * 100);
   gtag('event', 'share_click', {
     platform:  'web_share',
     quiz_type: quizType,
@@ -625,14 +1056,14 @@ function shareToWebShare() {
 }
 
 function shareToX() {
-  const data     = isVowelType() ? VOWELS : LETTERS;
-  const accuracy = Math.round((correctCount / data.length) * 100);
+  const accuracy = Math.round((correctCount / shuffledOrder.length) * 100);
   gtag('event', 'share_click', {
     platform:  'x',
     quiz_type: quizType,
     accuracy:  accuracy,
   });
-  const quizLabel = isVowelType() ? S.shareLabelVowel : S.shareLabelLetter;
+  const quizLabel = isSyllableType() ? S.shareLabelSyllable
+    : isVowelType() ? S.shareLabelVowel : S.shareLabelLetter;
   const shareUrl = LANG === 'en' ? `${APP_URL}/en/` : APP_URL;
   const text = LANG === 'en'
     ? `📜 Hebrew Alefbet quiz: ${accuracy}% correct in ${formatTime(elapsedSeconds)}\n${S.shareHashtag} ${shareUrl}`
@@ -650,7 +1081,12 @@ function shareToX() {
 // --- Event listeners ---
 function updateModeLabels() {
   const nameEl = document.querySelector('#mode-label-alpha .mode-option-name');
-  nameEl.innerHTML = isVowelType() ? S.modeAlphaVowel : S.modeAlpha;
+  if (nameEl) nameEl.innerHTML = isVowelType() ? S.modeAlphaVowel : S.modeAlpha;
+
+  const modeSection  = document.getElementById('mode-section');
+  const countSection = document.getElementById('count-section');
+  if (modeSection)  modeSection.style.display  = isSyllableType() ? 'none' : '';
+  if (countSection) countSection.style.display = isSyllableType() ? '' : 'none';
 }
 
 const typeRadios = document.querySelectorAll('input[name="quizType"]');
@@ -660,6 +1096,14 @@ typeRadios.forEach(radio => {
     quizType = radio.value;
     localStorage.setItem(STORAGE_KEY_TYPE, quizType);
     updateModeLabels();
+  });
+});
+
+document.querySelectorAll('input[name="syllableCount"]').forEach(radio => {
+  if (parseInt(radio.value, 10) === syllableCount) radio.checked = true;
+  radio.addEventListener('change', () => {
+    syllableCount = parseInt(radio.value, 10);
+    localStorage.setItem('hebrew-quiz-syllable-count', radio.value);
   });
 });
 

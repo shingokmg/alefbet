@@ -63,7 +63,7 @@
         <h1 class="start-title">Hebrew Alefbet Dojo</h1>
         <p class="start-subtitle">Learn the Biblical Hebrew Alphabet</p>
         <p class="feature-badges">
-          <span class="feature-badge">88 Questions</span>
+          <span class="feature-badge">477 Questions</span>
           <span class="badge-sep">·</span>
           <span class="feature-badge">Beat the Clock</span>
         </p>
@@ -99,6 +99,13 @@
                 <span class="type-option-count">16</span>
               </div>
             </label>
+            <label class="type-option" id="type-label-syllable">
+              <input type="radio" name="quizType" value="syllable">
+              <div class="type-option-text">
+                <span class="type-option-name">Syllables · Romanize</span>
+                <span class="type-option-count">389</span>
+              </div>
+            </label>
           </div>
         </div>
 
@@ -116,6 +123,24 @@
               <div class="mode-option-text">
                 <span class="mode-option-name">In Order</span>
               </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="mode-section" id="count-section" style="display:none;">
+          <div class="mode-section-title">Quiz Length</div>
+          <div class="mode-options" style="grid-template-columns:1fr 1fr 1fr;">
+            <label class="mode-option">
+              <input type="radio" name="syllableCount" value="10">
+              <div class="mode-option-text"><span class="mode-option-name">10</span></div>
+            </label>
+            <label class="mode-option">
+              <input type="radio" name="syllableCount" value="20">
+              <div class="mode-option-text"><span class="mode-option-name">20</span></div>
+            </label>
+            <label class="mode-option">
+              <input type="radio" name="syllableCount" value="30">
+              <div class="mode-option-text"><span class="mode-option-name">30</span></div>
             </label>
           </div>
         </div>

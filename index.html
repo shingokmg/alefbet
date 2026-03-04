@@ -70,7 +70,7 @@
         <h1 class="start-title">ヘブライ語Alefbet道場</h1>
         <p class="start-subtitle">旧約聖書を原典で読むための第一歩</p>
         <p class="feature-badges">
-          <span class="feature-badge">全88問のクイズ</span>
+          <span class="feature-badge">全477問のクイズ</span>
           <span class="badge-sep">×</span>
           <span class="feature-badge">タイムアタック</span>
         </p>
@@ -81,36 +81,43 @@
             <label class="type-option" id="type-label-consonant">
               <input type="radio" name="quizType" value="consonant">
               <div class="type-option-text">
-                <span class="type-option-name">ヘブライ文字｜字形 → 名前</span>
+                <span class="type-option-name">ヘブライ文字　字形 → 名前</span>
                 <span class="type-option-count">28問</span>
               </div>
             </label>
             <label class="type-option" id="type-label-consonant-reverse">
               <input type="radio" name="quizType" value="consonant-reverse">
               <div class="type-option-text">
-                <span class="type-option-name">ヘブライ文字｜名前 → 字形</span>
+                <span class="type-option-name">ヘブライ文字　名前 → 字形</span>
                 <span class="type-option-count">28問</span>
               </div>
             </label>
             <label class="type-option" id="type-label-vowel">
               <input type="radio" name="quizType" value="vowel">
               <div class="type-option-text">
-                <span class="type-option-name">母音記号｜記号 → 音</span>
+                <span class="type-option-name">母音記号 → 音</span>
                 <span class="type-option-count">16問</span>
               </div>
             </label>
             <label class="type-option" id="type-label-vowel-name">
               <input type="radio" name="quizType" value="vowel-name">
               <div class="type-option-text">
-                <span class="type-option-name">母音記号｜記号 → 名前</span>
+                <span class="type-option-name">母音記号 → 名前</span>
                 <span class="type-option-count">16問</span>
+              </div>
+            </label>
+            <label class="type-option" id="type-label-syllable">
+              <input type="radio" name="quizType" value="syllable">
+              <div class="type-option-text">
+                <span class="type-option-name">文字・母音記号 → ローマ字転写</span>
+                <span class="type-option-count">389問</span>
               </div>
             </label>
           </div>
         </div>
 
         <div class="mode-section" id="mode-section">
-          <div class="mode-section-title">出題順</div>
+          <div class="mode-section-title">出題形式</div>
           <div class="mode-options">
             <label class="mode-option" id="mode-label-random">
               <input type="radio" name="mode" value="random">
@@ -123,6 +130,24 @@
               <div class="mode-option-text">
                 <span class="mode-option-name">Alefbet順</span>
               </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="mode-section" id="count-section" style="display:none;">
+          <div class="mode-section-title">出題数</div>
+          <div class="mode-options" style="grid-template-columns:1fr 1fr 1fr;">
+            <label class="mode-option">
+              <input type="radio" name="syllableCount" value="10">
+              <div class="mode-option-text"><span class="mode-option-name">10問</span></div>
+            </label>
+            <label class="mode-option">
+              <input type="radio" name="syllableCount" value="20">
+              <div class="mode-option-text"><span class="mode-option-name">20問</span></div>
+            </label>
+            <label class="mode-option">
+              <input type="radio" name="syllableCount" value="30">
+              <div class="mode-option-text"><span class="mode-option-name">30問</span></div>
             </label>
           </div>
         </div>
