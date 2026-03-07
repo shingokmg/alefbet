@@ -90,6 +90,56 @@
       font-size: 0.85rem;
       color: #e53e3e;
     }
+    .faq-section {
+      margin-bottom: 2.5rem;
+    }
+    .faq-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 0.75rem;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item summary {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 0;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-heading);
+      cursor: pointer;
+      user-select: none;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-chevron {
+      flex-shrink: 0;
+      color: var(--text-sub);
+      transition: transform 0.2s;
+    }
+    .faq-item[open] .faq-chevron {
+      transform: rotate(180deg);
+    }
+    .faq-a {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      padding-bottom: 1rem;
+      margin: 0;
+    }
+    .faq-a a {
+      color: #17B890;
+      text-decoration: underline;
+    }
+    .contact-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 2rem;
+    }
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NCHCEQQXT"></script>
@@ -117,6 +167,58 @@
 
     <main class="legal-card">
       <h1 class="legal-title" style="margin-bottom: 1.25rem;">お問い合わせ</h1>
+
+      <section class="faq-section">
+        <h2 class="faq-title">よくあるご質問</h2>
+
+        <details class="faq-item">
+          <summary>このアプリはどんな人が作っていますか？<svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="faq-a">日本在住の社会人神学生、Shingo Kumagaiが個人開発しています。ヘブライ語の文字を覚えることに苦労した実体験から、「同じようにつまずく人の力になりたい」という思いで作りました。詳しくは<a href="about.html" target="_blank" rel="noopener">開発ストーリー</a>をご覧ください。</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>無料ですか？ 今後も無料ですか？<svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="faq-a">はい、完全無料です。課金要素はありません。「ヘブライ語を学ぶすべての人に無料で」という方針のもと運営しており、今後も無料を継続する予定です。</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>アカウント登録は必要ですか？<svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="faq-a">不要です。ブラウザからそのままお使いいただけます。設定や学習記録はお使いのデバイス内にのみ保存され、サーバーには送信されません。</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>個人情報は収集されますか？<svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="faq-a">クイズの点数・学習履歴はお使いのデバイス内に保存されます。お名前・メールアドレスなどの個人情報も一切取得していないため、シェア機能等を使って自ら共有しない限り、誰が何点を取ったかが開発者含め外部に知られることはありません。Google Analyticsによる匿名の利用統計（ページ閲覧数など）のみ収集しています。詳しくは<a href="privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>をご覧ください。</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>スマホでも使えますか？<svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="faq-a">はい、スマートフォン・タブレット・PCいずれでも動作します。アプリのインストールは不要で、ブラウザからそのままお使いいただけます。</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>どのクイズから始めればいいですか？<svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="faq-a">トップページに表示されている順番が、そのまま学習の推奨順です。上から順に進んでいき、🏆 30秒チャレンジ を最終目標にするのがおすすめです。</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>授業や礼拝で紹介・使用しても問題ありませんか？<svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="faq-a">もちろんです。神学校・教会・聖書勉強会など、教育・宣教目的でのご利用は連絡不要で自由にお使いください。詳しくは<a href="terms.html" target="_blank" rel="noopener">利用規約</a>をご覧ください。</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>文字を覚えるだけで聖書をヘブライ語で読めるようになりますか？<svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="faq-a">ヘブライ語の文章を読むには、文字に加えて単語・文法の知識が必要です。ただし「文字が読める」だけでも、聖書を原典で目にする体験は大きく変わります。このアプリで文字の土台をしっかり作ってから、入門書で次のステップに進みましょう。</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>このアプリの後、何を勉強すればいいですか？<svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <p class="faq-a">文字と母音記号をひと通り覚えたら、ヘブライ語の入門書に進みましょう。開発者自身は城倉啓著<a href="https://amzn.to/3MS8jQ5" target="_blank" rel="noopener noreferrer">『超入門 ヘブル語のススメ』</a>（いのちのことば社・2024）から学びはじめました。<a href="https://amzn.to/46KDun0" target="_blank" rel="noopener noreferrer">日本語で読める入門書</a>は他にも数多くあります。</p>
+        </details>
+
+      </section>
+
+      <p style="font-size:0.875rem;color:var(--text-secondary);margin:0 0 1.5rem;">ご質問はもちろん、ご感想やフィードバックもぜひお聞かせてください。</p>
 
       <form class="contact-form" id="contact-form" novalidate>
         <input type="hidden" name="language" value="ja">
