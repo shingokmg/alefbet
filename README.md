@@ -2,38 +2,58 @@
 
 古典ヘブライ語の文字・母音記号を択一クイズで学習できる無料Webアプリ。日本語・英語に対応。
 
-**本番URL：https://alefbet.jp**
+A free web app for learning Biblical Hebrew letters and vowel marks through multiple-choice quizzes. Available in Japanese and English.
+
+**本番URL / Live：https://alefbet.jp**
 **English version：https://alefbet.jp/en/**
 
 ---
 
-## 機能
+## 機能 / Features
 
-**ヘブライ文字クイズ（28問）**
-- 字形 → 名前：ヘブライ文字の字形を見て名前を答える4択クイズ
-- 名前 → 字形：名前を見てヘブライ文字を選ぶ4択クイズ
-- ランダム順 / Alefbet順を選択可能
+**ヘブライ文字クイズ（28問） / Hebrew Letter Quizzes (28 questions)**
+- 字形 → 名前 / Shape → Name：4択
+- 字形 → 発音 / Shape → Sound：4択
+- 名前 → 字形 / Name → Shape：4択
+- ランダム順 / 固定順 / Random or fixed order
 
-**母音記号クイズ（16問）**
-- 母音記号 → 音：母音記号（ニクド）を見て音を答える6択クイズ
-- 母音記号 → 名前：母音記号を見て名前を答える4択クイズ
+**ダゲシュクイズ（12問） / Dagesh Quiz (12 questions)**
+- ダゲシュ あり/なし → 発音 / With or without dagesh → Sound：4択
+
+**母音記号クイズ（16問） / Vowel Mark Quizzes (16 questions)**
+- 母音記号 → 音 / Mark → Sound：6択
+- 母音記号 → 名前 / Mark → Name：4択
 - シェワとカメツは同一字形で読みが異なる2択問題
-- ランダム順 / 固定順を選択可能
+- ランダム順 / 固定順 / Random or fixed order
 
-**音節ローマ字転写クイズ（389問）**
-- 文字・母音記号 → ローマ字転写：ヘブライ文字と母音記号の組み合わせを見てローマ字転写を答える4択クイズ
-- ベガドケファット6文字はダゲシュあり/なしを別問題として収録
-- 1セッションの出題数を10問 / 20問 / 30問から選択可能（デフォルト20問）
+**🏆 30秒チャレンジ（389問プール） / 30-Second Challenge (389-question pool)**
+- 全問からランダム出題。30秒で何問正解できるか挑戦 / Random questions from all categories — how many can you answer in 30 seconds?
+- 正解数でランク判定（5級〜特級 / Tier 5〜Master）
+- ベストスコア保存・紙吹雪演出（正解数20以上）/ Best score saved locally; confetti at 20+ correct
 
-**共通機能**
-- タイムアタック＆正答率（%）表示
-- 誤答問題の復習モード
-- フォント切り替え（Cardo / Frank Ruhl Libre / Heebo / Assistant）
-- ダークモード対応
-- X（旧Twitter）・LINE（日本語版）・Web Share API（英語版モバイル）でのシェア
-- PWA対応（オフラインキャッシュ）
+**共通機能 / Common Features**
+- タイムアタック＆正答率（%）表示 / Timed quiz with accuracy display
+- 誤答問題の復習モード（通常クイズのみ）/ Wrong-answer retry (standard quizzes only)
+- スタート画面にガイド（ⓘ ボタン）/ Contextual guide (ⓘ buttons) on start screen
+- フォント切り替え / Font switcher（Cardo / Frank Ruhl Libre / Heebo / Assistant）
+- ダークモード / Dark mode
+- X・LINE（日本語版）・Web Share API（英語版モバイル）でのシェア / Share on X, LINE (JA), Web Share API (EN mobile)
+- PWA対応（オフラインキャッシュ）/ PWA with offline caching
 
-全クイズ合計：**477問**
+全クイズ合計：**517問 / 517 questions total**
+
+---
+
+## Changelog
+
+| Date | Changes |
+|------|---------|
+| 2026-03-08 | Added guide (ⓘ) to start screen |
+| 2026-03-07 | Added 🏆 30-Second Challenge; added FAQ to contact page |
+| 2026-03-04 | Launched English version; added dev story, contact form, dark mode |
+| 2026-03-03 | Added Hebrew letters reference page; added wrong-answer retry |
+| 2026-03-02 | Added vowel marks quiz |
+| 2026-03-01 | Initial launch (Japanese only — 28 questions) |
 
 ---
 
