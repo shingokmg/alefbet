@@ -54,6 +54,36 @@
       color: #fff;
       text-decoration: none;
     }
+    .update-history {
+      margin-top: 2.5rem;
+    }
+    .update-history h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 0.25rem;
+    }
+    .update-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .update-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+    .update-date {
+      color: var(--text-sub);
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+    .update-desc {
+      color: var(--text-secondary);
+    }
     .about-highlight {
       background: var(--brand-light-bg);
       border-left: 3px solid #17B890;
@@ -131,11 +161,42 @@
           <li>Anyone with an interest in Hebrew script or ancient writing systems</li>
         </ul>
         <p style="margin-top:1rem;">In fact, when my elementary-school-aged son tested the app, he was soon able to name the letters as well. Hebrew may look intimidating at first, but once the entry point is clear, the first step is more approachable than many people expect.</p>
+        <p>I hope this dojo can be a place that supports that very first step.</p>
       </section>
 
-      <section>
-        <h2>Start With the Letters</h2>
-        <p>If you want to learn Biblical Hebrew, start with the script.<br>I hope this dojo can be a place that supports that very first step.</p>
+      <div class="about-cta-wrap">
+        <a class="about-cta" href="index.html">Start the Quiz Now</a>
+        <a class="about-cta-sub" href="alefbet.html">View the Letters &amp; Vowel Marks</a>
+      </div>
+
+      <section class="update-history">
+        <h2>Update History</h2>
+        <ul class="update-list">
+          <li class="update-item">
+            <span class="update-date">2026-03-08</span>
+            <span class="update-desc">Added the Guide (ⓘ) to the start screen</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026-03-07</span>
+            <span class="update-desc">Added the 🏆 30-Second Challenge<br>Added an FAQ section to the <a href="contact.html">Contact</a> page</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026-03-04</span>
+            <span class="update-desc">Launched the English version<br>Added How It Started, contact form, and dark mode</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026-03-03</span>
+            <span class="update-desc">Added a <a href="alefbet.html">Hebrew letters reference page</a><br>Added "retry incorrect answers"</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026-03-02</span>
+            <span class="update-desc">Added the vowel marks quiz</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026-03-01</span>
+            <span class="update-desc">Launched (Japanese only): 28 questions — Hebrew Letters · Name the Letter</span>
+          </li>
+        </ul>
       </section>
 
       <div class="about-cta-wrap">

@@ -50,6 +50,37 @@
       color: #fff;
       text-decoration: none;
     }
+    .update-history {
+      margin-top: 2.5rem;
+    }
+    .update-history h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 0.25rem;
+    }
+    .update-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .update-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .update-date {
+      color: var(--text-sub);
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+    .update-desc {
+      color: var(--text-secondary);
+    }
     .about-highlight {
       background: var(--brand-light-bg);
       border-left: 3px solid #17B890;
@@ -126,11 +157,42 @@
           <li>古代文字に、ちょっと興味がある方</li>
         </ul>
         <p style="margin-top:1rem;">実際に、小学生の息子がテストプレイしたときも、たちまち文字を言い当てられるようになりました。ヘブライ語は難しそうに見えますが、入口さえ整えば、最初の一歩は思われているほど遠くありません。</p>
+        <p>この道場が、その最初の一歩を支える場所になればうれしいです。</p>
       </section>
 
-      <section>
-        <h2>最初の一歩を、ここから</h2>
-        <p>ヘブライ語を学ぶなら、まずは文字から。<br>この道場が、その最初の一歩を支える場所になればうれしいです。</p>
+      <div class="about-cta-wrap">
+        <a class="about-cta" href="index.html">今すぐクイズを始める</a>
+        <a class="about-cta-sub" href="alefbet.html">文字と母音記号の一覧を見る</a>
+      </div>
+
+      <section class="update-history">
+        <h2>主な更新履歴</h2>
+        <ul class="update-list">
+          <li class="update-item">
+            <span class="update-date">2026-03-08</span>
+            <span class="update-desc">ガイド（ⓘ ボタン）追加</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026-03-07</span>
+            <span class="update-desc">🏆 30秒チャレンジ、<a href="contact.html">お問い合わせ</a>にFAQ追加</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026-03-04</span>
+            <span class="update-desc"><a href="en/index.html">英語版</a>公開。開発ストーリー、お問い合わせフォーム、ダークモード追加</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026-03-03</span>
+            <span class="update-desc"><a href="alefbet.html">ヘブライ文字一覧ページ</a>、誤答再挑戦機能追加</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026-03-02</span>
+            <span class="update-desc">母音記号クイズ追加</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026-03-01</span>
+            <span class="update-desc">日本語版公開。クイズは ヘブライ文字 字形→名前 の28問のみ</span>
+          </li>
+        </ul>
       </section>
 
       <div class="about-cta-wrap">
