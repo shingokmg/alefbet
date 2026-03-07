@@ -22,6 +22,7 @@ const STRINGS = {
     shareLabelVowel:    '母音記号の正答率',
     shareLabelLetter:   'ヘブライ文字の正答率',
     shareLabelSyllable: '音節の正答率',
+    shareLabelDagesh:   'ダゲシュクイズの正答率',
     shareChallenge:   'ヘブライ語に挑戦中✨',
     shareHashtag:     '#Alefbet道場',
     correctMark:      '○',
@@ -45,6 +46,7 @@ const STRINGS = {
     shareLabelVowel:    'Vowel accuracy: ',
     shareLabelLetter:   'Hebrew letter accuracy: ',
     shareLabelSyllable: 'Syllable accuracy: ',
+    shareLabelDagesh:   'Dagesh quiz accuracy: ',
     shareChallenge:   'Studying Hebrew✨',
     shareHashtag:     '#AlefbetDojo',
     correctMark:      '✓',
@@ -55,34 +57,34 @@ const S = STRINGS[LANG];
 
 // アルファベット順（語末形は直後に配置、シン・スィンを分離）= 28文字
 const LETTERS = [
-  { char: 'א',  name: 'アレフ',               romanized: 'Alef' },
-  { char: 'ב',  name: 'ベート',               romanized: 'Bet' },
-  { char: 'ג',  name: 'ギメル',               romanized: 'Gimel' },
-  { char: 'ד',  name: 'ダレト',               romanized: 'Dalet' },
-  { char: 'ה',  name: 'ヘー',                 romanized: 'He' },
-  { char: 'ו',  name: 'ワウ',                 romanized: 'Waw' },
-  { char: 'ז',  name: 'ザイン',               romanized: 'Zayin' },
-  { char: 'ח',  name: 'ヘート',               romanized: 'Het' },
-  { char: 'ט',  name: 'テート',               romanized: 'Tet' },
-  { char: 'י',  name: 'ヨード',               romanized: 'Yod' },
-  { char: 'כ',  name: 'カフ',                 romanized: 'Kaf' },
-  { char: 'ך',  name: 'カフ・ソフィット',     romanized: 'Kaf sofit' },
-  { char: 'ל',  name: 'ラメド',               romanized: 'Lamed' },
-  { char: 'מ',  name: 'メム',                 romanized: 'Mem' },
-  { char: 'ם',  name: 'メム・ソフィット',     romanized: 'Mem sofit' },
-  { char: 'נ',  name: 'ヌン',                 romanized: 'Nun' },
-  { char: 'ן',  name: 'ヌン・ソフィット',     romanized: 'Nun sofit' },
-  { char: 'ס',  name: 'サメフ',               romanized: 'Samekh' },
-  { char: 'ע',  name: 'アイン',               romanized: 'Ayin' },
-  { char: 'פ',  name: 'ペー',                 romanized: 'Pe' },
-  { char: 'ף',  name: 'ペー・ソフィット',     romanized: 'Pe sofit' },
-  { char: 'צ',  name: 'ツァデー',             romanized: 'Tsade' },
-  { char: 'ץ',  name: 'ツァデー・ソフィット', romanized: 'Tsade sofit' },
-  { char: 'ק',  name: 'コーフ',               romanized: 'Qof' },
-  { char: 'ר',  name: 'レーシュ',             romanized: 'Resh' },
-  { char: 'שׂ', name: 'スィン',               romanized: 'Sin' },
-  { char: 'שׁ', name: 'シン',                 romanized: 'Shin' },
-  { char: 'ת',  name: 'タウ',                 romanized: 'Tav' },
+  { char: 'א',  name: 'アレフ',               romanized: 'Alef',          sound: 'ʾ'  },
+  { char: 'ב',  name: 'ベート',               romanized: 'Bet',           sound: 'v'  },
+  { char: 'ג',  name: 'ギメル',               romanized: 'Gimel',         sound: 'gh' },
+  { char: 'ד',  name: 'ダレト',               romanized: 'Dalet',         sound: 'dh' },
+  { char: 'ה',  name: 'ヘー',                 romanized: 'He',            sound: 'h'  },
+  { char: 'ו',  name: 'ワウ',                 romanized: 'Waw',           sound: 'w'  },
+  { char: 'ז',  name: 'ザイン',               romanized: 'Zayin',         sound: 'z'  },
+  { char: 'ח',  name: 'ヘート',               romanized: 'Het',           sound: 'ḥ' },
+  { char: 'ט',  name: 'テート',               romanized: 'Tet',           sound: 'ṭ' },
+  { char: 'י',  name: 'ヨード',               romanized: 'Yod',           sound: 'y'  },
+  { char: 'כ',  name: 'カフ',                 romanized: 'Kaf',           sound: 'kh' },
+  { char: 'ך',  name: 'カフ・ソフィット',     romanized: 'Kaf sofit',     sound: 'kh' },
+  { char: 'ל',  name: 'ラメド',               romanized: 'Lamed',         sound: 'l'  },
+  { char: 'מ',  name: 'メム',                 romanized: 'Mem',           sound: 'm'  },
+  { char: 'ם',  name: 'メム・ソフィット',     romanized: 'Mem sofit',     sound: 'm'  },
+  { char: 'נ',  name: 'ヌン',                 romanized: 'Nun',           sound: 'n'  },
+  { char: 'ן',  name: 'ヌン・ソフィット',     romanized: 'Nun sofit',     sound: 'n'  },
+  { char: 'ס',  name: 'サメフ',               romanized: 'Samekh',        sound: 's'  },
+  { char: 'ע',  name: 'アイン',               romanized: 'Ayin',          sound: 'ʿ' },
+  { char: 'פ',  name: 'ペー',                 romanized: 'Pe',            sound: 'f'  },
+  { char: 'ף',  name: 'ペー・ソフィット',     romanized: 'Pe sofit',      sound: 'f'  },
+  { char: 'צ',  name: 'ツァデー',             romanized: 'Tsade',         sound: 'ṣ' },
+  { char: 'ץ',  name: 'ツァデー・ソフィット', romanized: 'Tsade sofit',   sound: 'ṣ' },
+  { char: 'ק',  name: 'コーフ',               romanized: 'Qof',           sound: 'q'  },
+  { char: 'ר',  name: 'レーシュ',             romanized: 'Resh',          sound: 'r'  },
+  { char: 'שׂ', name: 'スィン',               romanized: 'Sin',           sound: 'ś' },
+  { char: 'שׁ', name: 'シン',                 romanized: 'Shin',          sound: 'š' },
+  { char: 'ת',  name: 'タウ',                 romanized: 'Tav',           sound: 'th' },
 ];
 
 const VOWELS = [
@@ -502,6 +504,22 @@ const SYLLABLES = [
   { display: 'תּוֹ', romanized: 'tô' },
 ];
 
+// ベガドケファト6文字 × ダゲシュあり/なし = 12問（パタハで代表表示）
+const DAGESH = [
+  { display: 'בַּ', romanized: 'b'  },
+  { display: 'בַ',  romanized: 'v'  },
+  { display: 'גַּ', romanized: 'g'  },
+  { display: 'גַ',  romanized: 'gh' },
+  { display: 'דַּ', romanized: 'd'  },
+  { display: 'דַ',  romanized: 'dh' },
+  { display: 'כַּ', romanized: 'k'  },
+  { display: 'כַ',  romanized: 'kh' },
+  { display: 'פַּ', romanized: 'p'  },
+  { display: 'פַ',  romanized: 'f'  },
+  { display: 'תַּ', romanized: 't'  },
+  { display: 'תַ',  romanized: 'th' },
+];
+
 const FONTS = [
   { value: 'Cardo',            style: 'セリフ',     styleEn: 'Serif',      previewSize: '1.2rem'  },
   { value: 'Frank Ruhl Libre', style: 'セリフ',     styleEn: 'Serif',      previewSize: '1.45rem' },
@@ -577,6 +595,12 @@ function pickWrongAnswers(correctIdx, count) {
   return shuffle(pool).slice(0, count);
 }
 
+function pickWrongConsonantRomanized(correctIdx, count) {
+  const correctSound = LETTERS[correctIdx].sound;
+  const pool = LETTERS.filter((_, i) => i !== correctIdx && LETTERS[i].sound !== correctSound);
+  return shuffle(pool).slice(0, count);
+}
+
 function pickWrongVowelNames(correctIdx, count) {
   const pool = VOWELS.filter((_, i) => i !== correctIdx);
   return shuffle(pool).slice(0, count);
@@ -588,6 +612,13 @@ function pickWrongSyllables(correctIdx, count) {
   return shuffle(pool).slice(0, count);
 }
 
+function pickWrongDagesh(correctIdx, count) {
+  // 対義語（同文字の逆ダゲシュ）を必ず含める
+  const counterpartIdx = correctIdx % 2 === 0 ? correctIdx + 1 : correctIdx - 1;
+  const pool = DAGESH.filter((_, i) => i !== correctIdx && i !== counterpartIdx);
+  return shuffle([DAGESH[counterpartIdx], ...shuffle(pool).slice(0, count - 1)]);
+}
+
 function isVowelType() {
   return quizType === 'vowel' || quizType === 'vowel-name';
 }
@@ -596,7 +627,12 @@ function isSyllableType() {
   return quizType === 'syllable';
 }
 
+function isDageshType() {
+  return quizType === 'dagesh';
+}
+
 function getQuizData() {
+  if (isDageshType())  return DAGESH;
   if (isSyllableType()) return SYLLABLES;
   if (isVowelType())   return VOWELS;
   return LETTERS;
@@ -707,6 +743,8 @@ function startQuiz() {
   const indices = data.map((_, i) => i);
   if (isSyllableType()) {
     shuffledOrder = shuffle(indices).slice(0, syllableCount);
+  } else if (isDageshType()) {
+    shuffledOrder = shuffle(indices);
   } else {
     shuffledOrder = selectedMode === 'alpha' ? indices : shuffle(indices);
   }
@@ -826,6 +864,38 @@ function showQuestion() {
     choiceBtns.forEach((btn, i) => {
       if (i >= 4) return;
       btn.textContent     = choices[i].romanized;
+      btn.dataset.correct = (choices[i] === correct) ? 'true' : 'false';
+    });
+  } else if (quizType === 'dagesh') {
+    letterEl.textContent = correct.display;
+    choiceBtns[4].classList.add('hidden');
+    choiceBtns[4].dataset.correct = 'false';
+    choiceBtns[5].classList.add('hidden');
+    choiceBtns[5].dataset.correct = 'false';
+    choiceBtns[6].classList.add('hidden');
+    choiceBtns[6].dataset.correct = 'false';
+
+    const wrongs  = pickWrongDagesh(letterIdx, 3);
+    const choices = shuffle([correct, ...wrongs]);
+    choiceBtns.forEach((btn, i) => {
+      if (i >= 4) return;
+      btn.textContent     = choices[i].romanized;
+      btn.dataset.correct = (choices[i] === correct) ? 'true' : 'false';
+    });
+  } else if (quizType === 'consonant-romanized') {
+    letterEl.textContent = correct.char;
+    choiceBtns[4].classList.add('hidden');
+    choiceBtns[4].dataset.correct = 'false';
+    choiceBtns[5].classList.add('hidden');
+    choiceBtns[5].dataset.correct = 'false';
+    choiceBtns[6].classList.add('hidden');
+    choiceBtns[6].dataset.correct = 'false';
+
+    const wrongs  = pickWrongConsonantRomanized(letterIdx, 3);
+    const choices = shuffle([correct, ...wrongs]);
+    choiceBtns.forEach((btn, i) => {
+      if (i >= 4) return;
+      btn.textContent     = choices[i].sound;
       btn.dataset.correct = (choices[i] === correct) ? 'true' : 'false';
     });
   } else {
@@ -1062,7 +1132,8 @@ function shareToX() {
     quiz_type: quizType,
     accuracy:  accuracy,
   });
-  const quizLabel = isSyllableType() ? S.shareLabelSyllable
+  const quizLabel = isDageshType() ? S.shareLabelDagesh
+    : isSyllableType() ? S.shareLabelSyllable
     : isVowelType() ? S.shareLabelVowel : S.shareLabelLetter;
   const shareUrl = LANG === 'en' ? `${APP_URL}/en/` : APP_URL;
   const text = LANG === 'en'
@@ -1085,7 +1156,7 @@ function updateModeLabels() {
 
   const modeSection  = document.getElementById('mode-section');
   const countSection = document.getElementById('count-section');
-  if (modeSection)  modeSection.style.display  = isSyllableType() ? 'none' : '';
+  if (modeSection)  modeSection.style.display  = (isSyllableType() || isDageshType()) ? 'none' : '';
   if (countSection) countSection.style.display = isSyllableType() ? '' : 'none';
 }
 
