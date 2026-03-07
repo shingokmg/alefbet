@@ -4,43 +4,42 @@
 
 A free web app for learning Biblical Hebrew letters and vowel marks through multiple-choice quizzes. Available in Japanese and English.
 
-**本番URL / Live：https://alefbet.jp**
-**English version：https://alefbet.jp/en/**
+**Live:** https://alefbet.jp
+**English:** https://alefbet.jp/en/
 
 ---
 
 ## 機能 / Features
 
-**ヘブライ文字クイズ（28問） / Hebrew Letter Quizzes (28 questions)**
-- 字形 → 名前 / Shape → Name：4択
-- 字形 → 発音 / Shape → Sound：4択
-- 名前 → 字形 / Name → Shape：4択
-- ランダム順 / 固定順 / Random or fixed order
+### ヘブライ文字クイズ（28問） / Hebrew Letter Quizzes (28 questions)
+- 字形 → 名前 / Letter form → Name
+- 字形 → 発音 / Letter form → Sound
+- 名前 → 字形 / Name → Letter form
+- 固定順・ランダム / Fixed or random order
 
-**ダゲシュクイズ（12問） / Dagesh Quiz (12 questions)**
-- ダゲシュ あり/なし → 発音 / With or without dagesh → Sound：4択
+### ダゲシュクイズ（12問） / Dagesh Quiz (12 questions)
+- ダゲシュ あり/なし → 発音 / With or without dagesh → Sound
 
-**母音記号クイズ（16問） / Vowel Mark Quizzes (16 questions)**
-- 母音記号 → 音 / Mark → Sound：6択
-- 母音記号 → 名前 / Mark → Name：4択
-- シェワとカメツは同一字形で読みが異なる2択問題
-- ランダム順 / 固定順 / Random or fixed order
+### 母音記号クイズ（16問） / Vowel Mark Quizzes (16 questions)
+- 母音記号 → 音 / Mark → Sound
+- 母音記号 → 名前 / Mark → Name
+- シェワとカメツは同一字形で読みが異なる2択問題 / Two-choice questions where the same symbol has different readings (sheva and qamets)
+- 固定順・ランダム / Fixed or random order
 
-**🏆 30秒チャレンジ（389問プール） / 30-Second Challenge (389-question pool)**
+### 🏆 30秒チャレンジ（389問プール） / 🏆 30-Second Challenge (389-question pool)
 - 全問からランダム出題。30秒で何問正解できるか挑戦 / Random questions from all categories — how many can you answer in 30 seconds?
-- 正解数でランク判定（5級〜特級 / Tier 5〜Master）
+- 正解数でランク判定（5級〜特級 / Tier 5〜Master） / Rank based on your score (Tier 5 to Master)
 - ベストスコア保存・紙吹雪演出（正解数20以上）/ Best score saved locally; confetti at 20+ correct
 
-**共通機能 / Common Features**
-- タイムアタック＆正答率（%）表示 / Timed quiz with accuracy display
-- 誤答問題の復習モード（通常クイズのみ）/ Wrong-answer retry (standard quizzes only)
-- スタート画面にガイド（ⓘ ボタン）/ Contextual guide (ⓘ buttons) on start screen
-- フォント切り替え / Font switcher（Cardo / Frank Ruhl Libre / Heebo / Assistant）
+### 共通機能 / Common Features
+- タイムアタック＆正答率（%）表示 / Timed quizzes with accuracy (%)
+- 誤答問題の復習モード（通常クイズのみ） / Retry incorrect answers (standard quizzes only)
+- スタート画面にガイド（ⓘ ボタン） / On-screen guide (ⓘ) on the start screen
+- フォント切り替え / Font switcher (Cardo / Frank Ruhl Libre / Heebo / Assistant)
 - ダークモード / Dark mode
-- X・LINE（日本語版）・Web Share API（英語版モバイル）でのシェア / Share on X, LINE (JA), Web Share API (EN mobile)
-- PWA対応（オフラインキャッシュ）/ PWA with offline caching
-
-全クイズ合計：**517問 / 517 questions total**
+- X・LINE（日本語版）・Web Share API（英語版モバイル）でのシェア / Share via X, LINE (Japanese), and the Web Share API (English mobile)
+- PWA対応（オフラインキャッシュ） / PWA with offline caching
+- 全クイズ合計：517問 / 517 questions total
 
 ---
 
