@@ -251,6 +251,12 @@
           </div>
         </div>
 
+        <div class="install-section hidden" id="install-section">
+          <div class="install-text">📲 ホーム画面に追加して続けよう</div>
+          <button class="install-btn hidden" id="install-btn">ホーム画面に追加</button>
+          <p class="install-ios hidden" id="install-ios"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> →「ホーム画面に追加」をタップ</p>
+        </div>
+
         <div class="book-section">
           <a class="book-title-link" href="https://amzn.to/4aT2Mk1" target="_blank" rel="noopener noreferrer"><span class="book-title-main">📖 超入門ヘブル語のススメ<span class="book-title-sub"> 聖書を原語で読もう</span></span></a>
           <div class="book-author-text">城倉啓 著・いのちのことば社・2024　<span class="book-pr">PR</span></div>
@@ -308,6 +314,43 @@
       document.getElementById('info-btn-font').addEventListener('click', function(e) { e.stopPropagation(); openInfo('font'); });
       document.getElementById('info-modal-close').addEventListener('click', closeInfo);
       overlay.addEventListener('click', function(e) { if (e.target === overlay) closeInfo(); });
+    })();
+
+    (function() {
+      var deferredPrompt = null;
+
+      window.addEventListener('beforeinstallprompt', function(e) {
+        e.preventDefault();
+        deferredPrompt = e;
+      });
+
+      function showInstallSection() {
+        var section = document.getElementById('install-section');
+        var ua = navigator.userAgent;
+        var isIOS = /iPhone|iPad|iPod/.test(ua) && !window.navigator.standalone;
+        if (deferredPrompt) {
+          section.classList.remove('hidden');
+          document.getElementById('install-btn').classList.remove('hidden');
+        } else if (isIOS) {
+          section.classList.remove('hidden');
+          document.getElementById('install-ios').classList.remove('hidden');
+        }
+      }
+
+      document.getElementById('install-btn').addEventListener('click', function() {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function(result) {
+          deferredPrompt = null;
+          document.getElementById('install-section').classList.add('hidden');
+        });
+      });
+
+
+      var resultScreen = document.getElementById('result-screen');
+      new MutationObserver(function() {
+        if (!resultScreen.classList.contains('hidden')) showInstallSection();
+      }).observe(resultScreen, { attributes: true, attributeFilter: ['class'] });
     })();
 
     document.getElementById('extra-section-toggle').addEventListener('click', function() {

@@ -805,6 +805,40 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.install-section {
+  margin-top: 1.25rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg-section);
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.install-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-heading);
+  margin-bottom: 0.6rem;
+}
+.install-btn {
+  display: inline-block;
+  padding: 0.5rem 1.4rem;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-mid);
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.install-btn:hover { border-color: #17B890; color: #17B890; }
+.install-ios {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
 .book-section {
   border-top: 1px solid var(--border);
   margin-top: 1.25rem;
