@@ -420,3 +420,84 @@ body {
 .lang-toggle-btn:hover { color: #17B890; }
 .lang-toggle-btn--active { color: #17B890; }
 .lang-toggle-sep { color: var(--border-mid); }
+
+/* ================================
+   Dagesh Section
+================================ */
+.ref-dagesh-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.ref-dagesh-wrap {
+  overflow-x: auto;
+}
+
+.ref-dagesh-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  min-width: 320px;
+}
+
+.ref-dagesh-table th,
+.ref-dagesh-table td {
+  padding: 0.25rem 0.15rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.ref-dagesh-table thead th {
+  background: var(--bg-section);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  padding: 0.3rem 0.15rem;
+}
+
+.ref-dagesh-rowlabel {
+  font-size: 0.65rem;
+  color: var(--text-sub);
+  background: var(--bg-section) !important;
+  line-height: 1.35;
+  width: 3.5rem;
+}
+
+.ref-dagesh-rowlabel small {
+  font-size: 0.6rem;
+  color: var(--text-footer);
+  display: block;
+}
+
+.ref-dagesh-table .ref-char {
+  font-size: 1.8rem;
+  min-height: 2.2rem;
+}
+
+.ref-dagesh-table td {
+  background: var(--bg-faint);
+}
+
+.ref-dagesh-row-soft td {
+  background: var(--bg-card);
+}
+
+.ref-dagesh-row-soft .ref-char {
+  color: var(--text-secondary);
+}
+
+.ref-dagesh-roman {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-sub);
+  font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  margin-top: 0.1rem;
+}
+
+.ref-heb {
+  font-family: 'Cardo', serif;
+  font-size: 1.5em;
+}
