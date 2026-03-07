@@ -161,6 +161,10 @@ body {
   color: #17B890;
 }
 
+.print-btn {
+  margin-left: auto;
+}
+
 .ref-section {
   margin-bottom: 2rem;
 }
@@ -500,4 +504,93 @@ body {
 .ref-heb {
   font-family: 'Cardo', serif;
   font-size: 1.5em;
+}
+
+/* ================================
+   Print
+================================ */
+@media print {
+  body {
+    background: #fff;
+    padding: 0;
+    color: #000;
+  }
+
+  .ref-header,
+  .ref-font-picker,
+  .ref-book-card,
+  .ref-footer {
+    display: none !important;
+  }
+
+  .ref-wrap {
+    max-width: 100%;
+  }
+
+  .ref-card-main {
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0.75rem;
+    margin-bottom: 0;
+  }
+
+  .ref-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #000;
+  }
+
+  .ref-section-title {
+    color: #000;
+    border-bottom-color: #ccc;
+  }
+
+  .ref-item {
+    break-inside: avoid;
+    border-color: #ccc;
+    background: #fff;
+  }
+
+  .ref-item--sofit {
+    background: #f5f5f5;
+  }
+
+  .ref-char {
+    color: #000;
+    font-size: 2rem;
+    min-height: 2.4rem;
+  }
+
+  .ref-name { color: #000; }
+  .ref-roman { color: #555; }
+  .ref-sound { color: #000; }
+  .ref-notes li { color: #333; }
+
+  .ref-subsection-title {
+    color: #333;
+    border-left-color: #ccc;
+  }
+
+  .ref-dagesh-table th,
+  .ref-dagesh-table td {
+    border-color: #ccc;
+  }
+
+  .ref-dagesh-table thead th {
+    background: #f0f0f0;
+    color: #333;
+  }
+
+  .ref-dagesh-rowlabel {
+    background: #f0f0f0 !important;
+    color: #333;
+  }
+
+  .ref-dagesh-table td { background: #fff; }
+  .ref-dagesh-row-soft td { background: #fafafa; }
+  .ref-dagesh-row-soft .ref-char { color: #555; }
+  .ref-dagesh-roman { color: #555; }
+
+  .ref-divider { border-top-color: #ccc; }
+  .ref-heb { color: #000; }
 }
