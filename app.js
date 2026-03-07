@@ -32,7 +32,7 @@ const STRINGS = {
     msg50:            '着実に覚えてきています。続けることが大切です。',
     msg0:             '焦らず少しずつ。何度も繰り返すうちに必ず定着します。',
     progressUnit:     '問',
-    modeAlpha:        'Alefbet順',
+    modeAlpha:        '固定順',
     modeAlphaVowel:   '固定順',
     lineText:         `ヘブライ語Alefbet道場\n旧約聖書を原典で読むための第一歩\n`,
     sharePrefix:      ['難読すぎる', '知る人ぞ知る', '3000年前の', '超難解'],

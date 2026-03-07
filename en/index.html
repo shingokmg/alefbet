@@ -72,7 +72,7 @@
 
         <div class="type-section">
           <div class="type-section-header">
-            <div class="type-section-title">Quiz Mode</div>
+            <div class="type-section-title">Quiz Mode<button class="info-btn" id="info-btn-type" type="button" aria-label="About Quiz Mode"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button></div>
             <button class="extra-toggle-link" id="extra-section-toggle" type="button">Show All<svg class="extra-section-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
           </div>
           <div class="type-options" id="type-options">
@@ -129,25 +129,25 @@
         </div>
 
         <div class="mode-section" id="mode-section">
-          <div class="mode-section-title">Order</div>
+          <div class="mode-section-title">Order<button class="info-btn" id="info-btn-mode" type="button" aria-label="About Order"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button></div>
           <div class="mode-options">
-            <label class="mode-option" id="mode-label-random">
-              <input type="radio" name="mode" value="random">
-              <div class="mode-option-text">
-                <span class="mode-option-name">Random</span>
-              </div>
-            </label>
             <label class="mode-option" id="mode-label-alpha">
               <input type="radio" name="mode" value="alpha">
               <div class="mode-option-text">
                 <span class="mode-option-name">In Order</span>
               </div>
             </label>
+            <label class="mode-option" id="mode-label-random">
+              <input type="radio" name="mode" value="random">
+              <div class="mode-option-text">
+                <span class="mode-option-name">Random</span>
+              </div>
+            </label>
           </div>
         </div>
 
         <div class="font-section">
-          <div class="font-section-title">Font (optional)</div>
+          <div class="font-section-title">Font<button class="info-btn" id="info-btn-font" type="button" aria-label="About Font"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button></div>
           <div class="font-options" id="font-options">
             <!-- populated by JS -->
           </div>
@@ -263,8 +263,56 @@
 
   </main>
 
+  <!-- Info Modal -->
+  <div class="info-modal-overlay hidden" id="info-modal-overlay">
+    <div class="info-modal">
+      <button class="info-modal-close" id="info-modal-close" aria-label="Close">×</button>
+      <div class="info-modal-title" id="info-modal-title"></div>
+      <div class="info-modal-body" id="info-modal-body"></div>
+    </div>
+  </div>
+
   <script src="../app.js"></script>
   <script>
+    (function() {
+      var INFO = {
+        type: {
+          title: 'About Quiz Mode',
+          body: '<p>Go from top to bottom. That\'s the recommended order.</p>' +
+                '<p>Start with letter names and sounds, then move on to dagesh and vowel marks. Finish with the <strong>🏆 30-Second Challenge</strong>.</p>' +
+                '<p>Quizzes under "Show All" aren\'t required for the 30-Second Challenge. Save them for later if you\'d like.</p>'
+        },
+        mode: {
+          title: 'About Order',
+          body: '<p><strong>In Order</strong>: Letters start from alef, and vowel marks start from hateph pataḥ. The order is always fixed. Recommended until you get the hang of it.</p>' +
+                '<p><strong>Random</strong>: Questions are reshuffled every time.</p>'
+        },
+        font: {
+          title: 'About Font',
+          body: '<p>Start with <strong>Cardo</strong>. The letter shapes are clear and easy to recognize.</p>' +
+                '<p>Hebrew letters can look quite different from font to font, so once you\'re comfortable, try a few others too.</p>'
+        }
+      };
+      var overlay = document.getElementById('info-modal-overlay');
+      var titleEl = document.getElementById('info-modal-title');
+      var bodyEl = document.getElementById('info-modal-body');
+
+      function openInfo(key) {
+        titleEl.textContent = INFO[key].title;
+        bodyEl.innerHTML = INFO[key].body;
+        overlay.classList.remove('hidden');
+      }
+      function closeInfo() {
+        overlay.classList.add('hidden');
+      }
+
+      document.getElementById('info-btn-type').addEventListener('click', function(e) { e.stopPropagation(); openInfo('type'); });
+      document.getElementById('info-btn-mode').addEventListener('click', function(e) { e.stopPropagation(); openInfo('mode'); });
+      document.getElementById('info-btn-font').addEventListener('click', function(e) { e.stopPropagation(); openInfo('font'); });
+      document.getElementById('info-modal-close').addEventListener('click', closeInfo);
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) closeInfo(); });
+    })();
+
     document.getElementById('extra-section-toggle').addEventListener('click', function() {
       document.getElementById('type-options').classList.toggle('show-all');
       this.classList.toggle('open');

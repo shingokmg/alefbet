@@ -77,7 +77,7 @@
 
         <div class="type-section">
           <div class="type-section-header">
-            <div class="type-section-title">練習内容</div>
+            <div class="type-section-title">練習内容<button class="info-btn" id="info-btn-type" type="button" aria-label="練習内容について"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button></div>
             <button class="extra-toggle-link" id="extra-section-toggle" type="button">全て表示<svg class="extra-section-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
           </div>
           <div class="type-options" id="type-options">
@@ -134,25 +134,25 @@
         </div>
 
         <div class="mode-section" id="mode-section">
-          <div class="mode-section-title">出題形式</div>
+          <div class="mode-section-title">出題形式<button class="info-btn" id="info-btn-mode" type="button" aria-label="出題形式について"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button></div>
           <div class="mode-options">
-            <label class="mode-option" id="mode-label-random">
-              <input type="radio" name="mode" value="random">
-              <div class="mode-option-text">
-                <span class="mode-option-name">ランダム</span>
-              </div>
-            </label>
             <label class="mode-option" id="mode-label-alpha">
               <input type="radio" name="mode" value="alpha">
               <div class="mode-option-text">
                 <span class="mode-option-name">Alefbet順</span>
               </div>
             </label>
+            <label class="mode-option" id="mode-label-random">
+              <input type="radio" name="mode" value="random">
+              <div class="mode-option-text">
+                <span class="mode-option-name">ランダム</span>
+              </div>
+            </label>
           </div>
         </div>
 
         <div class="font-section">
-          <div class="font-section-title">フォント（任意）</div>
+          <div class="font-section-title">フォント<button class="info-btn" id="info-btn-font" type="button" aria-label="フォントについて"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button></div>
           <div class="font-options" id="font-options">
             <!-- populated by JS -->
           </div>
@@ -260,8 +260,56 @@
 
   </main>
 
+  <!-- Info Modal -->
+  <div class="info-modal-overlay hidden" id="info-modal-overlay">
+    <div class="info-modal">
+      <button class="info-modal-close" id="info-modal-close" aria-label="閉じる">×</button>
+      <div class="info-modal-title" id="info-modal-title"></div>
+      <div class="info-modal-body" id="info-modal-body"></div>
+    </div>
+  </div>
+
   <script src="app.js"></script>
   <script>
+    (function() {
+      var INFO = {
+        type: {
+          title: '練習内容について',
+          body: '<p>上から順に進めるのがオススメです。</p>' +
+                '<p>まず文字の名前と発音を覚え、ダゲシュ・母音記号と進んで、最後に<strong>🏆 30秒チャレンジ</strong>でスピードと正確性に磨きをかけましょう。</p>' +
+                '<p>「全て表示」の練習項目は、30秒チャレンジには必須ではありません。一旦後回しにしても大丈夫です。</p>'
+        },
+        mode: {
+          title: '出題形式について',
+          body: '<p><strong>固定順</strong>：ヘブライ文字はアレフから、母音記号はハテフ・パタハから毎回同じ順番で出題します。慣れるまではこちらがオススメです。</p>' +
+                '<p><strong>ランダム</strong>：問題をシャッフルして出題します。</p>'
+        },
+        font: {
+          title: 'フォントについて',
+          body: '<p>まずは文字の特徴がつかみやすい <strong>Cardo</strong> からはじめるのがオススメです。</p>' +
+                '<p>ヘブライ語はフォントによって字形が大きく変わるため、慣れてきたら複数のフォントにも挑戦してみましょう。</p>'
+        }
+      };
+      var overlay = document.getElementById('info-modal-overlay');
+      var titleEl = document.getElementById('info-modal-title');
+      var bodyEl = document.getElementById('info-modal-body');
+
+      function openInfo(key) {
+        titleEl.textContent = INFO[key].title;
+        bodyEl.innerHTML = INFO[key].body;
+        overlay.classList.remove('hidden');
+      }
+      function closeInfo() {
+        overlay.classList.add('hidden');
+      }
+
+      document.getElementById('info-btn-type').addEventListener('click', function(e) { e.stopPropagation(); openInfo('type'); });
+      document.getElementById('info-btn-mode').addEventListener('click', function(e) { e.stopPropagation(); openInfo('mode'); });
+      document.getElementById('info-btn-font').addEventListener('click', function(e) { e.stopPropagation(); openInfo('font'); });
+      document.getElementById('info-modal-close').addEventListener('click', closeInfo);
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) closeInfo(); });
+    })();
+
     document.getElementById('extra-section-toggle').addEventListener('click', function() {
       document.getElementById('type-options').classList.toggle('show-all');
       this.classList.toggle('open');
