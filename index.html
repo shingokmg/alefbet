@@ -76,8 +76,11 @@
         </p>
 
         <div class="type-section">
-          <div class="type-section-title">練習内容</div>
-          <div class="type-options">
+          <div class="type-section-header">
+            <div class="type-section-title">練習内容</div>
+            <button class="extra-toggle-link" id="extra-section-toggle" type="button">全て表示<svg class="extra-section-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          </div>
+          <div class="type-options" id="type-options">
             <label class="type-option" id="type-label-consonant">
               <input type="radio" name="quizType" value="consonant">
               <div class="type-option-text">
@@ -92,7 +95,7 @@
                 <span class="type-option-count">28問</span>
               </div>
             </label>
-            <label class="type-option" id="type-label-consonant-reverse">
+            <label class="type-option type-option--extra" id="type-label-consonant-reverse">
               <input type="radio" name="quizType" value="consonant-reverse">
               <div class="type-option-text">
                 <span class="type-option-name">ヘブライ文字　名前 → 字形</span>
@@ -102,7 +105,7 @@
             <label class="type-option" id="type-label-dagesh">
               <input type="radio" name="quizType" value="dagesh">
               <div class="type-option-text">
-                <span class="type-option-name">ダゲシュ　あり/なし → 発音</span>
+                <span class="type-option-name">ダゲシュ あり/なし → 発音</span>
                 <span class="type-option-count">12問</span>
               </div>
             </label>
@@ -113,17 +116,17 @@
                 <span class="type-option-count">16問</span>
               </div>
             </label>
-            <label class="type-option" id="type-label-vowel-name">
+            <label class="type-option type-option--extra" id="type-label-vowel-name">
               <input type="radio" name="quizType" value="vowel-name">
               <div class="type-option-text">
                 <span class="type-option-name">母音記号 → 名前</span>
                 <span class="type-option-count">16問</span>
               </div>
             </label>
-            <label class="type-option" id="type-label-syllable">
+            <label class="type-option type-option--challenge" id="type-label-syllable">
               <input type="radio" name="quizType" value="syllable">
               <div class="type-option-text">
-                <span class="type-option-name">文字・母音記号 → ローマ字転写</span>
+                <span class="type-option-name"><span id="challenge-rank-icon">🏆</span> 30秒チャレンジ</span>
                 <span class="type-option-count">389問</span>
               </div>
             </label>
@@ -144,24 +147,6 @@
               <div class="mode-option-text">
                 <span class="mode-option-name">Alefbet順</span>
               </div>
-            </label>
-          </div>
-        </div>
-
-        <div class="mode-section" id="count-section" style="display:none;">
-          <div class="mode-section-title">出題数</div>
-          <div class="mode-options" style="grid-template-columns:1fr 1fr 1fr;">
-            <label class="mode-option">
-              <input type="radio" name="syllableCount" value="10">
-              <div class="mode-option-text"><span class="mode-option-name">10問</span></div>
-            </label>
-            <label class="mode-option">
-              <input type="radio" name="syllableCount" value="20">
-              <div class="mode-option-text"><span class="mode-option-name">20問</span></div>
-            </label>
-            <label class="mode-option">
-              <input type="radio" name="syllableCount" value="30">
-              <div class="mode-option-text"><span class="mode-option-name">30問</span></div>
             </label>
           </div>
         </div>
@@ -231,6 +216,7 @@
     <div id="result-screen" class="hidden">
       <div class="result-card">
         <h2 class="result-title">クイズ終了！</h2>
+        <div class="result-rank hidden" id="result-rank"></div>
 
         <div class="result-stats">
           <div class="result-stat">
@@ -238,7 +224,7 @@
             <div class="result-stat-value" id="result-score"></div>
           </div>
           <div class="result-stat">
-            <div class="result-stat-label">タイム</div>
+            <div class="result-stat-label" id="result-time-label">タイム</div>
             <div class="result-stat-value" id="result-time"></div>
           </div>
         </div>
@@ -276,6 +262,10 @@
 
   <script src="app.js"></script>
   <script>
+    document.getElementById('extra-section-toggle').addEventListener('click', function() {
+      document.getElementById('type-options').classList.toggle('show-all');
+      this.classList.toggle('open');
+    });
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js');
     }

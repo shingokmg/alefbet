@@ -226,11 +226,40 @@ body {
   text-align: left;
 }
 
+.type-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
 .type-section-title {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 0.75rem;
+}
+
+.extra-toggle-link {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.extra-toggle-link:hover { color: #17B890; }
+
+.extra-toggle-link .extra-section-chevron {
+  transition: transform 0.2s;
+}
+
+.extra-toggle-link.open .extra-section-chevron {
+  transform: rotate(180deg);
 }
 
 .type-options {
@@ -286,6 +315,23 @@ body {
   font-size: 0.75rem;
   color: var(--text-sub);
   white-space: nowrap;
+}
+
+/* Challenge option */
+.type-option--challenge {
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 2px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Extra practice options (hidden until "全て表示") */
+.type-option--extra {
+  display: none;
+  background: var(--border);
+  border-color: var(--border-mid);
+}
+
+.type-options.show-all .type-option--extra {
+  display: flex;
 }
 
 /* Font selection */
@@ -694,7 +740,26 @@ body {
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.result-rank {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.rank-emoji {
+  font-size: 5rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.rank-label {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
 }
 
 .result-stats {

@@ -3,12 +3,29 @@
 const APP_URL = 'https://alefbet.jp';
 const LANG = localStorage.getItem('alefbet-lang') === 'en' ? 'en' : 'ja';
 
+const CHALLENGE_DURATION = 30;
+
 const STRINGS = {
   ja: {
     retryWrong:       n => `${n}問 復習する`,
     retryAgain:       'もう一度',
     titlePerfect:     '🎉 完全制覇！',
     titleComplete:    'クイズ終了！',
+    titleChallenge:   'チャレンジ終了！',
+    rankChallenge:    n => n >= 25 ? '👑 特級' :
+                          n >= 20 ? '🥇 1級' :
+                          n >= 15 ? '🥈 2級' :
+                          n >= 10 ? '🥉 3級' :
+                          n >=  5 ? '👏 4級' :
+                                    '👍 5級',
+    msgChallenge:     n => n >= 25 ? '極めて高いレベルの反射神経です！ もう文字を読むことで思考が止まることはないはずです。' :
+                          n >= 20 ? '素晴らしい集中力と正確性です。ヘブライ語学習の確固たる土台が完成しました！' :
+                          n >= 15 ? '見事です！ スムーズに読めるようになり、日々の修練の成果がはっきりと現れています。' :
+                          n >= 10 ? '素晴らしい！ 文字と音がしっかりと結びついてきましたね。' :
+                          n >=  5 ? '文字と音が繋がり始めましたね！ この調子で反復すれば、さらにスピードアップできます。' :
+                                    'ナイスチャレンジ！ ヘブライ文字は最初は誰でも戸惑うものです。焦らずいきましょう。',
+    timeLabelChallenge: 'クリア',
+    timeLabelNormal:    'タイム',
     msg100:           '全問正解！完全制覇おめでとうございます。',
     msg90:            '惜しい！あと一歩で完全制覇です。',
     msg75:            '基礎はしっかり身についています。繰り返して完璧を目指しましょう。',
@@ -33,6 +50,21 @@ const STRINGS = {
     retryAgain:       'Try Again',
     titlePerfect:     '🎉 Perfect Score!',
     titleComplete:    'Quiz Complete!',
+    titleChallenge:   "Time's Up!",
+    rankChallenge:    n => n >= 25 ? '👑 Master' :
+                          n >= 20 ? '🥇 Tier 1' :
+                          n >= 15 ? '🥈 Tier 2' :
+                          n >= 10 ? '🥉 Tier 3' :
+                          n >=  5 ? '👏 Tier 4' :
+                                    '👍 Tier 5',
+    msgChallenge:     n => n >= 25 ? 'Incredible speed! Reading Hebrew now feels second nature.' :
+                          n >= 20 ? 'Outstanding focus and accuracy. You\'ve built a rock-solid foundation in Hebrew.' :
+                          n >= 15 ? 'Impressive! You\'re reading smoothly — your daily practice is clearly paying off.' :
+                          n >= 10 ? 'Great progress! The more you repeat, the faster you\'ll get.' :
+                          n >=  5 ? 'Letters and sounds are starting to click. Keep going — you\'ll pick up speed.' :
+                                    'Nice try! Hebrew letters take time to get used to. No rush — you\'ve got this.',
+    timeLabelChallenge: 'Cleared',
+    timeLabelNormal:    'Time',
     msg100:           'Perfect score! Congratulations on mastering all the questions!',
     msg90:            'So close! One more step to a perfect score.',
     msg75:            'Good foundation! Keep practicing to reach perfection.',
@@ -527,9 +559,10 @@ const FONTS = [
   { value: 'Assistant',        style: 'サンセリフ', styleEn: 'Sans-Serif', previewSize: '1.4rem'  },
 ];
 
-const STORAGE_KEY_FONT = 'hebrew-quiz-font';
-const STORAGE_KEY_MODE = 'hebrew-quiz-mode';
-const STORAGE_KEY_TYPE = 'hebrew-quiz-type';
+const STORAGE_KEY_FONT            = 'hebrew-quiz-font';
+const STORAGE_KEY_MODE            = 'hebrew-quiz-mode';
+const STORAGE_KEY_TYPE            = 'hebrew-quiz-type';
+const STORAGE_KEY_CHALLENGE_BEST  = 'alefbet-challenge-best';
 const PREVIEW_CHAR = 'שׁלום'; // preview word shown on start screen (שׁ = shin with shin dot)
 
 // --- i18n helpers ---
@@ -547,7 +580,6 @@ let answered       = false;
 let selectedFont    = localStorage.getItem(STORAGE_KEY_FONT) || 'Cardo';
 let selectedMode    = localStorage.getItem(STORAGE_KEY_MODE) || 'random';
 let quizType        = localStorage.getItem(STORAGE_KEY_TYPE) || 'consonant';
-let syllableCount   = parseInt(localStorage.getItem('hebrew-quiz-syllable-count') || '20', 10);
 let selectedAnswers = [];
 
 // Timer state
@@ -627,6 +659,22 @@ function isSyllableType() {
   return quizType === 'syllable';
 }
 
+function challengeBestEmoji() {
+  const best = parseInt(localStorage.getItem(STORAGE_KEY_CHALLENGE_BEST) || '-1', 10);
+  if (best >= 25) return '👑';
+  if (best >= 20) return '🥇';
+  if (best >= 15) return '🥈';
+  if (best >= 10) return '🥉';
+  if (best >=  5) return '👏';
+  if (best >=  0) return '👍';
+  return '🏆';
+}
+
+function updateChallengeIcon() {
+  const el = document.getElementById('challenge-rank-icon');
+  if (el) el.textContent = challengeBestEmoji();
+}
+
 function isDageshType() {
   return quizType === 'dagesh';
 }
@@ -699,11 +747,20 @@ function buildFontOptions() {
 // --- Timer ---
 function startTimer() {
   elapsedSeconds = 0;
-  timerEl.textContent = formatTime(0);
-  timerInterval = setInterval(() => {
-    elapsedSeconds++;
-    timerEl.textContent = formatTime(elapsedSeconds);
-  }, 1000);
+  if (isSyllableType()) {
+    timerEl.textContent = formatTime(CHALLENGE_DURATION);
+    timerInterval = setInterval(() => {
+      elapsedSeconds++;
+      timerEl.textContent = formatTime(CHALLENGE_DURATION - elapsedSeconds);
+      if (elapsedSeconds >= CHALLENGE_DURATION) finishQuiz();
+    }, 1000);
+  } else {
+    timerEl.textContent = formatTime(0);
+    timerInterval = setInterval(() => {
+      elapsedSeconds++;
+      timerEl.textContent = formatTime(elapsedSeconds);
+    }, 1000);
+  }
 }
 
 function resumeTimer() {
@@ -742,7 +799,7 @@ function startQuiz() {
   const data    = getQuizData();
   const indices = data.map((_, i) => i);
   if (isSyllableType()) {
-    shuffledOrder = shuffle(indices).slice(0, syllableCount);
+    shuffledOrder = shuffle(indices);
   } else if (isDageshType()) {
     shuffledOrder = shuffle(indices);
   } else {
@@ -776,6 +833,7 @@ function startWrongOnlyQuiz() {
 
   applyFont(selectedFont);
   showQuizScreen();
+  elapsedSeconds = 0;
   resumeTimer();
   showQuestion();
 }
@@ -992,42 +1050,81 @@ function nextQuestion() {
 }
 
 function updateProgressDisplay() {
-  const questionNum = currentIndex + 1;
-  const total       = shuffledOrder.length;
-  progressBar.style.width = `${((questionNum - 1) / total) * 100}%`;
-  progressText.innerHTML =
-    `${questionNum} / ${total}${S.progressUnit}` +
-    `　<span class="progress-correct">${S.correctMark} ${correctCount}</span>` +
-    `　<span class="progress-wrong">${S.wrongMark} ${incorrectCount}</span>`;
+  if (isSyllableType()) {
+    progressBar.style.width = `${Math.min((elapsedSeconds / CHALLENGE_DURATION) * 100, 100)}%`;
+    progressText.innerHTML =
+      `<span class="progress-correct">${S.correctMark} ${correctCount}</span>` +
+      `　<span class="progress-wrong">${S.wrongMark} ${incorrectCount}</span>`;
+  } else {
+    const questionNum = currentIndex + 1;
+    const total       = shuffledOrder.length;
+    progressBar.style.width = `${((questionNum - 1) / total) * 100}%`;
+    progressText.innerHTML =
+      `${questionNum} / ${total}${S.progressUnit}` +
+      `　<span class="progress-correct">${S.correctMark} ${correctCount}</span>` +
+      `　<span class="progress-wrong">${S.wrongMark} ${incorrectCount}</span>`;
+  }
 }
 
 function finishQuiz() {
   stopTimer();
   showResultScreen();
 
-  const total    = shuffledOrder.length;
-  const accuracy = Math.round((correctCount / total) * 100);
+  const answered = isSyllableType() ? (correctCount + incorrectCount) : shuffledOrder.length;
+  const accuracy = answered > 0 ? Math.round((correctCount / answered) * 100) : 0;
 
-  retryBtn.textContent = incorrectCount > 0
+  retryBtn.textContent = (!isSyllableType() && incorrectCount > 0)
     ? S.retryWrong(incorrectCount)
     : S.retryAgain;
 
   resultScore.innerHTML = `${accuracy}<span class="result-unit">%</span>`;
-  resultTime.textContent  = formatTime(elapsedSeconds);
   document.getElementById('result-detail').innerHTML =
     `<span class="progress-correct">${S.correctMark} ${correctCount}</span>　<span class="progress-wrong">${S.wrongMark} ${incorrectCount}</span>`;
 
-  const resultCard  = document.querySelector('.result-card');
-  const resultTitle = document.querySelector('.result-title');
+  const resultCard      = document.querySelector('.result-card');
+  const resultTitle     = document.querySelector('.result-title');
+  const resultTimeLabel = document.getElementById('result-time-label');
 
   let msg;
-  if (accuracy === 100) {
+  const resultRank = document.getElementById('result-rank');
+  if (isSyllableType()) {
+    resultTitle.classList.add('hidden');
+    if (resultRank) {
+      const [emoji, ...labelParts] = S.rankChallenge(correctCount).split(' ');
+      resultRank.innerHTML = `<span class="rank-emoji">${emoji}</span><span class="rank-label">${labelParts.join(' ')}</span>`;
+      resultRank.classList.remove('hidden');
+    }
+    if (resultTimeLabel) resultTimeLabel.textContent = S.timeLabelChallenge;
+    resultTime.innerHTML = S.progressUnit
+      ? `${correctCount}<span class="result-unit">${S.progressUnit}</span>`
+      : `${correctCount}`;
+    const prevBest = parseInt(localStorage.getItem(STORAGE_KEY_CHALLENGE_BEST) || '-1', 10);
+    if (correctCount > prevBest) {
+      localStorage.setItem(STORAGE_KEY_CHALLENGE_BEST, correctCount);
+      updateChallengeIcon();
+    }
+    if (correctCount >= 20) {
+      resultCard.classList.add('result-card--perfect');
+      launchConfetti();
+    } else {
+      resultCard.classList.remove('result-card--perfect');
+    }
+    msg = S.msgChallenge(correctCount);
+  } else if (accuracy === 100) {
+    resultTitle.classList.remove('hidden');
+    if (resultRank) resultRank.classList.add('hidden');
     msg = S.msg100;
     resultTitle.textContent = S.titlePerfect;
+    if (resultTimeLabel) resultTimeLabel.textContent = S.timeLabelNormal;
+    resultTime.textContent = formatTime(elapsedSeconds);
     resultCard.classList.add('result-card--perfect');
     launchConfetti();
   } else {
+    resultTitle.classList.remove('hidden');
+    if (resultRank) resultRank.classList.add('hidden');
     resultTitle.textContent = S.titleComplete;
+    if (resultTimeLabel) resultTimeLabel.textContent = S.timeLabelNormal;
+    resultTime.textContent = formatTime(elapsedSeconds);
     resultCard.classList.remove('result-card--perfect');
     if (accuracy >= 90)      msg = S.msg90;
     else if (accuracy >= 75) msg = S.msg75;
@@ -1132,17 +1229,27 @@ function shareToX() {
     quiz_type: quizType,
     accuracy:  accuracy,
   });
-  const quizLabel = isDageshType() ? S.shareLabelDagesh
-    : isSyllableType() ? S.shareLabelSyllable
-    : isVowelType() ? S.shareLabelVowel : S.shareLabelLetter;
   const shareUrl = LANG === 'en' ? `${APP_URL}/en/` : APP_URL;
-  const text = LANG === 'en'
-    ? `📜 Hebrew Alefbet quiz: ${accuracy}% correct in ${formatTime(elapsedSeconds)}\n${S.shareHashtag} ${shareUrl}`
-    : [
-        `${S.sharePrefix[Math.floor(Math.random() * S.sharePrefix.length)]}${S.shareChallenge}`,
-        `${quizLabel}${accuracy}% / ${formatTime(elapsedSeconds)}`,
-        `${S.shareHashtag} ${shareUrl}`,
-      ].join('\n');
+  let text;
+  if (isSyllableType()) {
+    text = LANG === 'en'
+      ? `📜 Hebrew Alefbet 30-sec challenge:\n${S.rankChallenge(correctCount)} — ${correctCount} answered\n${S.shareHashtag} ${shareUrl}`
+      : [
+          `${S.sharePrefix[Math.floor(Math.random() * S.sharePrefix.length)]}${S.shareChallenge}`,
+          `30秒チャレンジ ${S.rankChallenge(correctCount).replace(' ', '')}（${correctCount}問クリア）`,
+          `${S.shareHashtag} ${shareUrl}`,
+        ].join('\n');
+  } else {
+    const quizLabel = isDageshType() ? S.shareLabelDagesh
+      : isVowelType() ? S.shareLabelVowel : S.shareLabelLetter;
+    text = LANG === 'en'
+      ? `📜 Hebrew Alefbet quiz: ${accuracy}% correct in ${formatTime(elapsedSeconds)}\n${S.shareHashtag} ${shareUrl}`
+      : [
+          `${S.sharePrefix[Math.floor(Math.random() * S.sharePrefix.length)]}${S.shareChallenge}`,
+          `${quizLabel}${accuracy}% / ${formatTime(elapsedSeconds)}`,
+          `${S.shareHashtag} ${shareUrl}`,
+        ].join('\n');
+  }
 
   const url = new URL('https://twitter.com/intent/tweet');
   url.searchParams.set('text', text);
@@ -1154,10 +1261,8 @@ function updateModeLabels() {
   const nameEl = document.querySelector('#mode-label-alpha .mode-option-name');
   if (nameEl) nameEl.innerHTML = isVowelType() ? S.modeAlphaVowel : S.modeAlpha;
 
-  const modeSection  = document.getElementById('mode-section');
-  const countSection = document.getElementById('count-section');
-  if (modeSection)  modeSection.style.display  = (isSyllableType() || isDageshType()) ? 'none' : '';
-  if (countSection) countSection.style.display = isSyllableType() ? '' : 'none';
+  const modeSection = document.getElementById('mode-section');
+  if (modeSection) modeSection.style.display = (isSyllableType() || isDageshType()) ? 'none' : '';
 }
 
 const typeRadios = document.querySelectorAll('input[name="quizType"]');
@@ -1169,14 +1274,14 @@ typeRadios.forEach(radio => {
     updateModeLabels();
   });
 });
+// Auto-show extra options if saved type is in the supplementary group
+if (quizType === 'consonant-reverse' || quizType === 'vowel-name') {
+  const typeOptions = document.getElementById('type-options');
+  if (typeOptions) typeOptions.classList.add('show-all');
+  const extraToggle = document.getElementById('extra-section-toggle');
+  if (extraToggle) extraToggle.classList.add('open');
+}
 
-document.querySelectorAll('input[name="syllableCount"]').forEach(radio => {
-  if (parseInt(radio.value, 10) === syllableCount) radio.checked = true;
-  radio.addEventListener('change', () => {
-    syllableCount = parseInt(radio.value, 10);
-    localStorage.setItem('hebrew-quiz-syllable-count', radio.value);
-  });
-});
 
 modeRadios.forEach(radio => {
   if (radio.value === selectedMode) radio.checked = true;
@@ -1225,6 +1330,13 @@ document.addEventListener('keydown', e => {
     if (answered) return;
     const correctBtn = [...choiceBtns].find(b => b.dataset.correct === 'true' && !b.disabled);
     if (correctBtn) handleAnswer(correctBtn);
+    return;
+  }
+
+  // Debug: z → end challenge immediately
+  if (e.key === 'z' && isSyllableType()) {
+    elapsedSeconds = CHALLENGE_DURATION;
+    finishQuiz();
     return;
   }
 
@@ -1304,4 +1416,5 @@ document.querySelectorAll('[data-lang-link]').forEach(a => {
 // --- Init ---
 buildFontOptions();
 updateModeLabels();
+updateChallengeIcon();
 showStartScreen();
