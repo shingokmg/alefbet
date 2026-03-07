@@ -65,7 +65,7 @@ const STRINGS = {
                                     'Nice try! Hebrew letters take time to get used to. No rush — you\'ve got this.',
     timeLabelChallenge: 'Cleared',
     timeLabelNormal:    'Time',
-    msg100:           'Perfect score! Want to share your result?',
+    msg100:           'Congratulations! Want to share your result?',
     msg90:            'So close! Try one more time and go for a perfect score.',
     msg75:            'Nice work! Review the ones you missed and aim for a perfect score.',
     msg50:            'Over halfway there! Practice makes it stick. Bookmark this page to come back later.',
