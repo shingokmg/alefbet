@@ -200,10 +200,17 @@ a:hover {
 .legal-footer-links {
   margin-top: 0.4rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.legal-footer-row {
+  display: flex;
   align-items: center;
   gap: 0.4rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .legal-footer-link {
@@ -214,6 +221,14 @@ a:hover {
 .legal-footer-link:hover {
   color: #17B890;
   text-decoration: underline;
+}
+
+.legal-footer-link--accent { color: #17B890; }
+
+.legal-footer-link--current {
+  color: var(--text-footer);
+  text-decoration: underline;
+  cursor: default;
 }
 
 .legal-footer-sep {
