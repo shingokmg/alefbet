@@ -1,4 +1,5 @@
 CLAUDE.md
 .claudeignore
+.claude/
 .DS_Store
 *.csv
