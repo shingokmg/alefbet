@@ -596,13 +596,22 @@ body {
   line-height: 1.1;
   text-align: center;
   color: var(--text-heading);
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   min-height: 10rem;
   display: flex;
   align-items: center;
   justify-content: center;
   letter-spacing: 0;
   user-select: none;
+}
+
+.vowel-length-label {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
 }
 
 /* Choice buttons */

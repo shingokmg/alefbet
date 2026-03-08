@@ -42,6 +42,7 @@ const STRINGS = {
     shareLabelDagesh:   'ダゲシュクイズの正答率',
     shareChallenge:   'ヘブライ語に挑戦中✨',
     shareHashtag:     '#Alefbet道場',
+    vowelLengthLabel: { 'ultra-short': '最短母音', 'sheva': 'シェワ', 'short': '短母音', 'long': '長母音', 'mixed': '' },
     correctMark:      '○',
     wrongMark:        '✕',
   },
@@ -120,27 +121,40 @@ const LETTERS = [
 ];
 
 const VOWELS = [
-  { display: 'בֲ',  name: 'ハテフ・パタハ',          nameEn: 'Hateph Patah',          sounds: ['a'],        romanized: 'ă'   },
-  { display: 'בֱ',  name: 'ハテフ・セゴル',          nameEn: 'Hateph Segol',          sounds: ['e'],        romanized: 'ĕ'   },
-  { display: 'בֳ',  name: 'ハテフ・カメツ',          nameEn: 'Hateph Qamets',         sounds: ['o'],        romanized: 'ŏ'   },
-  { display: 'בְ',  name: '有音 / 無音シェワ',   nameEn: 'Vocal / Silent Sheva',  sounds: ['ə', '無音'], romanized: 'ə / –' },
-  { display: 'בַ',  name: 'パタハ',                  nameEn: 'Patah',                 sounds: ['a'],        romanized: 'a'   },
-  { display: 'בִ',  name: 'ヒレク',                  nameEn: 'Hiriq',                 sounds: ['i'],        romanized: 'i'   },
-  { display: 'בֻ',  name: 'キブツ',                  nameEn: 'Qibbuts',               sounds: ['u'],        romanized: 'u'   },
-  { display: 'בֶ',  name: 'セゴル',                  nameEn: 'Segol',                 sounds: ['e'],        romanized: 'e'   },
-  { display: 'בָ',  name: '大カメツ / 小カメツ',      nameEn: 'Qamets / Qamets Hatuf', sounds: ['a', 'o'],   romanized: 'ā/o' },
-  { display: 'בֵ',  name: 'ツェレ',                  nameEn: 'Tsere',                 sounds: ['e'],        romanized: 'ē'   },
-  { display: 'בֹ',  name: 'ホレム',                  nameEn: 'Holam',                 sounds: ['o'],        romanized: 'ō'   },
-  { display: 'בָה', name: '大カメツ・ヘー',           nameEn: 'Qamets He',             sounds: ['a'],        romanized: 'â'   },
-  { display: 'בִי', name: 'ヒレク・ヨード',           nameEn: 'Hiriq Yod',             sounds: ['i'],        romanized: 'î'   },
-  { display: 'בוּ', name: 'シュルク',                nameEn: 'Shuruq',                sounds: ['u'],        romanized: 'û'   },
-  { display: 'בֵי', name: 'ツェレ・ヨード',           nameEn: 'Tsere Yod',             sounds: ['e'],        romanized: 'ê'   },
-  { display: 'בוֹ', name: 'ホレム・ワウ',             nameEn: 'Holam Waw',             sounds: ['o'],        romanized: 'ô'   },
+  { display: 'בֲ',  name: 'ハテフ・パタハ',      nameEn: 'Hateph Patah',          sounds: ['a'],        romanized: 'ă',    length: 'ultra-short' },
+  { display: 'בֱ',  name: 'ハテフ・セゴル',      nameEn: 'Hateph Segol',          sounds: ['e'],        romanized: 'ĕ',    length: 'ultra-short' },
+  { display: 'בֳ',  name: 'ハテフ・カメツ',      nameEn: 'Hateph Qamets',         sounds: ['o'],        romanized: 'ŏ',    length: 'ultra-short' },
+  { display: 'בְ',  name: '有音 / 無音シェワ',   nameEn: 'Vocal / Silent Sheva',  sounds: ['ə', '無音'], romanized: 'ə / –', length: 'sheva'       },
+  { display: 'בַ',  name: 'パタハ',              nameEn: 'Patah',                 sounds: ['a'],        romanized: 'a',    length: 'short'       },
+  { display: 'בִ',  name: 'ヒレク',              nameEn: 'Hiriq',                 sounds: ['i'],        romanized: 'i',    length: 'short'       },
+  { display: 'בֻ',  name: 'キブツ',              nameEn: 'Qibbuts',               sounds: ['u'],        romanized: 'u',    length: 'short'       },
+  { display: 'בֶ',  name: 'セゴル',              nameEn: 'Segol',                 sounds: ['e'],        romanized: 'e',    length: 'short'       },
+  { display: 'בָ',  name: '大カメツ / 小カメツ', nameEn: 'Qamets / Qamets Hatuf', sounds: ['a', 'o'],   romanized: 'ā/o',  length: 'mixed'       },
+  { display: 'בֵ',  name: 'ツェレ',              nameEn: 'Tsere',                 sounds: ['e'],        romanized: 'ē',    length: 'long'        },
+  { display: 'בֹ',  name: 'ホレム',              nameEn: 'Holam',                 sounds: ['o'],        romanized: 'ō',    length: 'long'        },
+  { display: 'בָה', name: '大カメツ・ヘー',       nameEn: 'Qamets He',             sounds: ['a'],        romanized: 'â',    length: 'long'        },
+  { display: 'בִי', name: 'ヒレク・ヨード',       nameEn: 'Hiriq Yod',             sounds: ['i'],        romanized: 'î',    length: 'long'        },
+  { display: 'בוּ', name: 'シュルク',            nameEn: 'Shuruq',                sounds: ['u'],        romanized: 'û',    length: 'long'        },
+  { display: 'בֵי', name: 'ツェレ・ヨード',       nameEn: 'Tsere Yod',             sounds: ['e'],        romanized: 'ê',    length: 'long'        },
+  { display: 'בוֹ', name: 'ホレム・ワウ',         nameEn: 'Holam Waw',             sounds: ['o'],        romanized: 'ô',    length: 'long'        },
 ];
 
-const VOWEL_SOUNDS = ['a', 'i', 'u', 'e', 'o', 'ə', '無音'];
+// EN vowel alpha order: same grouping (ultra-short→sheva→short→long) but a-e-i-o-u within each group
+const VOWELS_ALPHA_ORDER_EN = [0,1,2, 3, 4,7,5,8,6, 11,9,14,12,10,15,13];
+
+const VOWEL_SOUNDS = LANG === 'en'
+  ? ['a', 'e', 'i', 'o', 'u', 'ə', '無音']
+  : ['a', 'i', 'u', 'e', 'o', 'ə', '無音'];
+// Randomized decoration pool for wrong choices (ə and 無音 excluded — always fixed)
+const VOWEL_ROMANIZED_POOL = {
+  'a': ['a', 'ā', 'ă', 'â'],
+  'i': ['i', 'î'],
+  'u': ['u', 'û'],
+  'e': ['e', 'ē', 'ĕ', 'ê'],
+  'o': ['o', 'ō', 'ŏ', 'ô'],
+};
 const VOWEL_SOUND_LABELS = LANG === 'en'
-  ? ['a', 'i', 'u', 'e', 'o', 'ə', 'silent']
+  ? ['a', 'e', 'i', 'o', 'u', 'ə', 'silent']
   : VOWEL_SOUNDS;
 
 // 389 syllables: consonant × vowel mark combinations (including begadkephat dagesh variants)
@@ -803,7 +817,11 @@ function startQuiz() {
   } else if (isDageshType()) {
     shuffledOrder = shuffle(indices);
   } else {
-    shuffledOrder = selectedMode === 'alpha' ? indices : shuffle(indices);
+    if (selectedMode === 'alpha') {
+      shuffledOrder = (LANG === 'en' && isVowelType()) ? VOWELS_ALPHA_ORDER_EN : indices;
+    } else {
+      shuffledOrder = shuffle(indices);
+    }
   }
   currentIndex     = 0;
   correctCount     = 0;
@@ -865,11 +883,40 @@ function showQuestion() {
   letterEl.classList.remove('reverse-name');
   choicesEl.classList.remove('vowel-mode', 'reverse-mode');
 
+  // Vowel length label (JA only)
+  const vowelLabelEl = document.getElementById('vowel-length-label');
+  if (vowelLabelEl) {
+    if (isVowelType() && LANG === 'ja') {
+      const lbl = S.vowelLengthLabel[correct.length] || '';
+      vowelLabelEl.textContent = lbl;
+      vowelLabelEl.classList.toggle('hidden', !lbl);
+    } else {
+      vowelLabelEl.classList.add('hidden');
+    }
+  }
+
   if (quizType === 'vowel') {
     choicesEl.classList.add('vowel-mode');
     letterEl.textContent = correct.display;
+    const labels = [...VOWEL_SOUND_LABELS];
+    if (correct.length !== 'sheva') {
+      // Set correct answer label(s)
+      const parts = correct.romanized.split(/\s*\/\s*/);
+      correct.sounds.forEach((sound, i) => {
+        const idx = VOWEL_SOUNDS.indexOf(sound);
+        if (idx !== -1 && parts[i]) labels[idx] = parts[i];
+      });
+      // Randomize wrong choice labels (a/i/u/e/o only; ə and 無音 always fixed)
+      const correctSoundSet = new Set(correct.sounds);
+      VOWEL_SOUNDS.slice(0, 5).forEach((sound, si) => {
+        if (!correctSoundSet.has(sound) && VOWEL_ROMANIZED_POOL[sound]) {
+          const pool = VOWEL_ROMANIZED_POOL[sound];
+          labels[si] = pool[Math.floor(Math.random() * pool.length)];
+        }
+      });
+    }
     choiceBtns.forEach((btn, i) => {
-      btn.textContent     = VOWEL_SOUND_LABELS[i];
+      btn.textContent     = labels[i];
       btn.dataset.correct = correct.sounds.includes(VOWEL_SOUNDS[i]) ? 'true' : 'false';
     });
   } else if (quizType === 'vowel-name') {
