@@ -82,6 +82,7 @@ const STRINGS = {
     shareLabelDagesh:   'Dagesh quiz accuracy: ',
     shareChallenge:   'Studying Hebrew✨',
     shareHashtag:     '#AlefbetDojo',
+    vowelLengthLabel: { 'ultra-short': 'Ultra-short', 'sheva': 'Sheva', 'short': 'Short', 'long': 'Long', 'mixed': '' },
     correctMark:      '✓',
     wrongMark:        '✗',
   },
@@ -139,8 +140,8 @@ const VOWELS = [
   { display: 'בוֹ', name: 'ホレム・ワウ',         nameEn: 'Holam Waw',             sounds: ['o'],        romanized: 'ô',    length: 'long'        },
 ];
 
-// EN vowel alpha order: same grouping (ultra-short→sheva→short→long) but a-e-i-o-u within each group
-const VOWELS_ALPHA_ORDER_EN = [0,1,2, 3, 4,7,5,8,6, 11,9,14,12,10,15,13];
+// EN vowel alpha order: matches en/alefbet.html section order (ultra-short→sheva→short→long→long-mater)
+const VOWELS_ALPHA_ORDER_EN = [0,1,2, 3, 4,7,5,8,6, 9,10, 11,14,12,15,13];
 
 const VOWEL_SOUNDS = LANG === 'en'
   ? ['a', 'e', 'i', 'o', 'u', 'ə', '無音']
@@ -886,10 +887,11 @@ function showQuestion() {
   // Vowel length label (JA only)
   const vowelLabelEl = document.getElementById('vowel-length-label');
   if (vowelLabelEl) {
-    if (isVowelType() && LANG === 'ja') {
+    if (quizType === 'vowel') {
       const lbl = S.vowelLengthLabel[correct.length] || '';
-      vowelLabelEl.textContent = lbl;
-      vowelLabelEl.classList.toggle('hidden', !lbl);
+      const sep = LANG === 'en' ? ': ' : '：';
+      vowelLabelEl.textContent = lbl ? `${lbl}${sep}${vowelName(correct)}` : vowelName(correct);
+      vowelLabelEl.classList.remove('hidden');
     } else {
       vowelLabelEl.classList.add('hidden');
     }
@@ -900,21 +902,21 @@ function showQuestion() {
     letterEl.textContent = correct.display;
     const labels = [...VOWEL_SOUND_LABELS];
     if (correct.length !== 'sheva') {
-      // Set correct answer label(s)
+      // Set correct answer label(s) with diacritics
       const parts = correct.romanized.split(/\s*\/\s*/);
       correct.sounds.forEach((sound, i) => {
         const idx = VOWEL_SOUNDS.indexOf(sound);
         if (idx !== -1 && parts[i]) labels[idx] = parts[i];
       });
-      // Randomize wrong choice labels (a/i/u/e/o only; ə and 無音 always fixed)
-      const correctSoundSet = new Set(correct.sounds);
-      VOWEL_SOUNDS.slice(0, 5).forEach((sound, si) => {
-        if (!correctSoundSet.has(sound) && VOWEL_ROMANIZED_POOL[sound]) {
-          const pool = VOWEL_ROMANIZED_POOL[sound];
-          labels[si] = pool[Math.floor(Math.random() * pool.length)];
-        }
-      });
     }
+    // Randomize wrong choice labels (a/e/i/o/u only; ə and 無音 always fixed)
+    const correctSoundSet = new Set(correct.sounds);
+    VOWEL_SOUNDS.slice(0, 5).forEach((sound, si) => {
+      if (!correctSoundSet.has(sound) && VOWEL_ROMANIZED_POOL[sound]) {
+        const pool = VOWEL_ROMANIZED_POOL[sound];
+        labels[si] = pool[Math.floor(Math.random() * pool.length)];
+      }
+    });
     choiceBtns.forEach((btn, i) => {
       btn.textContent     = labels[i];
       btn.dataset.correct = correct.sounds.includes(VOWEL_SOUNDS[i]) ? 'true' : 'false';
