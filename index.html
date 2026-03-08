@@ -28,9 +28,6 @@
     (function() {
       var s = localStorage.getItem('alefbet-lang');
       if (s === 'en') { location.replace('en/index.html'); return; }
-      if (!s && navigator.language && navigator.language.toLowerCase().startsWith('en')) {
-        location.replace('en/index.html');
-      }
     })();
     if(localStorage.getItem('hebrew-quiz-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');
   </script>
