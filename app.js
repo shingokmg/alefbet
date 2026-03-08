@@ -538,18 +538,18 @@ const SYLLABLES = [
 
 // ベガドケファト6文字 × ダゲシュあり/なし = 12問（パタハで代表表示）
 const DAGESH = [
-  { display: 'בַּ', romanized: 'b'  },
-  { display: 'בַ',  romanized: 'v'  },
-  { display: 'גַּ', romanized: 'g'  },
-  { display: 'גַ',  romanized: 'gh' },
-  { display: 'דַּ', romanized: 'd'  },
-  { display: 'דַ',  romanized: 'dh' },
-  { display: 'כַּ', romanized: 'k'  },
-  { display: 'כַ',  romanized: 'kh' },
-  { display: 'פַּ', romanized: 'p'  },
-  { display: 'פַ',  romanized: 'f'  },
-  { display: 'תַּ', romanized: 't'  },
-  { display: 'תַ',  romanized: 'th' },
+  { display: 'בּ', romanized: 'b'  },
+  { display: 'ב',  romanized: 'v'  },
+  { display: 'גּ', romanized: 'g'  },
+  { display: 'ג',  romanized: 'gh' },
+  { display: 'דּ', romanized: 'd'  },
+  { display: 'ד',  romanized: 'dh' },
+  { display: 'כּ', romanized: 'k'  },
+  { display: 'כ',  romanized: 'kh' },
+  { display: 'פּ', romanized: 'p'  },
+  { display: 'פ',  romanized: 'f'  },
+  { display: 'תּ', romanized: 't'  },
+  { display: 'ת',  romanized: 'th' },
 ];
 
 const FONTS = [
