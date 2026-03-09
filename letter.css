@@ -1,0 +1,114 @@
+.letter-hero {
+  text-align: center;
+  margin: 1.5rem 0 2rem;
+}
+.letter-glyph {
+  font-family: 'Cardo', serif;
+  font-size: 6rem;
+  line-height: 1;
+  color: #17B890;
+  display: block;
+}
+.letter-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-top: 0.5rem;
+}
+.letter-romanized {
+  font-size: 0.9rem;
+  color: var(--text-sub);
+  margin-top: 0.2rem;
+}
+.letter-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--brand-light-bg);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+}
+.letter-meta-row {
+  display: flex;
+  gap: 0.75rem;
+}
+.letter-meta-label {
+  color: var(--text-sub);
+  flex-shrink: 0;
+  width: 5rem;
+}
+.letter-meta-value {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.word-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+.word-item {
+  border-left: 3px solid #17B890;
+  padding: 0.75rem 1rem;
+  background: var(--bg-card);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.word-hebrew {
+  font-family: 'Cardo', serif;
+  font-size: 3rem;
+  color: var(--text-heading);
+  direction: rtl;
+  display: block;
+  line-height: 1.4;
+  text-align: center;
+}
+.word-roman {
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  margin-top: 0.1rem;
+  text-align: center;
+}
+.word-meaning {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-top: 0.35rem;
+  text-align: center;
+}
+.word-note {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  line-height: 1.8;
+}
+.heb {
+  font-family: 'Cardo', serif;
+  font-size: 1.5em;
+}
+.letter-cta {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.letter-cta-btn {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.75rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.letter-cta-btn:hover { opacity: 0.85; }
+.letter-cta-btn--secondary {
+  background: var(--border);
+  color: var(--text-secondary);
+}
+.letter-cta-btn--primary {
+  background: linear-gradient(135deg, #1de9b6 0%, #17B890 50%, #0d7a60 100%);
+  color: #fff;
+  box-shadow: 0 4px 20px var(--brand-glow);
+}
