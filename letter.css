@@ -87,6 +87,17 @@
   font-family: 'Cardo', serif;
   font-size: 1.5em;
 }
+.bible-attribution {
+  font-size: 0.73rem;
+  color: var(--text-sub);
+  text-align: right;
+  margin-top: 1.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+.bible-attribution cite {
+  font-style: normal;
+}
 .letter-cta {
   margin-top: 2.5rem;
   display: flex;
