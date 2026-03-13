@@ -1,8 +1,10 @@
-const CACHE_NAME = 'alefbet-v4';
+const CACHE_NAME = 'alefbet-v5';
 const ASSETS = [
   '/',
   '/index.html',
   '/app.js',
+  '/base.css',
+  '/theme-toggle.js',
   '/style.css',
   '/alefbet.html',
   '/alefbet.css',

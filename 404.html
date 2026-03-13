@@ -11,6 +11,7 @@
     if (localStorage.getItem('hebrew-quiz-theme') === 'dark')
       document.documentElement.setAttribute('data-theme', 'dark');
   </script>
+  <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="subpage.css">
   <style>
     .not-found-body {
@@ -102,16 +103,7 @@
     var el = document.getElementById('countdown');
     setInterval(function() { if (el && n > 1) el.textContent = --n; }, 1000);
 
-    document.getElementById('theme-toggle').addEventListener('click', function() {
-      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.removeItem('hebrew-quiz-theme');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('hebrew-quiz-theme', 'dark');
-      }
-    });
   </script>
+  <script src="theme-toggle.js"></script>
 </body>
 </html>

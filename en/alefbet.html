@@ -31,6 +31,7 @@
     if (localStorage.getItem('hebrew-quiz-theme') === 'dark')
       document.documentElement.setAttribute('data-theme', 'dark');
   </script>
+  <link rel="stylesheet" href="../base.css">
   <link rel="stylesheet" href="../alefbet.css">
   <style>.ref-sound { display: none; }</style>
   <!-- Google tag (gtag.js) -->
@@ -500,7 +501,7 @@
           <a class="ref-footer-link ref-footer-link--accent" href="about.html">How It Started</a>
         </div>
         <div class="ref-footer-row">
-          <a class="ref-footer-link" href="index.html" style="display:inline-flex;align-items:center;gap:0.3rem;"><svg width="12" height="12" style="transform:translateY(-1px)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Alefbet Dojo</a>
+          <a class="ref-footer-link" href="index.html" class="footer-home-link"><svg width="12" height="12" class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Alefbet Dojo</a>
           <span class="ref-footer-sep">|</span>
           <a class="ref-footer-link" href="contact.html">Contact</a>
           <span class="ref-footer-sep">|</span>
@@ -544,16 +545,7 @@
       gtag('event', 'book_click', { location: 'reference_page' });
     });
 
-    document.getElementById('theme-toggle').addEventListener('click', function() {
-      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.removeItem('hebrew-quiz-theme');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('hebrew-quiz-theme', 'dark');
-      }
-    });
   </script>
+  <script src="../theme-toggle.js"></script>
 </body>
 </html>

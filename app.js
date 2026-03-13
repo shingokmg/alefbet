@@ -5,6 +5,15 @@ const LANG = localStorage.getItem('alefbet-lang') === 'en' ? 'en' : 'ja';
 
 const CHALLENGE_DURATION = 30;
 
+const CHALLENGE_TIERS = [
+  { min: 25, emoji: '👑', ja: '特級',  en: 'Master', msgJa: '極めて高いレベルの反射神経です！ もう文字を読むことで思考が止まることはないはずです。', msgEn: 'Incredible speed! Reading Hebrew now feels second nature.' },
+  { min: 20, emoji: '🥇', ja: '1級',   en: 'Tier 1', msgJa: '素晴らしい集中力と正確性です。ヘブライ語学習の確固たる土台が完成しました！', msgEn: 'Outstanding focus and accuracy. You\'ve built a rock-solid foundation in Hebrew.' },
+  { min: 15, emoji: '🥈', ja: '2級',   en: 'Tier 2', msgJa: '見事です！ スムーズに読めるようになり、日々の修練の成果がはっきりと現れています。', msgEn: 'Impressive! You\'re reading smoothly — your daily practice is clearly paying off.' },
+  { min: 10, emoji: '🥉', ja: '3級',   en: 'Tier 3', msgJa: '素晴らしい！ 文字と音がしっかりと結びついてきましたね。', msgEn: 'Great progress! The more you repeat, the faster you\'ll get.' },
+  { min:  5, emoji: '👏', ja: '4級',   en: 'Tier 4', msgJa: '文字と音が繋がり始めましたね！ この調子で反復すれば、さらにスピードアップできます。', msgEn: 'Letters and sounds are starting to click. Keep going — you\'ll pick up speed.' },
+  { min:  0, emoji: '👍', ja: '5級',   en: 'Tier 5', msgJa: 'ナイスチャレンジ！ ヘブライ文字は最初は誰でも戸惑うものです。焦らずいきましょう。', msgEn: 'Nice try! Hebrew letters take time to get used to. No rush — you\'ve got this.' },
+];
+
 const STRINGS = {
   ja: {
     retryWrong:       n => `${n}問 復習する`,
@@ -12,18 +21,8 @@ const STRINGS = {
     titlePerfect:     '🎉 全問正解！',
     titleComplete:    'クイズ終了！',
     titleChallenge:   'チャレンジ終了！',
-    rankChallenge:    n => n >= 25 ? '👑 特級' :
-                          n >= 20 ? '🥇 1級' :
-                          n >= 15 ? '🥈 2級' :
-                          n >= 10 ? '🥉 3級' :
-                          n >=  5 ? '👏 4級' :
-                                    '👍 5級',
-    msgChallenge:     n => n >= 25 ? '極めて高いレベルの反射神経です！ もう文字を読むことで思考が止まることはないはずです。' :
-                          n >= 20 ? '素晴らしい集中力と正確性です。ヘブライ語学習の確固たる土台が完成しました！' :
-                          n >= 15 ? '見事です！ スムーズに読めるようになり、日々の修練の成果がはっきりと現れています。' :
-                          n >= 10 ? '素晴らしい！ 文字と音がしっかりと結びついてきましたね。' :
-                          n >=  5 ? '文字と音が繋がり始めましたね！ この調子で反復すれば、さらにスピードアップできます。' :
-                                    'ナイスチャレンジ！ ヘブライ文字は最初は誰でも戸惑うものです。焦らずいきましょう。',
+    rankChallenge:    n => { const t = CHALLENGE_TIERS.find(t => n >= t.min); return `${t.emoji} ${t.ja}`; },
+    msgChallenge:     n => CHALLENGE_TIERS.find(t => n >= t.min).msgJa,
     timeLabelChallenge: 'クリア',
     timeLabelNormal:    'タイム',
     msg100:           'おめでとうございます！ この結果、ぜひシェアしてみませんか？',
@@ -52,18 +51,8 @@ const STRINGS = {
     titlePerfect:     '🎉 Perfect Score!',
     titleComplete:    'Quiz Complete!',
     titleChallenge:   "Time's Up!",
-    rankChallenge:    n => n >= 25 ? '👑 Master' :
-                          n >= 20 ? '🥇 Tier 1' :
-                          n >= 15 ? '🥈 Tier 2' :
-                          n >= 10 ? '🥉 Tier 3' :
-                          n >=  5 ? '👏 Tier 4' :
-                                    '👍 Tier 5',
-    msgChallenge:     n => n >= 25 ? 'Incredible speed! Reading Hebrew now feels second nature.' :
-                          n >= 20 ? 'Outstanding focus and accuracy. You\'ve built a rock-solid foundation in Hebrew.' :
-                          n >= 15 ? 'Impressive! You\'re reading smoothly — your daily practice is clearly paying off.' :
-                          n >= 10 ? 'Great progress! The more you repeat, the faster you\'ll get.' :
-                          n >=  5 ? 'Letters and sounds are starting to click. Keep going — you\'ll pick up speed.' :
-                                    'Nice try! Hebrew letters take time to get used to. No rush — you\'ve got this.',
+    rankChallenge:    n => { const t = CHALLENGE_TIERS.find(t => n >= t.min); return `${t.emoji} ${t.en}`; },
+    msgChallenge:     n => CHALLENGE_TIERS.find(t => n >= t.min).msgEn,
     timeLabelChallenge: 'Cleared',
     timeLabelNormal:    'Time',
     msg100:           'Congratulations! Want to share your result?',
@@ -676,13 +665,8 @@ function isSyllableType() {
 
 function challengeBestEmoji() {
   const best = parseInt(localStorage.getItem(STORAGE_KEY_CHALLENGE_BEST) || '-1', 10);
-  if (best >= 25) return '👑';
-  if (best >= 20) return '🥇';
-  if (best >= 15) return '🥈';
-  if (best >= 10) return '🥉';
-  if (best >=  5) return '👏';
-  if (best >=  0) return '👍';
-  return '🏆';
+  const tier = CHALLENGE_TIERS.find(t => best >= t.min);
+  return tier ? tier.emoji : '🏆';
 }
 
 function updateChallengeIcon() {
@@ -880,8 +864,7 @@ function showQuestion() {
 
   updateProgressDisplay();
 
-  letterEl.style.color = '';
-  letterEl.classList.remove('reverse-name');
+  letterEl.classList.remove('letter-correct', 'reverse-name');
   choicesEl.classList.remove('vowel-mode', 'reverse-mode');
 
   // Vowel length label (JA only)
@@ -1026,6 +1009,25 @@ function showQuestion() {
   answered = false;
 }
 
+function markCorrect() {
+  letterEl.classList.add('letter-correct');
+}
+
+function revealCorrectChoices() {
+  choiceBtns.forEach(b => {
+    if (b.dataset.correct === 'true') b.classList.add('correct');
+  });
+}
+
+function disableAllChoices() {
+  choiceBtns.forEach(b => { b.disabled = true; });
+}
+
+function recordIncorrect() {
+  incorrectCount++;
+  incorrectIndices.push(shuffledOrder[currentIndex]);
+}
+
 function handleAnswer(btn) {
   if (answered) return;
 
@@ -1034,28 +1036,22 @@ function handleAnswer(btn) {
 
   if (isMulti) {
     if (btn.dataset.correct === 'false') {
-      // 不正解：即時終了
       answered = true;
       btn.classList.add('wrong');
-      incorrectCount++;
-      incorrectIndices.push(shuffledOrder[currentIndex]);
-      choiceBtns.forEach(b => {
-        if (b.dataset.correct === 'true') b.classList.add('correct');
-        b.disabled = true;
-      });
+      recordIncorrect();
+      revealCorrectChoices();
+      disableAllChoices();
       updateProgressDisplay();
       nextWrap.classList.remove('hidden');
     } else {
-      // 正解の1つを選択
       btn.classList.add('correct');
       btn.disabled = true;
       selectedAnswers.push(btn.textContent);
       if (selectedAnswers.length >= VOWELS[shuffledOrder[currentIndex]].sounds.length) {
-        // 全正解選択完了
         answered = true;
         correctCount++;
-        letterEl.style.color = '#17B890';
-        choiceBtns.forEach(b => { b.disabled = true; });
+        markCorrect();
+        disableAllChoices();
         updateProgressDisplay();
         setTimeout(nextQuestion, 200);
       }
@@ -1063,23 +1059,19 @@ function handleAnswer(btn) {
     return;
   }
 
-  // 単一正解（子音クイズ・単音母音）
   answered = true;
   const isCorrect = btn.dataset.correct === 'true';
 
   if (isCorrect) {
     correctCount++;
-    letterEl.style.color = '#17B890';
+    markCorrect();
   } else {
     btn.classList.add('wrong');
-    incorrectCount++;
-    incorrectIndices.push(shuffledOrder[currentIndex]);
-    choiceBtns.forEach(b => {
-      if (b.dataset.correct === 'true') b.classList.add('correct');
-    });
+    recordIncorrect();
+    revealCorrectChoices();
   }
 
-  choiceBtns.forEach(b => { b.disabled = true; });
+  disableAllChoices();
   updateProgressDisplay();
 
   if (isCorrect) {
@@ -1115,12 +1107,37 @@ function updateProgressDisplay() {
   }
 }
 
+function computeResult() {
+  const total = isSyllableType() ? (correctCount + incorrectCount) : shuffledOrder.length;
+  const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+  return { total, accuracy };
+}
+
+function getResultMessage(accuracy) {
+  if (accuracy >= 100) return S.msg100;
+  if (accuracy >= 90)  return S.msg90;
+  if (accuracy >= 75)  return S.msg75;
+  if (accuracy >= 50)  return S.msg50;
+  return S.msg0;
+}
+
+function logQuizComplete(accuracy) {
+  gtag('event', 'quiz_complete', {
+    quiz_type:       quizType,
+    accuracy:        accuracy,
+    correct:         correctCount,
+    incorrect:       incorrectCount,
+    elapsed_seconds: elapsedSeconds,
+    mode:            selectedMode,
+    font:            selectedFont,
+  });
+}
+
 function finishQuiz() {
   stopTimer();
   showResultScreen();
 
-  const answered = isSyllableType() ? (correctCount + incorrectCount) : shuffledOrder.length;
-  const accuracy = answered > 0 ? Math.round((correctCount / answered) * 100) : 0;
+  const { accuracy } = computeResult();
 
   retryBtn.textContent = (!isSyllableType() && incorrectCount > 0)
     ? S.retryWrong(incorrectCount)
@@ -1133,9 +1150,9 @@ function finishQuiz() {
   const resultCard      = document.querySelector('.result-card');
   const resultTitle     = document.querySelector('.result-title');
   const resultTimeLabel = document.getElementById('result-time-label');
+  const resultRank      = document.getElementById('result-rank');
 
   let msg;
-  const resultRank = document.getElementById('result-rank');
   if (isSyllableType()) {
     resultTitle.classList.add('hidden');
     if (resultRank) {
@@ -1152,7 +1169,7 @@ function finishQuiz() {
       localStorage.setItem(STORAGE_KEY_CHALLENGE_BEST, correctCount);
       updateChallengeIcon();
     }
-    if (correctCount >= 20) {
+    if (correctCount >= CHALLENGE_TIERS[1].min) {
       resultCard.classList.add('result-card--perfect');
       launchConfetti();
     } else {
@@ -1162,12 +1179,12 @@ function finishQuiz() {
   } else if (accuracy === 100) {
     resultTitle.classList.remove('hidden');
     if (resultRank) resultRank.classList.add('hidden');
-    msg = S.msg100;
     resultTitle.textContent = S.titlePerfect;
     if (resultTimeLabel) resultTimeLabel.textContent = S.timeLabelNormal;
     resultTime.textContent = formatTime(elapsedSeconds);
     resultCard.classList.add('result-card--perfect');
     launchConfetti();
+    msg = S.msg100;
   } else {
     resultTitle.classList.remove('hidden');
     if (resultRank) resultRank.classList.add('hidden');
@@ -1175,23 +1192,11 @@ function finishQuiz() {
     if (resultTimeLabel) resultTimeLabel.textContent = S.timeLabelNormal;
     resultTime.textContent = formatTime(elapsedSeconds);
     resultCard.classList.remove('result-card--perfect');
-    if (accuracy >= 90)      msg = S.msg90;
-    else if (accuracy >= 75) msg = S.msg75;
-    else if (accuracy >= 50) msg = S.msg50;
-    else                     msg = S.msg0;
+    msg = getResultMessage(accuracy);
   }
 
   resultMsg.textContent = msg;
-
-  gtag('event', 'quiz_complete', {
-    quiz_type:       quizType,
-    accuracy:        accuracy,
-    correct:         correctCount,
-    incorrect:       incorrectCount,
-    elapsed_seconds: elapsedSeconds,
-    mode:            selectedMode,
-    font:            selectedFont,
-  });
+  logQuizComplete(accuracy);
 }
 
 // --- Confetti ---
