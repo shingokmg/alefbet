@@ -836,7 +836,6 @@ function startWrongOnlyQuiz() {
 
   applyFont(selectedFont);
   showQuizScreen();
-  elapsedSeconds = 0;
   resumeTimer();
   showQuestion();
 }
