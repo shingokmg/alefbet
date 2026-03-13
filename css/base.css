@@ -1,0 +1,73 @@
+/* ================================
+   Base: CSS Variables + Reset
+   Shared across all pages
+================================ */
+:root {
+  --bg: #f0f4f8;
+  --bg-card: #ffffff;
+  --bg-section: #f7fafc;
+  --bg-faint: #fafafa;
+  --text: #2d3748;
+  --text-heading: #1a202c;
+  --text-secondary: #4a5568;
+  --text-sub: #5a677d;
+  --text-footer: #767676;
+  --border: #e2e8f0;
+  --border-mid: #cbd5e0;
+  --border-light: #94a3b8;
+  --brand-light-bg: #E4F9F4;
+  --brand-light-border: #9de8d0;
+  --correct-bg: #c6f6d5;
+  --correct-text: #276749;
+  --correct-border: #38a169;
+  --wrong-bg: #fed7d7;
+  --wrong-text: #742a2a;
+  --wrong-border: #e53e3e;
+  --progress-wrong-color: #c4827a;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow-sm: rgba(0, 0, 0, 0.08);
+  --brand-glow: rgba(23, 184, 144, 0.5);
+  --brand-glow-sm: rgba(23, 184, 144, 0.15);
+  --brand-glow-next: rgba(23, 184, 144, 0.4);
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg-card: #1e293b;
+  --bg-section: #162032;
+  --bg-faint: #1e293b;
+  --text: #e2e8f0;
+  --text-heading: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-sub: #8892a4;
+  --text-footer: #94a3b8;
+  --border: #2d3748;
+  --border-mid: #4a5568;
+  --border-light: #334155;
+  --brand-light-bg: #0a3530;
+  --brand-light-border: #1a4a3e;
+  --correct-bg: #1a3a2a;
+  --correct-text: #6ee7b7;
+  --correct-border: #059669;
+  --wrong-bg: #3a1a1a;
+  --wrong-text: #fca5a5;
+  --wrong-border: #dc2626;
+  --progress-wrong-color: #f87171;
+  --shadow: rgba(0, 0, 0, 0.35);
+  --shadow-sm: rgba(0, 0, 0, 0.25);
+  --brand-glow: rgba(23, 184, 144, 0.3);
+  --brand-glow-sm: rgba(23, 184, 144, 0.1);
+  --brand-glow-next: rgba(23, 184, 144, 0.25);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+}
