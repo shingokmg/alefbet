@@ -154,6 +154,53 @@ a.letter-nav-item:hover {
   color: #17B890;
   font-weight: 600;
 }
+/* ================================
+   Prev / Next Pager
+================================ */
+.letter-pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  gap: 0.5rem;
+}
+
+.letter-pager-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #17B890;
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid var(--brand-light-border);
+  background: var(--brand-light-bg);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.letter-pager-btn:hover {
+  background: var(--brand-light-border);
+  border-color: #17B890;
+  text-decoration: none;
+}
+
+.letter-pager-icon {
+  flex-shrink: 0;
+}
+
+.letter-pager-char {
+  font-family: 'Cardo', serif;
+  font-size: 1.3rem;
+  line-height: 1;
+  direction: rtl;
+}
+
+.letter-pager-btn--next { margin-left: auto; }
+
 .letter-cta {
   margin-top: 2.5rem;
   display: flex;
