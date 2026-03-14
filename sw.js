@@ -1,9 +1,19 @@
-const CACHE_NAME = 'alefbet-v5';
+const CACHE_NAME = 'alefbet-v6';
 const ASSETS = [
   '/',
   '/index.html',
   '/app.js',
   '/css/base.css',
+  '/fonts/assistant-hebrew.woff2',
+  '/fonts/assistant-latin.woff2',
+  '/fonts/cardo-400-hebrew.woff2',
+  '/fonts/cardo-400-latin.woff2',
+  '/fonts/cardo-700-hebrew.woff2',
+  '/fonts/cardo-700-latin.woff2',
+  '/fonts/frank-ruhl-libre-hebrew.woff2',
+  '/fonts/frank-ruhl-libre-latin.woff2',
+  '/fonts/heebo-hebrew.woff2',
+  '/fonts/heebo-latin.woff2',
   '/theme-toggle.js',
   '/css/style.css',
   '/alefbet.html',
