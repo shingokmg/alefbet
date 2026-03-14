@@ -33,8 +33,10 @@
   <meta name="theme-color" content="#17B890">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Alefbet Dojo">
+  <link rel="preload" href="../app.js" as="script">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="preconnect" href="https://www.google-analytics.com">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NCHCEQQXT"></script>
   <script>
@@ -303,7 +305,7 @@
     </div>
   </div>
 
-  <script src="../app.js"></script>
+  <script src="../app.js" defer></script>
   <script>
     (function() {
       var INFO = {
