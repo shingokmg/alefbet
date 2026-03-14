@@ -50,31 +50,48 @@
 
 ## Changelog
 
-| Date | Changes |
-|------|---------|
-| 2026-03-14 | Added audio playback (Web Speech API) to all letter and vowel detail pages |
-|            | Added hints after incorrect answers |
-|            | Added vowel mark detail pages (`/vowels/`) |
-|            | Self-hosted fonts |
-| 2026-03-13 | Site-wide refactoring |
-| 2026-03-10 | Added individual detail pages for all 22 Hebrew letters (`/letters/`) |
-| 2026-03-08 | Added start-screen guide (ⓘ) |
-|            | Redesigned footer |
-|            | Added print button |
-|            | Improved vowel quiz UX |
-| 2026-03-07 | Added dagesh quiz |
-|            | Added letter-form → sound quiz |
-|            | Added 🏆 30-Second Challenge |
-|            | Added FAQ to contact page |
-| 2026-03-06 | Added 404 page with language detection |
-|            | Updated OGP images |
-| 2026-03-04 | Launched the English version |
-|            | Added dev story, contact form, and dark mode |
-|            | Added PWA support |
-| 2026-03-03 | Added Hebrew letters & vowel reference page |
-|            | Added retry for missed questions |
-| 2026-03-02 | Added vowel mark quizzes |
-| 2026-03-01 | Initial launch (Japanese only — 28 questions) |
+## 2026-03-14
+- Added audio playback (Web Speech API) to all letter and vowel detail pages
+- Added hints after incorrect answers
+- Added vowel mark detail pages (`/vowels/`)
+- Self-hosted fonts
+
+## 2026-03-13
+- Site-wide refactoring
+
+## 2026-03-10
+- Added individual detail pages for all 22 Hebrew letters (`/letters/`)
+
+## 2026-03-08
+- Added start-screen guide (ⓘ)
+- Redesigned footer
+- Added print button
+- Improved vowel quiz UX
+
+## 2026-03-07
+- Added dagesh quiz
+- Added letter-form → sound quiz
+- Added 🏆 30-Second Challenge
+- Added FAQ to contact page
+
+## 2026-03-06
+- Added 404 page with language detection
+- Updated OGP images
+
+## 2026-03-04
+- Launched the English version
+- Added dev story, contact form, and dark mode
+- Added PWA support
+
+## 2026-03-03
+- Added Hebrew letters & vowel reference page
+- Added retry for missed questions
+
+## 2026-03-02
+- Added vowel mark quizzes
+
+## 2026-03-01
+- Initial launch (Japanese only — 28 questions)
 
 ---
 
