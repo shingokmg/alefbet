@@ -131,11 +131,33 @@ body {
   padding: 0.6rem 0.4rem;
   text-align: center;
   background: var(--bg-faint);
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.ref-item:hover,
+.ref-item:focus-visible {
+  background: var(--brand-light-bg);
+  border-color: #17B890;
+  outline: none;
+}
+
+.ref-item:hover .ref-name,
+.ref-item:focus-visible .ref-name {
+  color: #17B890;
 }
 
 .ref-item--sofit {
   background: var(--bg-card);
   border-color: var(--brand-light-bg);
+}
+
+.ref-item--sofit:hover,
+.ref-item--sofit:focus-visible {
+  background: var(--brand-light-bg);
+  border-color: #17B890;
 }
 
 .ref-notes {
@@ -174,16 +196,6 @@ body {
   margin-bottom: 0.15rem;
 }
 
-.ref-name a {
-  color: inherit;
-  text-decoration: none;
-  border-bottom: 1px dotted var(--text-sub);
-}
-
-.ref-name a:hover {
-  color: #17B890;
-  border-bottom-color: #17B890;
-}
 
 .ref-roman {
   font-size: 1rem;
