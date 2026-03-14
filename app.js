@@ -44,6 +44,9 @@ const STRINGS = {
     vowelLengthLabel: { 'ultra-short': '最短母音', 'sheva': 'シェワ', 'short': '短母音', 'long': '長母音', 'mixed': '' },
     correctMark:      '○',
     wrongMark:        '✕',
+    masteryTitle:     '習熟度',
+    masteryLetters:   'ヘブライ文字',
+    masteryVowels:    '母音記号',
   },
   en: {
     retryWrong:       n => `Review ${n} missed`,
@@ -74,6 +77,9 @@ const STRINGS = {
     vowelLengthLabel: { 'ultra-short': 'Ultra-short', 'sheva': 'Sheva', 'short': 'Short', 'long': 'Long', 'mixed': '' },
     correctMark:      '✓',
     wrongMark:        '✗',
+    masteryTitle:     'Mastery',
+    masteryLetters:   'Letters',
+    masteryVowels:    'Vowel Marks',
   },
 };
 const S = STRINGS[LANG];
@@ -556,6 +562,32 @@ const DAGESH = [
   { display: 'ת',  romanized: 'th' , hint: '点なしで古典的な /θ/ 音。英語の "think"・"thin" の th に近い。'},
 ];
 
+// 22 consolidated letters for mastery display (sofit + Sin/Shin merged; begadkephat includes dagesh keys)
+const LETTERS22 = [
+  { char: 'א', nameJa: 'アレフ',      nameEn: 'Alef',      lk: ['Alef'],                dk: []         },
+  { char: 'ב', nameJa: 'ベート',      nameEn: 'Bet',       lk: ['Bet'],                 dk: ['b','v']  },
+  { char: 'ג', nameJa: 'ギメル',      nameEn: 'Gimel',     lk: ['Gimel'],               dk: ['g','gh'] },
+  { char: 'ד', nameJa: 'ダレト',      nameEn: 'Dalet',     lk: ['Dalet'],               dk: ['d','dh'] },
+  { char: 'ה', nameJa: 'ヘー',        nameEn: 'He',        lk: ['He'],                  dk: []         },
+  { char: 'ו', nameJa: 'ワウ',        nameEn: 'Waw',       lk: ['Waw'],                 dk: []         },
+  { char: 'ז', nameJa: 'ザイン',      nameEn: 'Zayin',     lk: ['Zayin'],               dk: []         },
+  { char: 'ח', nameJa: 'ヘート',      nameEn: 'Het',       lk: ['Het'],                 dk: []         },
+  { char: 'ט', nameJa: 'テート',      nameEn: 'Tet',       lk: ['Tet'],                 dk: []         },
+  { char: 'י', nameJa: 'ヨード',      nameEn: 'Yod',       lk: ['Yod'],                 dk: []         },
+  { char: 'כ', nameJa: 'カフ',        nameEn: 'Kaf',       lk: ['Kaf','Kaf sofit'],     dk: ['k','kh'] },
+  { char: 'ל', nameJa: 'ラメド',      nameEn: 'Lamed',     lk: ['Lamed'],               dk: []         },
+  { char: 'מ', nameJa: 'メム',        nameEn: 'Mem',       lk: ['Mem','Mem sofit'],     dk: []         },
+  { char: 'נ', nameJa: 'ヌン',        nameEn: 'Nun',       lk: ['Nun','Nun sofit'],     dk: []         },
+  { char: 'ס', nameJa: 'サメフ',      nameEn: 'Samekh',    lk: ['Samekh'],              dk: []         },
+  { char: 'ע', nameJa: 'アイン',      nameEn: 'Ayin',      lk: ['Ayin'],                dk: []         },
+  { char: 'פ', nameJa: 'ペー',        nameEn: 'Pe',        lk: ['Pe','Pe sofit'],       dk: ['p','f']  },
+  { char: 'צ', nameJa: 'ツァデー',    nameEn: 'Tsade',     lk: ['Tsade','Tsade sofit'], dk: []         },
+  { char: 'ק', nameJa: 'コーフ',      nameEn: 'Qof',       lk: ['Qof'],                 dk: []         },
+  { char: 'ר', nameJa: 'レーシュ',    nameEn: 'Resh',      lk: ['Resh'],                dk: []         },
+  { char: 'שׁ', nameJa: 'シン/スィン', nameEn: 'Shin/Sin', lk: ['Shin','Sin'],           dk: []         },
+  { char: 'ת', nameJa: 'タウ',        nameEn: 'Tav',       lk: ['Tav'],                 dk: ['t','th'] },
+];
+
 const FONTS = [
   { value: 'Cardo',            style: 'セリフ',     styleEn: 'Serif',      previewSize: '1.2rem'  },
   { value: 'Frank Ruhl Libre', style: 'セリフ',     styleEn: 'Serif',      previewSize: '1.45rem' },
@@ -567,6 +599,7 @@ const STORAGE_KEY_FONT            = 'hebrew-quiz-font';
 const STORAGE_KEY_MODE            = 'hebrew-quiz-mode';
 const STORAGE_KEY_TYPE            = 'hebrew-quiz-type';
 const STORAGE_KEY_CHALLENGE_BEST  = 'alefbet-challenge-best';
+const STORAGE_KEY_MASTERY         = 'alefbet-mastery';
 const PREVIEW_CHAR = 'שׁלום'; // preview word shown on start screen (שׁ = shin with shin dot)
 
 // --- i18n helpers ---
@@ -691,6 +724,114 @@ function getCurrentHint() {
   const data = getQuizData();
   const item = data[shuffledOrder[currentIndex]];
   return item && item.hint ? item.hint : '';
+}
+
+// --- Mastery tracking ---
+function getMasteryData() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY_MASTERY)) || {}; } catch(e) { return {}; }
+}
+
+function saveMasteryData(data) {
+  localStorage.setItem(STORAGE_KEY_MASTERY, JSON.stringify(data));
+}
+
+function recordMastery(category, key, isCorrect) {
+  const data = getMasteryData();
+  if (!data[category]) data[category] = {};
+  if (!data[category][key]) data[category][key] = { correct: 0, total: 0 };
+  data[category][key].total++;
+  if (isCorrect) data[category][key].correct++;
+  saveMasteryData(data);
+}
+
+function hebrewSuffix(str) {
+  // Returns characters after the first Hebrew consonant (U+05D0–U+05EA), excluding dagesh (U+05BC)
+  let past = false;
+  return Array.from(str).filter(c => {
+    const cp = c.codePointAt(0);
+    if (!past && cp >= 0x05D0 && cp <= 0x05EA) { past = true; return false; }
+    return past && cp !== 0x05BC;
+  }).join('');
+}
+
+function recordCurrentAnswer(isCorrect) {
+  if (isSyllableType()) {
+    const q = SYLLABLES[shuffledOrder[currentIndex]];
+    if (!q) return;
+    const firstCons = Array.from(q.display).find(c => { const cp = c.codePointAt(0); return cp >= 0x05D0 && cp <= 0x05EA; });
+    if (firstCons) {
+      const letter = LETTERS.find(l => l.char === firstCons);
+      if (letter) recordMastery('letters', letter.romanized, isCorrect);
+    }
+    const suffix = hebrewSuffix(q.display);
+    if (suffix) {
+      const vowel = VOWELS.find(v => hebrewSuffix(v.display) === suffix);
+      if (vowel) recordMastery('vowels', vowel.nameEn, isCorrect);
+    }
+    return;
+  }
+  const item = getQuizData()[shuffledOrder[currentIndex]];
+  if (!item) return;
+  if (isDageshType())  { recordMastery('dagesh',  item.romanized, isCorrect); return; }
+  if (isVowelType())   { recordMastery('vowels',  item.nameEn,    isCorrect); return; }
+  recordMastery('letters', item.romanized, isCorrect);
+}
+
+function renderMasteryGrids() {
+  const masteryEl = document.getElementById('mastery-section');
+  if (!masteryEl) return;
+  const data = getMasteryData();
+
+  function aggrPct(lkeys, dkeys) {
+    let correct = 0, total = 0;
+    lkeys.forEach(k => { const d = data.letters && data.letters[k]; if (d) { correct += d.correct; total += d.total; } });
+    dkeys.forEach(k => { const d = data.dagesh  && data.dagesh[k];  if (d) { correct += d.correct; total += d.total; } });
+    return total ? Math.round(correct / total * 100) : null;
+  }
+
+  function mcClass(pct) {
+    if (pct === null) return 'mc mc-none';
+    if (pct >= 80)   return 'mc mc-high';
+    if (pct >= 50)   return 'mc mc-mid';
+    return 'mc mc-low';
+  }
+
+  function makeCard(char, name, pct, href) {
+    const tag = href ? `a href="${href}"` : 'div';
+    const close = href ? 'a' : 'div';
+    return `<${tag} class="${mcClass(pct)}">` +
+      `<span class="mc-char">${char}</span>` +
+      `<span class="mc-name">${name}</span>` +
+      `<span class="mc-stat">${pct !== null ? pct + '%' : '—'}</span>` +
+      `</${close}>`;
+  }
+
+  function vowelSlug(v) {
+    if (v.nameEn === 'Vocal / Silent Sheva') return 'sheva';
+    return v.nameEn.toLowerCase().replace(/ \/ .*/, '').replace(/\s+/g, '-');
+  }
+
+  const prefix = location.pathname.includes('/en/') ? '../' : '';
+
+  const lettersHTML = LETTERS22.map(l => {
+    const pct = aggrPct(l.lk, l.dk);
+    const href = LANG === 'ja' ? `${prefix}letters/${l.lk[0].toLowerCase()}.html` : null;
+    return makeCard(l.char, LANG === 'en' ? l.nameEn : l.nameJa, pct, href);
+  }).join('');
+
+  const vowelsHTML = VOWELS.map(v => {
+    const d = data.vowels && data.vowels[v.nameEn];
+    const pct = (d && d.total) ? Math.round(d.correct / d.total * 100) : null;
+    const href = LANG === 'ja' ? `${prefix}vowels/${vowelSlug(v)}.html` : null;
+    return makeCard(v.display, LANG === 'en' ? v.nameEn : v.name, pct, href);
+  }).join('');
+
+  masteryEl.innerHTML =
+    `<div class="mastery-heading">${S.masteryTitle}</div>` +
+    `<div class="mastery-subsect">${S.masteryLetters}</div>` +
+    `<div class="mastery-grid">${lettersHTML}</div>` +
+    `<div class="mastery-subsect">${S.masteryVowels}</div>` +
+    `<div class="mastery-grid">${vowelsHTML}</div>`;
 }
 
 function formatTime(seconds) {
@@ -1050,6 +1191,7 @@ function handleAnswer(btn) {
       revealCorrectChoices();
       disableAllChoices();
       updateProgressDisplay();
+      recordCurrentAnswer(false);
       if (hintBox) hintBox.textContent = getCurrentHint();
       nextWrap.classList.remove('hidden');
     } else {
@@ -1062,6 +1204,7 @@ function handleAnswer(btn) {
         markCorrect();
         disableAllChoices();
         updateProgressDisplay();
+        recordCurrentAnswer(true);
         setTimeout(nextQuestion, 200);
       }
     }
@@ -1082,6 +1225,7 @@ function handleAnswer(btn) {
 
   disableAllChoices();
   updateProgressDisplay();
+  recordCurrentAnswer(isCorrect);
 
   if (isCorrect) {
     setTimeout(nextQuestion, 200);
@@ -1207,6 +1351,7 @@ function finishQuiz() {
 
   resultMsg.textContent = msg;
   logQuizComplete(accuracy);
+  renderMasteryGrids();
 }
 
 // --- Confetti ---

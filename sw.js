@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alefbet-v7';
+const CACHE_NAME = 'alefbet-v9';
 const ASSETS = [
   '/',
   '/index.html',
@@ -37,6 +37,9 @@ const ASSETS = [
   '/en/contact.html',
   '/en/terms.html',
   '/en/privacy.html',
+  '/progress.html',
+  '/en/progress.html',
+  '/css/progress.css',
 ];
 
 self.addEventListener('install', event => {

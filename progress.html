@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>習熟度 — ヘブライ語Alefbet道場</title>
+  <meta name="description" content="クイズの回答履歴から、ヘブライ文字・母音記号ごとの正解率を確認できます。">
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://alefbet.jp/progress.html">
+  <meta property="og:site_name"   content="ヘブライ語Alefbet道場">
+  <meta property="og:title"       content="習熟度 — ヘブライ語Alefbet道場">
+  <meta property="og:description" content="クイズの回答履歴から、ヘブライ文字・母音記号ごとの正解率を確認できます。">
+  <meta property="og:image"       content="https://alefbet.jp/images/ogp-ja.png">
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="習熟度 — ヘブライ語Alefbet道場">
+  <meta name="twitter:description" content="クイズの回答履歴から、ヘブライ文字・母音記号ごとの正解率を確認できます。">
+  <meta name="twitter:image"       content="https://alefbet.jp/images/ogp-ja.png">
+  <link rel="canonical" href="https://alefbet.jp/progress.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <script>if(localStorage.getItem('hebrew-quiz-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/subpage.css">
+  <link rel="stylesheet" href="css/progress.css">
+  <link rel="preconnect" href="https://www.google-analytics.com">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NCHCEQQXT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6NCHCEQQXT', { anonymize_ip: true });
+  </script>
+</head>
+<body>
+  <div class="legal-wrap">
+    <header class="legal-header">
+      <a class="back-link" href="index.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>ヘブライ語Alefbet道場</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="ダークモード切替">
+        <svg class="theme-icon theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="theme-icon theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </header>
+
+    <main class="legal-card">
+      <h1 class="legal-title" style="margin-bottom:1rem;">習熟度</h1>
+      <p class="legal-intro">クイズの回答履歴に基づき、文字・母音記号ごとの習熟度を表示しています。30秒チャレンジの結果も反映されます。</p>
+
+      <div class="progress-legend">
+        <span class="legend-item legend-none">未挑戦</span>
+        <span class="legend-item legend-low">〜49%</span>
+        <span class="legend-item legend-mid">50〜79%</span>
+        <span class="legend-item legend-high">80%〜</span>
+      </div>
+
+      <section class="progress-section">
+        <h2 class="progress-section-title">ヘブライ文字（22字）</h2>
+        <div class="progress-grid" id="letters-grid"></div>
+      </section>
+
+      <section class="progress-section">
+        <h2 class="progress-section-title">母音記号（16種）</h2>
+        <div class="progress-grid" id="vowels-grid"></div>
+      </section>
+
+      <div class="progress-actions">
+        <a class="progress-btn-quiz" href="index.html">クイズに戻る</a>
+        <button class="progress-btn-reset" id="reset-btn">習熟度をリセット</button>
+      </div>
+    </main>
+
+    <footer class="legal-footer">
+      <div class="legal-footer-links">
+        <div class="legal-footer-row">
+          <a class="legal-footer-link legal-footer-link--accent" href="alefbet.html">ヘブライ文字一覧</a>
+          <span class="legal-footer-sep">|</span>
+          <span class="legal-footer-link legal-footer-link--current">習熟度</span>
+          <span class="legal-footer-sep">|</span>
+          <a class="legal-footer-link legal-footer-link--accent" href="about.html">開発ストーリー</a>
+        </div>
+        <div class="legal-footer-row">
+          <a class="legal-footer-link footer-home-link" href="index.html"><svg width="12" height="12" class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Alefbet道場</a>
+          <span class="legal-footer-sep">|</span>
+          <a class="legal-footer-link" href="contact.html">お問い合わせ</a>
+          <span class="legal-footer-sep">|</span>
+          <a class="legal-footer-link" href="terms.html">利用規約</a>
+          <span class="legal-footer-sep">|</span>
+          <a class="legal-footer-link" href="privacy.html">プライバシーポリシー</a>
+        </div>
+      </div>
+      <div>© 2026 Shingo Kumagai</div>
+    </footer>
+  </div>
+
+  <script>
+    // 22 consolidated letters: each entry aggregates letter quiz keys (lk) and dagesh quiz keys (dk)
+    var LETTERS22 = [
+      { char: 'א', name: 'アレフ',    lk: ['Alef'],                 dk: []           },
+      { char: 'ב', name: 'ベート',    lk: ['Bet'],                  dk: ['b','v']    },
+      { char: 'ג', name: 'ギメル',    lk: ['Gimel'],                dk: ['g','gh']   },
+      { char: 'ד', name: 'ダレト',    lk: ['Dalet'],                dk: ['d','dh']   },
+      { char: 'ה', name: 'ヘー',      lk: ['He'],                   dk: []           },
+      { char: 'ו', name: 'ワウ',      lk: ['Waw'],                  dk: []           },
+      { char: 'ז', name: 'ザイン',    lk: ['Zayin'],                dk: []           },
+      { char: 'ח', name: 'ヘート',    lk: ['Het'],                  dk: []           },
+      { char: 'ט', name: 'テート',    lk: ['Tet'],                  dk: []           },
+      { char: 'י', name: 'ヨード',    lk: ['Yod'],                  dk: []           },
+      { char: 'כ', name: 'カフ',      lk: ['Kaf','Kaf sofit'],      dk: ['k','kh']   },
+      { char: 'ל', name: 'ラメド',    lk: ['Lamed'],                dk: []           },
+      { char: 'מ', name: 'メム',      lk: ['Mem','Mem sofit'],      dk: []           },
+      { char: 'נ', name: 'ヌン',      lk: ['Nun','Nun sofit'],      dk: []           },
+      { char: 'ס', name: 'サメフ',    lk: ['Samekh'],               dk: []           },
+      { char: 'ע', name: 'アイン',    lk: ['Ayin'],                 dk: []           },
+      { char: 'פ', name: 'ペー',      lk: ['Pe','Pe sofit'],        dk: ['p','f']    },
+      { char: 'צ', name: 'ツァデー',  lk: ['Tsade','Tsade sofit'],  dk: []           },
+      { char: 'ק', name: 'コーフ',    lk: ['Qof'],                  dk: []           },
+      { char: 'ר', name: 'レーシュ',  lk: ['Resh'],                 dk: []           },
+      { char: 'שׁ', name: 'シン/スィン', lk: ['Shin','Sin'],         dk: []           },
+      { char: 'ת', name: 'タウ',      lk: ['Tav'],                  dk: ['t','th']   },
+    ];
+    var VOWELS_DATA = [
+      ['בֲ','ハテフ・パタハ','Hateph Patah'],
+      ['בֱ','ハテフ・セゴル','Hateph Segol'],
+      ['בֳ','ハテフ・カメツ','Hateph Qamets'],
+      ['בְ','シェワ','Vocal / Silent Sheva'],
+      ['בַ','パタハ','Patah'],
+      ['בִ','ヒレク','Hiriq'],
+      ['בֻ','キブツ','Qibbuts'],
+      ['בֶ','セゴル','Segol'],
+      ['בָ','カメツ','Qamets / Qamets Hatuf'],
+      ['בֵ','ツェレ','Tsere'],
+      ['בֹ','ホレム','Holam'],
+      ['בָה','カメツ・ヘー','Qamets He'],
+      ['בִי','ヒレク・ヨード','Hiriq Yod'],
+      ['בוּ','シュルク','Shuruq'],
+      ['בֵי','ツェレ・ヨード','Tsere Yod'],
+      ['בוֹ','ホレム・ワウ','Holam Waw'],
+    ];
+
+    var masteryData = JSON.parse(localStorage.getItem('alefbet-mastery') || '{}');
+
+    function aggrMastery(lkeys, dkeys) {
+      var correct = 0, total = 0;
+      lkeys.forEach(function(k) {
+        var d = masteryData['letters'] && masteryData['letters'][k];
+        if (d) { correct += d.correct; total += d.total; }
+      });
+      dkeys.forEach(function(k) {
+        var d = masteryData['dagesh'] && masteryData['dagesh'][k];
+        if (d) { correct += d.correct; total += d.total; }
+      });
+      return total ? Math.round(correct / total * 100) : null;
+    }
+
+    function getMastery(cat, key) {
+      var d = masteryData[cat] && masteryData[cat][key];
+      return (d && d.total) ? Math.round(d.correct / d.total * 100) : null;
+    }
+
+    function colorClass(pct) {
+      if (pct === null) return 'pc-none';
+      if (pct >= 80)   return 'pc-high';
+      if (pct >= 50)   return 'pc-mid';
+      return 'pc-low';
+    }
+
+    function vowelSlug(nameEn) {
+      if (nameEn === 'Vocal / Silent Sheva') return 'sheva';
+      return nameEn.toLowerCase().replace(/ \/ .*/, '').replace(/\s+/g, '-');
+    }
+
+    function makeCard(char, name, pct, href) {
+      var el = document.createElement(href ? 'a' : 'div');
+      el.className = 'progress-card ' + colorClass(pct);
+      if (href) el.href = href;
+      el.innerHTML =
+        '<span class="pc-char">' + char + '</span>' +
+        '<span class="pc-name">' + name + '</span>' +
+        '<span class="pc-stat">' + (pct !== null ? pct + '%' : '—') + '</span>';
+      return el;
+    }
+
+    var lettersGrid = document.getElementById('letters-grid');
+    LETTERS22.forEach(function(item) {
+      lettersGrid.appendChild(makeCard(item.char, item.name, aggrMastery(item.lk, item.dk), 'letters/' + item.lk[0].toLowerCase() + '.html'));
+    });
+
+    var vowelsGrid = document.getElementById('vowels-grid');
+    VOWELS_DATA.forEach(function(item) {
+      vowelsGrid.appendChild(makeCard(item[0], item[1], getMastery('vowels', item[2]), 'vowels/' + vowelSlug(item[2]) + '.html'));
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', function() {
+      if (confirm('習熟度データをすべてリセットしますか？')) {
+        localStorage.removeItem('alefbet-mastery');
+        location.reload();
+      }
+    });
+  </script>
+  <script src="theme-toggle.js"></script>
+</body>
+</html>
