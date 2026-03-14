@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alefbet-v6';
+const CACHE_NAME = 'alefbet-v7';
 const ASSETS = [
   '/',
   '/index.html',
@@ -15,6 +15,7 @@ const ASSETS = [
   '/fonts/heebo-hebrew.woff2',
   '/fonts/heebo-latin.woff2',
   '/theme-toggle.js',
+  '/letter-audio.js',
   '/css/style.css',
   '/alefbet.html',
   '/css/alefbet.css',
