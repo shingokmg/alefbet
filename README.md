@@ -52,13 +52,14 @@
 
 | Date | Changes |
 |------|---------|
-| 2026-03-14 | Added audio playback to all letter and vowel detail pages |
-| 2026-03-14 | Added hints after incorrect answers |
-| 2026-03-13 | Added vowel mark detail pages (`/vowels/`) |
-| 2026-03-08 | Added the start-screen guide (ⓘ) |
-| 2026-03-07 | Added 🏆 30-Second Challenge; added an FAQ to the contact page |
-| 2026-03-04 | Launched the English version; added dev story, contact form, and dark mode |
-| 2026-03-03 | Added a Hebrew letters reference page; added retry for missed questions |
+| 2026-03-14 | Added audio playback (Web Speech API) to all letter and vowel detail pages; added hints after incorrect answers; added vowel mark detail pages (`/vowels/`); self-hosted fonts |
+| 2026-03-13 | Site-wide refactoring |
+| 2026-03-10 | Added individual detail pages for all 22 Hebrew letters (`/letters/`) |
+| 2026-03-08 | Added start-screen guide (ⓘ); redesigned footer; added print button; improved vowel quiz UX |
+| 2026-03-07 | Added dagesh quiz; letter-form → sound quiz; 🏆 30-Second Challenge; FAQ on contact page |
+| 2026-03-06 | Added 404 page with language detection; updated OGP images |
+| 2026-03-04 | Launched the English version; added dev story, contact form, dark mode, and PWA support |
+| 2026-03-03 | Added Hebrew letters & vowel reference page; added retry for missed questions |
 | 2026-03-02 | Added vowel mark quizzes |
 | 2026-03-01 | Initial launch (Japanese only — 28 questions) |
 
