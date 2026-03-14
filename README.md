@@ -1,45 +1,50 @@
-# ヘブライ語Alefbet道場 / Hebrew Alefbet Dojo
+# Hebrew Alefbet Dojo
 
-古典ヘブライ語の文字・母音記号を択一クイズで学習できる無料Webアプリ。日本語・英語に対応。
+**Hebrew Alefbet Dojo** is a free web app for learning **Biblical Hebrew** letters and vowel marks (**niqqud**) through fast, multiple-choice quizzes. Available in **Japanese** and **English**.
 
-A free web app for learning Biblical Hebrew letters and vowel marks through multiple-choice quizzes. Available in Japanese and English.
-
-**Live:** https://alefbet.jp
-**English:** https://alefbet.jp/en/
+- **Live demo:** https://alefbet.jp
+- **English:** https://alefbet.jp/en/
 
 ---
 
-## 機能 / Features
+## Features
 
-### ヘブライ文字クイズ（28問） / Hebrew Letter Quizzes (28 questions)
-- 字形 → 名前 / Letter form → Name
-- 字形 → 発音 / Letter form → Sound
-- 名前 → 字形 / Name → Letter form
-- 固定順・ランダム / Fixed or random order
+### Hebrew Letter Quizzes (28 questions)
+- Letter form → name
+- Letter form → sound
+- Name → letter form
+- Fixed order or randomized
 
-### ダゲシュクイズ（12問） / Dagesh Quiz (12 questions)
-- ダゲシュ あり/なし → 発音 / With or without dagesh → Sound
+### Dagesh Quiz (12 questions)
+- Letter (with / without dagesh) → sound
 
-### 母音記号クイズ（16問） / Vowel Mark Quizzes (16 questions)
-- 母音記号 → 音 / Mark → Sound
-- 母音記号 → 名前 / Mark → Name
-- シェワとカメツは同一字形で読みが異なる2択問題 / Two-choice questions where the same symbol has different readings (sheva and qamets)
-- 固定順・ランダム / Fixed or random order
+### Vowel Mark Quizzes (16 questions)
+- Mark → sound
+- Mark → name
+- Two-choice questions for symbols with multiple readings (e.g., sheva, qamets)
+- Fixed order or randomized
 
-### 🏆 30秒チャレンジ（389問プール） / 🏆 30-Second Challenge (389-question pool)
-- 全問からランダム出題。30秒で何問正解できるか挑戦 / Random questions from all categories — how many can you answer in 30 seconds?
-- 正解数でランク判定（5級〜特級 / Tier 5〜Master） / Rank based on your score (Tier 5 to Master)
-- ベストスコア保存・紙吹雪演出（正解数20以上）/ Best score saved locally; confetti at 20+ correct
+### 🏆 30-Second Challenge (389-question pool)
+- Random questions from all categories — how many can you answer in 30 seconds?
+- Earn ranks based on your score (Tier 5 → Master)
+- Best score saved locally; confetti at **20+** correct answers
 
-### 共通機能 / Common Features
-- タイムアタック＆正答率（%）表示 / Timed quizzes with accuracy (%)
-- 誤答問題の復習モード（通常クイズのみ） / Retry incorrect answers (standard quizzes only)
-- スタート画面にガイド（ⓘ ボタン） / On-screen guide (ⓘ) on the start screen
-- フォント切り替え / Font switcher (Cardo / Frank Ruhl Libre / Heebo / Assistant)
-- ダークモード / Dark mode
-- X・LINE（日本語版）・Web Share API（英語版モバイル）でのシェア / Share via X, LINE (Japanese), and the Web Share API (English mobile)
-- PWA対応（オフラインキャッシュ） / PWA with offline caching
-- 全クイズ合計：517問 / 517 questions total
+### Common Features
+- Timed quizzes + accuracy tracking (%)
+- Retry missed questions (standard quizzes only)
+- Hints shown after incorrect answers
+  (letter origin/mnemonics, visual tips for vowel marks, pronunciation rules for dagesh)
+- On-screen guide (ⓘ) on the start screen
+- Font switcher: Cardo / Frank Ruhl Libre / Heebo / Assistant
+- Dark mode
+- Share to X, LINE (JP), and the Web Share API (EN mobile)
+- PWA with offline caching
+- **517 questions** total
+
+### Letter & Vowel Detail Pages
+- Individual pages for all **22 letters** (`/letters/`) and **16 vowel marks** (`/vowels/`)
+- Each page includes origin, pronunciation notes, and **10 Biblical Hebrew** example words
+- Audio via the Web Speech API (`he-IL`) for letter names and example words
 
 ---
 
@@ -47,70 +52,80 @@ A free web app for learning Biblical Hebrew letters and vowel marks through mult
 
 | Date | Changes |
 |------|---------|
-| 2026-03-08 | Added guide (ⓘ) to start screen |
-| 2026-03-07 | Added 🏆 30-Second Challenge; added FAQ to contact page |
-| 2026-03-04 | Launched English version; added dev story, contact form, dark mode |
-| 2026-03-03 | Added Hebrew letters reference page; added wrong-answer retry |
-| 2026-03-02 | Added vowel marks quiz |
+| 2026-03-14 | Added audio playback to all letter and vowel detail pages |
+| 2026-03-14 | Added hints after incorrect answers |
+| 2026-03-13 | Added vowel mark detail pages (`/vowels/`) |
+| 2026-03-08 | Added the start-screen guide (ⓘ) |
+| 2026-03-07 | Added 🏆 30-Second Challenge; added an FAQ to the contact page |
+| 2026-03-04 | Launched the English version; added dev story, contact form, and dark mode |
+| 2026-03-03 | Added a Hebrew letters reference page; added retry for missed questions |
+| 2026-03-02 | Added vowel mark quizzes |
 | 2026-03-01 | Initial launch (Japanese only — 28 questions) |
 
 ---
 
-## 多言語対応
+## i18n
 
-`app.js` 内の `STRINGS` オブジェクトで日英の全UI文言を管理。`/en/` 配下のページが `localStorage` に `alefbet-lang=en` をセットし、`app.js` が読み取って言語を切り替える。ルートの `index.html` はブラウザ言語または `localStorage` に基づいて自動リダイレクト。
-
----
-
-## 技術スタック
-
-| 項目 | 内容 |
-|------|------|
-| 言語 | HTML / CSS / JavaScript（バニラ） |
-| フォント | Google Fonts（Cardo, Frank Ruhl Libre, Heebo, Assistant） |
-| ホスティング | GitHub Pages |
-| お問い合わせ | Formspree |
-| 外部ライブラリ | なし |
-
-フレームワーク不使用。依存関係ゼロで長期メンテナンスコストを抑えている。
+All UI strings live in the `STRINGS` object in `app.js`. Pages under `/en/` set `alefbet-lang=en` in `localStorage`, and `app.js` uses that value to switch languages. The root `index.html` auto-redirects on first visit based on browser language (or `localStorage` if already set).
 
 ---
 
-## 実装の工夫
+## Tech Stack
 
-**ヘブライ語Unicodeの扱い**
-ヘブライ文字は右から左（RTL）に記述され、母音記号（ニクド）は基底文字にUnicode結合文字を重ねて表現する。フォントによってニクドの描画サイズが異なるため、フォントごとにプレビューサイズを個別調整している。
-
-**2択問題のロジック**
-有音シェワ（`בְ`）と大カメツ / 小カメツ（`בָ`）は字形が同一で読みが異なる。1問に対して2つの選択肢を両方選ぶと正解となる独自のインタラクションを実装。選択順は問わず、誤答を選んだ時点で即終了する。
-
-**日英共通のapp.js**
-言語ごとにHTMLを分けつつ、ロジックは `app.js` 1ファイルで共有。`LANG` 定数と `STRINGS` オブジェクトで文言を切り替え、DOM要素の有無は null チェックで吸収している。
+| | |
+|---|---|
+| Languages | HTML / CSS / Vanilla JavaScript |
+| Fonts | Self-hosted WOFF2 (Cardo, Frank Ruhl Libre, Heebo, Assistant) |
+| Hosting | GitHub Pages |
+| Contact form | Formspree |
+| Dependencies | None |
 
 ---
 
-## ファイル構成
+## Implementation Notes
+
+### Hebrew Unicode
+Hebrew is written right-to-left (RTL). Vowel marks (niqqud) are Unicode combining characters layered onto base consonants. Niqqud rendering can vary by font, so preview sizing is tuned per font.
+
+### Two-choice questions
+Some symbols share the same glyph but have different readings (e.g., vocal sheva vs. silent sheva, qamets vs. qamets hatuf). These are implemented as multi-answer questions: all correct choices must be selected, and selecting an incorrect option ends the question immediately.
+
+### Shared `app.js`
+Japanese and English pages share a single `app.js`. A `LANG` constant plus the `STRINGS` object handles text switching. Elements that differ between languages are guarded with null checks.
+
+---
+
+## File Structure
 
 ```
 .
-├── index.html        # 日本語メイン画面（スタート・クイズ・リザルト）
-├── app.js            # クイズロジック・データ定義（日英共通）
-├── style.css         # メイン画面スタイル
-├── alefbet.html      # 日本語 文字・母音記号一覧
-├── alefbet.css       # 一覧ページ用スタイル
-├── about.html        # 日本語 開発ストーリー
-├── contact.html      # 日本語 お問い合わせ
-├── terms.html        # 日本語 利用規約
-├── privacy.html      # 日本語 プライバシーポリシー
-├── subpage.css       # サブページ共通スタイル
-├── sw.js             # Service Worker
+├── index.html          # Japanese main screen (start / quiz / result)
+├── app.js              # Quiz logic, data, GA4 events (shared by both languages)
+├── theme-toggle.js     # Theme toggle for pages that don't load app.js
+├── letter-audio.js     # Audio playback for letter and vowel detail pages
+├── sw.js               # Service Worker (cache: alefbet-v7)
 ├── sitemap.xml
-├── images/           # OGP画像・ファビコン一式
+├── css/
+│   ├── base.css        # Shared CSS variables and reset
+│   ├── style.css       # Main screen styles
+│   ├── alefbet.css     # Reference page styles
+│   ├── subpage.css     # Shared subpage styles
+│   └── letter.css      # Letter / vowel detail page styles
+├── fonts/              # Self-hosted WOFF2 × 10 (Hebrew + Latin subsets)
+├── images/             # OGP images and favicons
+├── letters/            # Letter detail pages (alef.html … tav.html, 22 files)
+├── vowels/             # Vowel detail pages (patah.html … tsere.html, 16 files)
+├── alefbet.html        # Japanese letter & vowel reference
+├── about.html          # Japanese dev story
+├── contact.html        # Japanese contact (with FAQ)
+├── terms.html          # Japanese terms of use
+├── privacy.html        # Japanese privacy policy
 └── en/
-    ├── index.html    # 英語メイン画面
-    ├── alefbet.html  # 英語 文字・母音記号一覧
-    ├── about.html    # 英語 開発ストーリー
-    ├── contact.html  # 英語 お問い合わせ
-    ├── terms.html    # 英語 利用規約
-    └── privacy.html  # 英語 プライバシーポリシー
+    ├── index.html      # English main screen
+    ├── alefbet.html    # English letter & vowel reference
+    ├── about.html      # English dev story
+    ├── contact.html    # English contact (with FAQ)
+    ├── terms.html      # English terms of use
+    └── privacy.html    # English privacy policy
 ```
+
