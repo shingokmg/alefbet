@@ -20,6 +20,47 @@
   color: var(--text-sub);
   margin-top: 0.2rem;
 }
+
+/* ================================
+   Audio pill buttons
+================================ */
+.audio-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.65rem;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 9999px;
+  color: var(--text-sub);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.audio-pill:hover {
+  border-color: #17B890;
+  color: #17B890;
+  background: var(--brand-light-bg);
+}
+
+.audio-pill:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Hero: centered below letter name */
+.audio-pill--hero {
+  margin-top: 0.4rem;
+}
+
+/* Word list: content-width, centered */
+.audio-pill--word {
+  display: flex;
+  width: fit-content;
+  margin: 0.1rem auto 0;
+}
 .letter-meta {
   display: flex;
   flex-direction: column;
