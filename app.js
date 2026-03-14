@@ -80,53 +80,53 @@ const S = STRINGS[LANG];
 
 // アルファベット順（語末形は直後に配置、シン・スィンを分離）= 28文字
 const LETTERS = [
-  { char: 'א',  name: 'アレフ',               romanized: 'Alef',          sound: 'ʾ'  },
-  { char: 'ב',  name: 'ベート',               romanized: 'Bet',           sound: 'v'  },
-  { char: 'ג',  name: 'ギメル',               romanized: 'Gimel',         sound: 'gh' },
-  { char: 'ד',  name: 'ダレト',               romanized: 'Dalet',         sound: 'dh' },
-  { char: 'ה',  name: 'ヘー',                 romanized: 'He',            sound: 'h'  },
-  { char: 'ו',  name: 'ワウ',                 romanized: 'Waw',           sound: 'w'  },
-  { char: 'ז',  name: 'ザイン',               romanized: 'Zayin',         sound: 'z'  },
-  { char: 'ח',  name: 'ヘート',               romanized: 'Het',           sound: 'ḥ' },
-  { char: 'ט',  name: 'テート',               romanized: 'Tet',           sound: 'ṭ' },
-  { char: 'י',  name: 'ヨード',               romanized: 'Yod',           sound: 'y'  },
-  { char: 'כ',  name: 'カフ',                 romanized: 'Kaf',           sound: 'kh' },
-  { char: 'ך',  name: 'カフ・ソフィット',     romanized: 'Kaf sofit',     sound: 'kh' },
-  { char: 'ל',  name: 'ラメド',               romanized: 'Lamed',         sound: 'l'  },
-  { char: 'מ',  name: 'メム',                 romanized: 'Mem',           sound: 'm'  },
-  { char: 'ם',  name: 'メム・ソフィット',     romanized: 'Mem sofit',     sound: 'm'  },
-  { char: 'נ',  name: 'ヌン',                 romanized: 'Nun',           sound: 'n'  },
-  { char: 'ן',  name: 'ヌン・ソフィット',     romanized: 'Nun sofit',     sound: 'n'  },
-  { char: 'ס',  name: 'サメフ',               romanized: 'Samekh',        sound: 's'  },
-  { char: 'ע',  name: 'アイン',               romanized: 'Ayin',          sound: 'ʿ' },
-  { char: 'פ',  name: 'ペー',                 romanized: 'Pe',            sound: 'f'  },
-  { char: 'ף',  name: 'ペー・ソフィット',     romanized: 'Pe sofit',      sound: 'f'  },
-  { char: 'צ',  name: 'ツァデー',             romanized: 'Tsade',         sound: 'ṣ' },
-  { char: 'ץ',  name: 'ツァデー・ソフィット', romanized: 'Tsade sofit',   sound: 'ṣ' },
-  { char: 'ק',  name: 'コーフ',               romanized: 'Qof',           sound: 'q'  },
-  { char: 'ר',  name: 'レーシュ',             romanized: 'Resh',          sound: 'r'  },
-  { char: 'שׂ', name: 'スィン',               romanized: 'Sin',           sound: 'ś' },
-  { char: 'שׁ', name: 'シン',                 romanized: 'Shin',          sound: 'š' },
-  { char: 'ת',  name: 'タウ',                 romanized: 'Tav',           sound: 'th' },
+  { char: 'א',  name: 'アレフ',               romanized: 'Alef',          sound: 'ʾ'  , hint: '「牛の頭」が起源。声門の子音（ʾ）。覚え方：Aを回すと角っぽい。'},
+  { char: 'ב',  name: 'ベート',               romanized: 'Bet',           sound: 'v'  , hint: '「家」が起源。創1:1の最初の文字はב（בְּרֵאשִׁית）で始まる。'},
+  { char: 'ג',  name: 'ギメル',               romanized: 'Gimel',         sound: 'gh' , hint: '起源は諸説（ラクダなど）。G系の祖先とされる。'},
+  { char: 'ד',  name: 'ダレト',               romanized: 'Dalet',         sound: 'dh' , hint: '「扉」が起源。רと混同注意：右上が角ばりやすいのがד。'},
+  { char: 'ה',  name: 'ヘー',                 romanized: 'He',            sound: 'h'  , hint: '起源は諸説。左上が切れるのがה。上がつながるとח。'},
+  { char: 'ו',  name: 'ワウ',                 romanized: 'Waw',           sound: 'w'  , hint: '「釘・鉤」が起源。יより縦が長い。接続詞「そして」（ו－）で頻出。'},
+  { char: 'ז',  name: 'ザイン',               romanized: 'Zayin',         sound: 'z'  , hint: '起源は諸説（武器など）。Z系の祖先とされる。'},
+  { char: 'ח',  name: 'ヘート',               romanized: 'Het',           sound: 'ḥ' , hint: 'הに似るが、上がつながって閉じるのがח。喉の摩擦音（ḥ）。'},
+  { char: 'ט',  name: 'テート',               romanized: 'Tet',           sound: 'ṭ' , hint: '起源は諸説。סと混同注意：טは内側に線が入る。'},
+  { char: 'י',  name: 'ヨード',               romanized: 'Yod',           sound: 'y'  , hint: '「手」が起源。22文字で最小。וより縦が短い。'},
+  { char: 'כ',  name: 'カフ',                 romanized: 'Kaf',           sound: 'kh' , hint: '「手のひら」が起源。K系の祖先。ダゲシュなしで /kh/。語尾はך。'},
+  { char: 'ך',  name: 'カフ・ソフィット',     romanized: 'Kaf sofit',     sound: 'kh' , hint: 'כの語尾形。縦棒が下に大きく伸びる。音は同じ。'},
+  { char: 'ל',  name: 'ラメド',               romanized: 'Lamed',         sound: 'l'  , hint: '「牛追いの棒」が起源。唯一、上に大きく突き出る文字。'},
+  { char: 'מ',  name: 'メム',                 romanized: 'Mem',           sound: 'm'  , hint: '「水」が起源。M系の祖先。通常形は左下が少し開き、語尾はם。'},
+  { char: 'ם',  name: 'メム・ソフィット',     romanized: 'Mem sofit',     sound: 'm'  , hint: 'מの語尾形。四角く完全に閉じる（通常形מは左下が少し開く）。'},
+  { char: 'נ',  name: 'ヌン',                 romanized: 'Nun',           sound: 'n'  , hint: '起源は諸説。語尾ではןになり、縦棒が下に伸びる。'},
+  { char: 'ן',  name: 'ヌン・ソフィット',     romanized: 'Nun sofit',     sound: 'n'  , hint: 'נの語尾形。縦棒が大きく下に伸びる（通常形נは短く丸い）。'},
+  { char: 'ס',  name: 'サメフ',               romanized: 'Samekh',        sound: 's'  , hint: '起源は諸説。閉じた形。טは内側に線が入る。'},
+  { char: 'ע',  name: 'アイン',               romanized: 'Ayin',          sound: 'ʿ' , hint: '「目」が起源。喉音（ʿ）：母音を支えるが本来は子音。'},
+  { char: 'פ',  name: 'ペー',                 romanized: 'Pe',            sound: 'f'  , hint: '「口」が起源。P系の祖先。ダゲシュなしで /f/。語尾はף。'},
+  { char: 'ף',  name: 'ペー・ソフィット',     romanized: 'Pe sofit',      sound: 'f'  , hint: 'פの語尾形。縦棒が下に垂れる。音は同じ。'},
+  { char: 'צ',  name: 'ツァデー',             romanized: 'Tsade',         sound: 'ṣ' , hint: '起源は諸説（釣り針など）。「正義（צֶדֶק）」の頭文字でもある。語尾はץ。'},
+  { char: 'ץ',  name: 'ツァデー・ソフィット', romanized: 'Tsade sofit',   sound: 'ṣ' , hint: 'צの語尾形。縦画が下に長く伸びる。'},
+  { char: 'ק',  name: 'コーフ',               romanized: 'Qof',           sound: 'q'  , hint: '起源は諸説。Q系と関連。קָדוֹשׁ（聖）の頭文字。'},
+  { char: 'ר',  name: 'レーシュ',             romanized: 'Resh',          sound: 'r'  , hint: '「頭」が起源。R系の祖先。דは角ばり、רは丸いのが目印。'},
+  { char: 'שׂ', name: 'スィン',               romanized: 'Sin',           sound: 'ś' , hint: '左上の点がשׂ（sin /s/）、右上の点がשׁ（shin /sh/）。'},
+  { char: 'שׁ', name: 'シン',                 romanized: 'Shin',          sound: 'š' , hint: '「歯」が起源。שָׁלוֹם（平和）・שַׁבָּת（安息日）の頭文字でもある。'},
+  { char: 'ת',  name: 'タウ',                 romanized: 'Tav',           sound: 'th' , hint: '「しるし（tav）」が起源。T系の祖先。アレフベット22文字の最後。'},
 ];
 
 const VOWELS = [
-  { display: 'בֲ',  name: 'ハテフ・パタハ',      nameEn: 'Hateph Patah',          sounds: ['a'],        romanized: 'ă',    length: 'ultra-short' },
-  { display: 'בֱ',  name: 'ハテフ・セゴル',      nameEn: 'Hateph Segol',          sounds: ['e'],        romanized: 'ĕ',    length: 'ultra-short' },
-  { display: 'בֳ',  name: 'ハテフ・カメツ',      nameEn: 'Hateph Qamets',         sounds: ['o'],        romanized: 'ŏ',    length: 'ultra-short' },
-  { display: 'בְ',  name: '有音 / 無音シェワ',   nameEn: 'Vocal / Silent Sheva',  sounds: ['ə', '無音'], romanized: 'ə / –', length: 'sheva'       },
-  { display: 'בַ',  name: 'パタハ',              nameEn: 'Patah',                 sounds: ['a'],        romanized: 'a',    length: 'short'       },
-  { display: 'בִ',  name: 'ヒレク',              nameEn: 'Hiriq',                 sounds: ['i'],        romanized: 'i',    length: 'short'       },
-  { display: 'בֻ',  name: 'キブツ',              nameEn: 'Qibbuts',               sounds: ['u'],        romanized: 'u',    length: 'short'       },
-  { display: 'בֶ',  name: 'セゴル',              nameEn: 'Segol',                 sounds: ['e'],        romanized: 'e',    length: 'short'       },
-  { display: 'בָ',  name: '大カメツ / 小カメツ', nameEn: 'Qamets / Qamets Hatuf', sounds: ['a', 'o'],   romanized: 'ā/o',  length: 'mixed'       },
-  { display: 'בֵ',  name: 'ツェレ',              nameEn: 'Tsere',                 sounds: ['e'],        romanized: 'ē',    length: 'long'        },
-  { display: 'בֹ',  name: 'ホレム',              nameEn: 'Holam',                 sounds: ['o'],        romanized: 'ō',    length: 'long'        },
-  { display: 'בָה', name: '大カメツ・ヘー',       nameEn: 'Qamets He',             sounds: ['a'],        romanized: 'â',    length: 'long'        },
-  { display: 'בִי', name: 'ヒレク・ヨード',       nameEn: 'Hiriq Yod',             sounds: ['i'],        romanized: 'î',    length: 'long'        },
-  { display: 'בוּ', name: 'シュルク',            nameEn: 'Shuruq',                sounds: ['u'],        romanized: 'û',    length: 'long'        },
-  { display: 'בֵי', name: 'ツェレ・ヨード',       nameEn: 'Tsere Yod',             sounds: ['e'],        romanized: 'ê',    length: 'long'        },
-  { display: 'בוֹ', name: 'ホレム・ワウ',         nameEn: 'Holam Waw',             sounds: ['o'],        romanized: 'ô',    length: 'long'        },
+  { display: 'בֲ',  name: 'ハテフ・パタハ',      nameEn: 'Hateph Patah',          sounds: ['a'],        romanized: 'ă',    length: 'ultra-short' , hint: 'パタハ（横線）の下に2点を加えた形。א・ה・ח・ע の喉音文字専用の最短母音。'},
+  { display: 'בֱ',  name: 'ハテフ・セゴル',      nameEn: 'Hateph Segol',          sounds: ['e'],        romanized: 'ĕ',    length: 'ultra-short' , hint: 'セゴル（逆三角3点）の下に2点を加えた形。喉音文字専用の最短母音「エ」。'},
+  { display: 'בֳ',  name: 'ハテフ・カメツ',      nameEn: 'Hateph Qamets',         sounds: ['o'],        romanized: 'ŏ',    length: 'ultra-short' , hint: 'カメツ（T字型）の下に2点を加えた形。喉音文字専用の最短母音「オ」。'},
+  { display: 'בְ',  name: '有音 / 無音シェワ',   nameEn: 'Vocal / Silent Sheva',  sounds: ['ə', '無音'], romanized: 'ə / –', length: 'sheva'       , hint: '縦に並ぶ2点。語頭・音節頭は有音（ə）、音節末は無音——位置で見分ける。'},
+  { display: 'בַ',  name: 'パタハ',              nameEn: 'Patah',                 sounds: ['a'],        romanized: 'a',    length: 'short'       , hint: '横線1本。「開く」が語源。語末の喉音（ח・ע・ה）の前では位置が逆転する（フルティヴム）。'},
+  { display: 'בִ',  name: 'ヒレク',              nameEn: 'Hiriq',                 sounds: ['i'],        romanized: 'i',    length: 'short'       , hint: '点1つだけ。短母音「イ」。ヨードが加わるとヒレク・ヨード（בִי・長音）になる。'},
+  { display: 'בֻ',  name: 'キブツ',              nameEn: 'Qibbuts',               sounds: ['u'],        romanized: 'u',    length: 'short'       , hint: '斜めに並ぶ3点。短母音「ウ」。シュルク（וּ）はワウの縦棒の中に点がある。'},
+  { display: 'בֶ',  name: 'セゴル',              nameEn: 'Segol',                 sounds: ['e'],        romanized: 'e',    length: 'short'       , hint: '「ブドウの房」が語源の逆三角形3点。ツェレ（横並び2点・長音）と混同注意。'},
+  { display: 'בָ',  name: '大カメツ / 小カメツ', nameEn: 'Qamets / Qamets Hatuf', sounds: ['a', 'o'],   romanized: 'ā/o',  length: 'mixed'       , hint: 'T字型記号。ほぼすべてアー（大）だが、閉じた非強勢音節ではオ（小カメツ）になる。'},
+  { display: 'בֵ',  name: 'ツェレ',              nameEn: 'Tsere',                 sounds: ['e'],        romanized: 'ē',    length: 'long'        , hint: '横に並ぶ2点。長母音「エー」。逆三角形3点のセゴル（短母音「エ」）と混同注意。'},
+  { display: 'בֹ',  name: 'ホレム',              nameEn: 'Holam',                 sounds: ['o'],        romanized: 'ō',    length: 'long'        , hint: '子音の「左肩」に1点。他のほぼすべての母音が文字の下に来る中で唯一、上に付く記号。'},
+  { display: 'בָה', name: '大カメツ・ヘー',       nameEn: 'Qamets He',             sounds: ['a'],        romanized: 'â',    length: 'long'        , hint: '語末の無音ヘー（ה）＋直前のカメツで長音アー。ヘー自体は発音しない。'},
+  { display: 'בִי', name: 'ヒレク・ヨード',       nameEn: 'Hiriq Yod',             sounds: ['i'],        romanized: 'î',    length: 'long'        , hint: 'ヒレク（点）にヨード（י）が加わった長音イー。ヨードは発音せず音を伸ばす役割。'},
+  { display: 'בוּ', name: 'シュルク',            nameEn: 'Shuruq',                sounds: ['u'],        romanized: 'û',    length: 'long'        , hint: 'ワウ（ו）の縦棒の中に点。長母音「ウー」。斜め3点のキブツ（短音「ウ」）と混同注意。'},
+  { display: 'בֵי', name: 'ツェレ・ヨード',       nameEn: 'Tsere Yod',             sounds: ['e'],        romanized: 'ê',    length: 'long'        , hint: 'ツェレ（横2点）にヨード（י）が加わった長音エー。ヨードは発音せず音を伸ばす役割。'},
+  { display: 'בוֹ', name: 'ホレム・ワウ',         nameEn: 'Holam Waw',             sounds: ['o'],        romanized: 'ô',    length: 'long'        , hint: 'ワウ（ו）の上に点。長母音「オー」。点だけのホレム（文字の左肩）と区別。'},
 ];
 
 // EN vowel alpha order: matches en/alefbet.html section order (ultra-short→sheva→short→long→long-mater)
@@ -542,18 +542,18 @@ const SYLLABLES = [
 
 // ベガドケファト6文字 × ダゲシュあり/なし = 12問（パタハで代表表示）
 const DAGESH = [
-  { display: 'בּ', romanized: 'b'  },
-  { display: 'ב',  romanized: 'v'  },
-  { display: 'גּ', romanized: 'g'  },
-  { display: 'ג',  romanized: 'gh' },
-  { display: 'דּ', romanized: 'd'  },
-  { display: 'ד',  romanized: 'dh' },
-  { display: 'כּ', romanized: 'k'  },
-  { display: 'כ',  romanized: 'kh' },
-  { display: 'פּ', romanized: 'p'  },
-  { display: 'פ',  romanized: 'f'  },
-  { display: 'תּ', romanized: 't'  },
-  { display: 'ת',  romanized: 'th' },
+  { display: 'בּ', romanized: 'b'  , hint: 'ダゲシュ（字内の点）ありで /b/。点がなければ摩擦音 /v/（ב）。'},
+  { display: 'ב',  romanized: 'v'  , hint: 'ダゲシュなしで摩擦音 /v/。字内に点があれば /b/（בּ）。'},
+  { display: 'גּ', romanized: 'g'  , hint: 'ダゲシュありで /g/。古典では点なしで gh（軟口蓋摩擦音）になる。'},
+  { display: 'ג',  romanized: 'gh' , hint: '点なしで古典的な gh 音。現代ヘブライ語では /g/ と区別しない。'},
+  { display: 'דּ', romanized: 'd'  , hint: 'ダゲシュありで /d/。古典では点なしで dh（英語 "this" の th に近い音）。'},
+  { display: 'ד',  romanized: 'dh' , hint: '点なしで dh 音。英語の "this"・"the" の th に相当する歯間摩擦音。'},
+  { display: 'כּ', romanized: 'k'  , hint: 'ダゲシュありで /k/。点なしは喉の奥の摩擦音 /kh/（バッハの ch）になる。'},
+  { display: 'כ',  romanized: 'kh' , hint: '点なしで /kh/。バッハ（Bach）の ch や英語 "loch" の ch と同じ音。'},
+  { display: 'פּ', romanized: 'p'  , hint: 'ダゲシュありで /p/。点なしで /f/。英語の p と f の関係と同じ。'},
+  { display: 'פ',  romanized: 'f'  , hint: '点なしで /f/。ダゲシュ（字内の点）があれば /p/（פּ）になる。'},
+  { display: 'תּ', romanized: 't'  , hint: 'ダゲシュありで /t/。古典では点なしで /θ/（英語 "think" の th）。'},
+  { display: 'ת',  romanized: 'th' , hint: '点なしで古典的な /θ/ 音。英語の "think"・"thin" の th に近い。'},
 ];
 
 const FONTS = [
@@ -606,6 +606,7 @@ const letterEl     = document.getElementById('letter-display');
 const choiceBtns   = document.querySelectorAll('.choice-btn');
 const nextWrap     = document.getElementById('next-wrap');
 const nextBtn      = document.getElementById('next-btn');
+const hintBox      = document.getElementById('hint-box');
 
 const resultScore  = document.getElementById('result-score');
 const resultTime   = document.getElementById('result-time');
@@ -683,6 +684,13 @@ function getQuizData() {
   if (isSyllableType()) return SYLLABLES;
   if (isVowelType())   return VOWELS;
   return LETTERS;
+}
+
+function getCurrentHint() {
+  if (isSyllableType()) return '';
+  const data = getQuizData();
+  const item = data[shuffledOrder[currentIndex]];
+  return item && item.hint ? item.hint : '';
 }
 
 function formatTime(seconds) {
@@ -842,6 +850,7 @@ function startWrongOnlyQuiz() {
 
 function showQuestion() {
   nextWrap.classList.add('hidden');
+  if (hintBox) hintBox.textContent = '';
 
   const choicesEl = document.getElementById('choices');
   choicesEl.style.display = 'none';
@@ -1041,6 +1050,7 @@ function handleAnswer(btn) {
       revealCorrectChoices();
       disableAllChoices();
       updateProgressDisplay();
+      if (hintBox) hintBox.textContent = getCurrentHint();
       nextWrap.classList.remove('hidden');
     } else {
       btn.classList.add('correct');
@@ -1076,6 +1086,7 @@ function handleAnswer(btn) {
   if (isCorrect) {
     setTimeout(nextQuestion, 200);
   } else {
+    if (hintBox) hintBox.textContent = getCurrentHint();
     nextWrap.classList.remove('hidden');
   }
 }

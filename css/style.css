@@ -673,7 +673,27 @@ body {
 /* Next button */
 .next-wrap {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.hint-box:not(:empty) {
+  width: 100%;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  background: var(--brand-light-bg);
+  border-left: 3px solid #17B890;
+  border-radius: 0 0.4rem 0.4rem 0;
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  animation: hint-fade-in 0.25s ease;
+}
+
+@keyframes hint-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .next-wrap.hidden {
